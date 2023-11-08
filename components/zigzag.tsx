@@ -1,5 +1,4 @@
 import Image from "next/image";
-
 import FeatImage01 from "../public/images/hero-image.png";
 import FeatImage02 from "../public/images/diverse-network-removebg.png";
 
@@ -10,7 +9,7 @@ export default function Zigzag() {
         <div className="py-12 md:py-20 border-t border-gray-800">
           {/* Section header */}
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
-            <div className="inline-flex text-sm font-semibold py-1 px-3 m-2 text-green-600 bg-green-200 rounded-full mb-4">
+            <div className="inline-flex text-base font-semibold py-2 px-4 m-2 text-green-600 bg-green-200 rounded-full mb-4">
               How It Works
             </div>
           </div>
@@ -39,7 +38,7 @@ export default function Zigzag() {
               >
                 <div className="md:pr-4 lg:pr-12 xl:pr-16">
                   <div className="font-architects-daughter text-xl text-purple-600 mb-2">
-                    More Options. Less stress.
+                    Simple triage. Tailored care.
                   </div>
                   <h3 className="h3 mb-3">
                     We’ll help you build a personalized path to care
@@ -78,12 +77,14 @@ export default function Zigzag() {
               </div>
             </div>
 
+            <div className="grid gap-10"></div>
             {/* 2nd item */}
-            <div className="max-w-3xl mx-auto text-center pb-2 md:pb-16">
-              <div className="inline-flex text-sm font-semibold py-1 px-3 m-2 text-green-600 bg-green-200 rounded-full">
+            <div className="max-w-3xl mx-auto text-center">
+              <div className="inline-flex text-base font-semibold py-2 px-4 text-green-600 bg-green-200 rounded-full">
                 Diverse Provider Network
               </div>
             </div>
+
             <div className="md:grid md:grid-cols-12 md:gap-6 items-center">
               {/* Image */}
               <div
@@ -105,11 +106,19 @@ export default function Zigzag() {
               >
                 <div className="md:pl-4 lg:pl-12 xl:pl-16">
                   <div className="font-architects-daughter text-xl text-purple-600 mb-2">
-                    More speed. Less spend
+                    More options. Easy access.
                   </div>
-                  <h3 className="h3 mb-3">Access a diverse network of providers within the natural medicine space, and get care that’s tailored to your specific needs </h3>
+                  <h3 className="h3 mb-3">
+                    Access a diverse network of providers within the natural
+                    medicine space, and get care that’s tailored to your
+                    specific needs{" "}
+                  </h3>
                   <p className="text-xl text-gray-400 mb-4">
-                  Natu’s responsive approach to care supports people across a wide range of needs, interests and goals. Our personalized options are backed up by a provider network with varying clinical expertise and modality to help make access to care easier than ever.
+                    Natu’s responsive approach to care supports people across a
+                    wide range of needs, interests and goals. Our personalized
+                    options are backed up by a provider network with varying
+                    clinical expertise and modality to help make access to care
+                    easier than ever.
                   </p>
                 </div>
               </div>
