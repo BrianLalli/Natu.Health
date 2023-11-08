@@ -1,3 +1,4 @@
+'use client'
 import React, { useState } from 'react';
 
 // This is a single FAQ item component
