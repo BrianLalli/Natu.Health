@@ -1,0 +1,48 @@
+/* Add this to a CSS file that you import into your quiz-component.client.tsx */
+
+/* This will center your question on the page */
+.question {
+    text-align: center;
+    font-size: 1.5rem; /* Example font size */
+    margin-bottom: 1rem; /* Space between the question and the answers */
+  }
+  
+  /* Styling for the answer bubbles */
+  .answer-bubble {
+    display: block; /* Each bubble will take up the full width of its container */
+    margin: 0.5rem auto; /* This will center the bubbles and add some space between them */
+    padding: 1rem 2rem; /* Adjust the padding to get the desired bubble size */
+  
+    background-color: #4169E0; /* The blue background color for the bubbles */
+    color: white; /* White text color */
+    border-radius: 9999px;
+  
+    text-align: center; /* Center the text within the bubble */
+    cursor: pointer; /* Changes the cursor to indicate the bubble is clickable */
+  
+    /* Add some box shadow for depth, if desired */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    
+    /* A little transition for when the user hovers over the bubble */
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  /* Hover effect for the bubbles */
+  .answer-bubble:hover {
+    transform: scale(1.05); /* The bubble will grow slightly when hovered */
+  }
+  
+  .age-dropdown {
+    width: 30%; /* Ensures the dropdown fills the container */
+    padding: 10px; /* Adjust padding for comfort */
+    border-radius: 20px; /* Consistent with the bubble style */
+    background-color: #f0f0f0; /* Light background for the dropdown */
+    border: 1px solid #ccc; /* Subtle border */
+    color: #333; /* Text color */
+    font-size: 1rem; /* Match font size with your design */
+    cursor: pointer; /* Indicates it's an interactive element */
+  }
+  
+  .quiz-container {
+      padding-bottom: 6rem;
+  }
