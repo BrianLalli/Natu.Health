@@ -17,16 +17,16 @@ export default function SecondaryHero() {
           </div>
   
           {/* Hero content */}
-          <div className="relative pt-32 pb-10 md:pt-40 md:pb-16">
+          <div className="relative pt-32 pb-10 md:pt-10 md:pb-10">
   
             {/* Section header */}
-            <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
-              <h1 className="h1 mb-4" data-aos="fade-up">Ready to get started?</h1>
-              <div className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center">
+            <div className="max-w-3xl mx-auto text-center">
+              <h1 className="h1 mb-1" data-aos="fade-up">Ready to get started?</h1>
+              {/* <div className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center">
                 <div data-aos="fade-up" data-aos-delay="400">
                   <a className="btn text-white bg-purple-600 hover:bg-purple-700 w-full mb-4 sm:w-auto sm:mb-0" href="#0">Sign Up</a>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

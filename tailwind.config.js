@@ -20,15 +20,15 @@ module.exports = {
           900: '#151719',
         },
         purple: {
-          100: '#F4F4FF',
-          200: '#E2E1FF',
-          300: '#CBCCFF',
-          400: '#ABABFF',
-          500: '#8D8DFF',
-          600: '#5D5DFF',
-          700: '#4B4ACF',
-          800: '#38379C',
-          900: '#262668',
+          100: '#ebf8ff', // lightest blue
+          200: '#ceedff',
+          300: '#add8e6',
+          400: '#87ceeb',
+          500: '#6495ed', // medium blue
+          600: '#4169e1',
+          700: '#1f4f7c', // darker blue
+          800: '#1c3d5a',
+          900: '#17202a', // darkest blue
         },
       },
       spacing: {

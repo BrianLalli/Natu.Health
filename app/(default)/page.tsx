@@ -5,18 +5,18 @@ export const metadata = {
 
 import Hero from '@/components/hero';
 import Zigzag from '@/components/zigzag';
-import SecondaryHero from '../../components/SecondaryHero';
+import SecondaryHero from '../../components/secondaryHero';
 import FAQ from '../../components/faq';
-// import QuizComponent from '../../components/quiz-component.client';
+import QuizComponent from '../../components/quiz-component.client';
 
 export default function Home() {
   return (
     <>
       <Hero />
       <Zigzag />
-      <FAQ />
       <SecondaryHero />
-      {/* <QuizComponent /> */}
+      <QuizComponent />
+      <FAQ />
     </>
   );
 }
