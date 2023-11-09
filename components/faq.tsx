@@ -29,9 +29,33 @@ export default function FAQ() {
   const faqs = [
     {
       question: "How does this service work?",
-      answer: "You start by doing this and that...",
+      answer: "You start by completing our comprehensive quiz, which helps us understand your health goals and challenges. Based on your answers, we provide personalized recommendations for services and products that align with your health journey."
     },
-    // ... more FAQs
+    {
+      question: "Is my personal information kept confidential?",
+      answer: "Absolutely. We prioritize your privacy and ensure that all personal information is encrypted and stored securely. We do not share your information with any third parties without your explicit consent."
+    },
+    {
+      question: "Can I change my plan after signing up?",
+      answer: "Yes, you can adjust your plan at any time. We understand that your health needs may change, and our flexible plans are designed to adapt with you."
+    },
+    {
+      question: "What if I'm not satisfied with the service?",
+      answer: "We strive for 100% satisfaction, but if you're not happy with the service, you can cancel your subscription at any time. We also welcome feedback to help us improve."
+    },
+    {
+      question: "Do you offer support or consultations?",
+      answer: "We offer ongoing support through our online portal. You can also schedule consultations with our health experts to discuss your progress and any concerns."
+    },
+    {
+      question: "How are your health experts qualified?",
+      answer: "Our team consists of certified professionals with extensive experience in their respective fields, including nutritionists, personal trainers, and medical advisors."
+    },
+    {
+      question: "What makes your approach different?",
+      answer: "We take a holistic view of health and wellness, considering all aspects of your lifestyle and well-being. Our personalized approach ensures that you receive care that's tailored specifically to you."
+    },
+    // ... additional FAQs
   ];
 
   return (

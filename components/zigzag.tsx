@@ -1,6 +1,6 @@
 import Image from "next/image";
 import FeatImage01 from "../public/images/hero-image.png";
-import FeatImage02 from "../public/images/diverse-network-removebg.png";
+import FeatImage02 from "../public/images/cropped-diverse-network.png";
 
 export default function Zigzag() {
   return (
