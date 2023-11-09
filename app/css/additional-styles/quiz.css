@@ -6,26 +6,44 @@
     font-size: 1.5rem; /* Example font size */
     margin-bottom: 1rem; /* Space between the question and the answers */
   }
+
+  .answers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* This adds space between the buttons */
+    justify-content: space-evenly; /* This will distribute the space evenly */
+    align-items: center; /* This will align items vertically in the center */
+  }
+  
   
   /* Styling for the answer bubbles */
   .answer-bubble {
-    display: block; /* Each bubble will take up the full width of its container */
-    margin: 0.5rem auto; /* This will center the bubbles and add some space between them */
-    padding: 1rem 2rem; /* Adjust the padding to get the desired bubble size */
+    display: flex; /* Use flexbox for centering text inside the bubble */
+    justify-content: center; /* Center text horizontally */
+    align-items: center; /* Center text vertically */
+    margin: 0.5rem; /* This will add some space around the bubbles */
+    padding: 1rem; /* Adjust the padding if needed, but it may affect the overall size */
+    width: 300px; /* Set a fixed width */
+    height: 50px; /* Set a fixed height */
   
     background-color: #4169E0; /* The blue background color for the bubbles */
     color: white; /* White text color */
-    border-radius: 9999px;
+    border-radius: 9999px; /* Rounded corners for the bubble effect */
   
-    text-align: center; /* Center the text within the bubble */
     cursor: pointer; /* Changes the cursor to indicate the bubble is clickable */
   
     /* Add some box shadow for depth, if desired */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    
+  
     /* A little transition for when the user hovers over the bubble */
     transition: transform 0.2s ease-in-out;
+  
+    /* Prevent text from wrapping */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
+  
   
   /* Hover effect for the bubbles */
   .answer-bubble:hover {
@@ -43,6 +61,32 @@
     cursor: pointer; /* Indicates it's an interactive element */
   }
   
-  .quiz-container {
-      padding-bottom: 6rem;
+.progress-bar-wrapper {
+  max-width: 500px; /* Adjust as needed for desktop size */
+  margin: 20px auto; /* Centers the container */
+  padding: 0 15px;
+}
+
+.quiz-container {
+    padding-bottom: 6rem;
+    max-width: 650px;
+    margin-left: auto;
+    margin-right: auto;
   }
+  
+
+  .progress-bar-container {
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    margin: 20px auto;
+  }
+  
+  .progress-bar {
+    height: 20px;
+    background-color: #4caf50; /* Change to match your color scheme */
+    width: 0; /* Initial width should be 0 */
+    border-radius: 5px;
+    transition: width 0.4s ease-in-out; /* Adds a smooth transition effect */
+  }
+  

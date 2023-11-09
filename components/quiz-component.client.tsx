@@ -32,13 +32,15 @@ const QuizComponent = () => {
   };
 
   const renderProgressBar = () => {
-    const progress = ((currentQuestion + 1) / totalQuestions) * 100;
+    const progress = ((currentQuestion + 1) / totalQuestions) * 100; // Ensure this is 100 to represent the percentage
     return (
-      <div className="progress-bar-container">
-        <div className="progress-bar" style={{ width: `${progress}%` }}></div>
+      <div className="progress-bar-wrapper"> {/* Wrapper added */}
+        <div className="progress-bar-container">
+          <div className="progress-bar" style={{ width: `${progress}%` }}></div>
+        </div>
       </div>
     );
-  };
+  };  
 
   const renderQuestion = () => {
     switch (currentQuestion) {
@@ -96,6 +98,65 @@ const QuizComponent = () => {
               >
                 Woman
               </button>
+              <button
+                className="answer-bubble"
+                onClick={() =>
+                  handleAnswerSelect({ questionId: "Q2", value: "Non-Binary" })
+                }
+              >
+                Non-Binary
+              </button>
+              <button
+                className="answer-bubble"
+                onClick={() =>
+                  handleAnswerSelect({ questionId: "Q2", value: "Genderqueer" })
+                }
+              >
+                Genderqueer
+              </button>
+              <button
+                className="answer-bubble"
+                onClick={() =>
+                  handleAnswerSelect({ questionId: "Q2", value: "Genderfluid" })
+                }
+              >
+                Genderfluid
+              </button>
+              <button
+                className="answer-bubble"
+                onClick={() =>
+                  handleAnswerSelect({ questionId: "Q2", value: "Transgender Woman" })
+                }
+              >
+                Transgender Woman
+              </button>
+              <button
+                className="answer-bubble"
+                onClick={() =>
+                  handleAnswerSelect({ questionId: "Q2", value: "Transgender Man" })
+                }
+              >
+                Transgender Man
+              </button>
+              <button
+                className="answer-bubble"
+                onClick={() =>
+                  handleAnswerSelect({ questionId: "Q2", value: "Prefer Not to Say" })
+                }
+              >
+                Prefer not to say
+              </button>
+              <input
+                  type="text"
+                  placeholder="Prefer to self-describe"
+                  maxLength={25}
+                  onChange={(e) =>
+                    handleAnswerSelect({
+                      questionId: "Self-Describe",
+                      value: e.target.value,
+                    })
+                  }
+                />
             </div>
           </div>
         );
@@ -613,19 +674,19 @@ const QuizComponent = () => {
   };
 
   return (
-    <div className="quiz-container">
-      {currentQuestion < totalQuestions ? (
-        <>
-          {renderProgressBar()}
-          {renderQuestion()}
-        </>
-      ) : (
-        <div>
-          <p>Thank you for completing the quiz!</p>
-          <button onClick={handleSubmit}>Submit</button>
-        </div>
-      )}
-    </div>
+      <div className="quiz-container">
+        {currentQuestion < totalQuestions ? (
+          <>
+            {renderProgressBar()}
+            {renderQuestion()}
+          </>
+        ) : (
+          <div>
+            <p>Thank you for completing the quiz!</p>
+            <button onClick={handleSubmit}>Submit</button>
+          </div>
+        )}
+      </div>
   );
 };
 
