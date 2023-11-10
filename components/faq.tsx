@@ -36,10 +36,6 @@ export default function FAQ() {
       answer: "Absolutely. We prioritize your privacy and ensure that all personal information is encrypted and stored securely. We do not share your information with any third parties without your explicit consent."
     },
     {
-      question: "Can I change my plan after signing up?",
-      answer: "Yes, you can adjust your plan at any time. We understand that your health needs may change, and our flexible plans are designed to adapt with you."
-    },
-    {
       question: "What if I'm not satisfied with the service?",
       answer: "We strive for 100% satisfaction, but if you're not happy with the service, you can cancel your subscription at any time. We also welcome feedback to help us improve."
     },
