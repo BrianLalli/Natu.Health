@@ -20,6 +20,8 @@ const QuizComponent = () => {
 
   const handleAnswerSelect = (selectedAnswer: Answer) => {
     // Check if the answer is from an input field
+    console.log('Selected answer:', selectedAnswer);
+    console.log('Current question before update:', currentQuestion);
     if (selectedAnswer.input) {
       // If from an input, update the temporary input state
       setTemporaryInput((prevInput) => ({
@@ -29,6 +31,7 @@ const QuizComponent = () => {
           value: selectedAnswer.value, // Update the value
         },
       }));
+      console.log('Current question after update:', currentQuestion);
     } else {
       // If from a button, update the answers state and move to the next question
       setAnswers((prevAnswers) => ({
@@ -60,33 +63,38 @@ const QuizComponent = () => {
     }
   };
 
- // Function to handle the submission of text input answers
-const handleInputSubmit = (questionId: string) => {
-  const inputValue = temporaryInput[questionId];
-  if (inputValue) {
-    console.log('inputValue:', JSON.stringify(inputValue, null, 2));
-    console.log('temporaryInput:', JSON.stringify(temporaryInput, null, 2));
-    setAnswers((prevAnswers) => {
-      console.log('prevAnswers before update:', JSON.stringify(prevAnswers, null, 2));
-      const newAnswers = {
-        ...prevAnswers,
-        [questionId]: { questionId, value: inputValue.value }, // Make sure to use inputValue.value
-      };
-      console.log('newAnswers after update:', JSON.stringify(newAnswers, null, 2));
-      return newAnswers;
-    });
-    // Logic to set the next question goes here
-    setCurrentQuestion((prevCurrentQuestion) => {
-      // Determine the next question based on current logic
-      // This is a placeholder for your branching logic
-      const nextQuestionIndex = prevCurrentQuestion + 1;
-      console.log('Setting next question index to:', nextQuestionIndex);
-      return nextQuestionIndex;
-    });
-  }
-};
-
-
+  // Function to handle the submission of text input answers
+  const handleInputSubmit = (questionId: string) => {
+    const inputValue = temporaryInput[questionId];
+    if (inputValue) {
+      console.log("inputValue:", JSON.stringify(inputValue, null, 2));
+      console.log("temporaryInput:", JSON.stringify(temporaryInput, null, 2));
+      setAnswers((prevAnswers) => {
+        console.log(
+          "prevAnswers before update:",
+          JSON.stringify(prevAnswers, null, 2)
+        );
+        const newAnswers = {
+          ...prevAnswers,
+          [questionId]: { questionId, value: inputValue.value }, // Make sure to use inputValue.value
+        };
+        console.log(
+          "newAnswers after update:",
+          JSON.stringify(newAnswers, null, 2)
+        );
+        return newAnswers;
+      });
+      // Logic to set the next question goes here
+      setCurrentQuestion((prevCurrentQuestion) => {
+        // Determine the next question based on current logic
+        // This is a placeholder for your branching logic
+        const nextQuestionIndex = prevCurrentQuestion + 1;
+        console.log("Setting next question index to:", nextQuestionIndex);
+        console.log('Setting current question to:', newQuestion);
+        return nextQuestionIndex;
+      });
+    }
+  };
 
   const handleSubmit = () => {
     console.log("Final Answers:", answers);
@@ -151,6 +159,7 @@ const handleInputSubmit = (questionId: string) => {
               <div className="answers">
                 <input
                   type="text"
+                  className="input-text"
                   placeholder="Type in answer"
                   maxLength={25}
                   onChange={(e) =>
@@ -164,14 +173,14 @@ const handleInputSubmit = (questionId: string) => {
                     })
                   }
                 />
-                <button onClick={() => handleInputSubmit("Q2")}>Next</button>
               </div>
+              <button className="next-button" onClick={() => handleInputSubmit("Q2")}>Next</button>
             </div>
           );
-        // } else {
-        //   // If this case is reached without the expected answer, reset or handle accordingly
-        //   setCurrentQuestion(0);
-        //   return null;
+          // } else {
+          //   // If this case is reached without the expected answer, reset or handle accordingly
+          //   setCurrentQuestion(0);
+          //   return null;
         }
 
       // Question 2B: Are you looking for specific care? (If 'Proactive care' was chosen)
@@ -183,22 +192,28 @@ const handleInputSubmit = (questionId: string) => {
               <div className="answers">
                 <input
                   type="text"
+                  className="input-text"
                   placeholder="Type in answer"
                   maxLength={25}
                   onChange={(e) =>
-                    handleAnswerSelect({
-                      questionId: "Q2",
-                      value: e.target.value,
+                    setTemporaryInput({
+                      ...temporaryInput,
+                      ["Q2"]: {
+                        questionId: "Q2",
+                        value: e.target.value,
+                        input: true,
+                      },
                     })
                   }
                 />
               </div>
+              <button className="next-button" onClick={() => handleInputSubmit("Q2")}>Next</button>
             </div>
           );
-        // } else {
-        //   // Handle the unexpected path
-        //   setCurrentQuestion(0);
-        //   return null;
+          // } else {
+          //   // Handle the unexpected path
+          //   setCurrentQuestion(0);
+          //   return null;
         }
       // Question 2C: Are there specific areas you’re interested in exploring? (If 'Just exploring' was chosen)
       case 3:
@@ -269,10 +284,10 @@ const handleInputSubmit = (questionId: string) => {
               </div>
             </div>
           );
-        // } else {
-        //   // Handle the unexpected path
-        //   setCurrentQuestion(0);
-        //   return null;
+          // } else {
+          //   // Handle the unexpected path
+          //   setCurrentQuestion(0);
+          //   return null;
         }
       // Question 3: Digging a little deeper, what else are you looking for help with?
       case 4:
@@ -356,16 +371,22 @@ const handleInputSubmit = (questionId: string) => {
               </button>
               <input
                 type="text"
-                placeholder="Other"
+                className="input-text"
+                placeholder="Type in answer"
                 maxLength={25}
                 onChange={(e) =>
-                  handleAnswerSelect({
-                    questionId: "Other",
-                    value: e.target.value,
+                  setTemporaryInput({
+                    ...temporaryInput,
+                    ["Q3"]: {
+                      questionId: "Q3",
+                      value: e.target.value,
+                      input: true,
+                    },
                   })
                 }
               />
             </div>
+            <button className="next-button" onClick={() => handleInputSubmit("Q3")}>Next</button>
           </div>
         );
       // Question 4: How long have you experienced your symptoms? (If 'Help with current symptoms' was chosen)
@@ -425,10 +446,10 @@ const handleInputSubmit = (questionId: string) => {
               </div>
             </div>
           );
-        // } else {
-        //   // Handle the unexpected path
-        //   setCurrentQuestion(0);
-        //   return null;
+          // } else {
+          //   // Handle the unexpected path
+          //   setCurrentQuestion(0);
+          //   return null;
         }
       // Question 5: Are there specific reasons you’re looking for proactive care?
       case 6:
@@ -485,22 +506,28 @@ const handleInputSubmit = (questionId: string) => {
                 </button>
                 <input
                   type="text"
-                  placeholder="Other"
+                  className="input-text"
+                  placeholder="Type in answer"
                   maxLength={25}
                   onChange={(e) =>
-                    handleAnswerSelect({
-                      questionId: "Q5",
-                      value: e.target.value,
+                    setTemporaryInput({
+                      ...temporaryInput,
+                      ["Q5"]: {
+                        questionId: "Q5",
+                        value: e.target.value,
+                        input: true,
+                      },
                     })
                   }
                 />
+                <button className="next-button" onClick={() => handleInputSubmit("Q5")}>Next</button>
               </div>
             </div>
           );
-        // } else {
-        //   // Handle the unexpected path
-        //   setCurrentQuestion(0);
-        //   return null;
+          // } else {
+          //   // Handle the unexpected path
+          //   setCurrentQuestion(0);
+          //   return null;
         }
       // Question 6: Have you had experience with any of the following?
       case 7:
@@ -638,16 +665,22 @@ const handleInputSubmit = (questionId: string) => {
               </button>
               <input
                 type="text"
-                placeholder="Prefer to self-describe"
+                className="input-text"
+                placeholder="Type in answer"
                 maxLength={25}
                 onChange={(e) =>
-                  handleAnswerSelect({
-                    questionId: "Q7",
-                    value: e.target.value,
+                  setTemporaryInput({
+                    ...temporaryInput,
+                    ["Q7"]: {
+                      questionId: "Q7",
+                      value: e.target.value,
+                      input: true,
+                    },
                   })
                 }
               />
             </div>
+            <button className="next-button" onClick={() => handleInputSubmit("Q7")}>Next</button>
           </div>
         );
       // Question 8: How old are you?
@@ -737,15 +770,21 @@ const handleInputSubmit = (questionId: string) => {
             <p>Zip Code</p>
             <input
               type="text"
-              placeholder="Enter 5 digits"
-              maxLength={5}
+              className="input-text"
+              placeholder="Enter 5 Digit Zip Code"
+              maxLength={25}
               onChange={(e) =>
-                handleAnswerSelect({
-                  questionId: "ZipCode",
-                  value: e.target.value,
+                setTemporaryInput({
+                  ...temporaryInput,
+                  ["Q10"]: {
+                    questionId: "Q10",
+                    value: e.target.value,
+                    input: true,
+                  },
                 })
               }
             />
+            <button className="next-button" onClick={() => handleInputSubmit("Q10")}>Next</button>
           </div>
         );
     }
@@ -760,8 +799,8 @@ const handleInputSubmit = (questionId: string) => {
         </>
       ) : (
         <div>
-          <p>Thank you for completing the quiz!</p>
-          <button onClick={handleSubmit}>Submit</button>
+          <p className="completion-message">Thank you for completing the quiz!</p>
+          <button className="next-button" onClick={handleSubmit}>Submit</button>
         </div>
       )}
     </div>

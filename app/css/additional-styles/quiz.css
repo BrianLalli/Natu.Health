@@ -90,3 +90,62 @@
     transition: width 0.4s ease-in-out; /* Adds a smooth transition effect */
   }
   
+
+/* Style for the Next button */
+.next-button {
+  display: block;           /* Block display to fill the width of its container */
+  margin: 20px auto;        /* Centering the button horizontally with top and bottom margin */
+  padding: 10px 30px;       /* Padding to make the button larger */
+  background-color: #4caf50; /* Green background */
+  color: white;             /* Black text color */
+  border: none;             /* No border */
+  cursor: pointer;          /* Changes the cursor to signify it's clickable */
+  text-align: center;       /* Ensures the text inside the button is centered */
+  font-size: 20px;          /* Sets the font size */
+  border-radius: 20px;      /* Rounded edges */
+  width: auto;  
+  font-weight: bold;            /* Auto width based on content and padding */
+}
+
+/* Hover effect for the Next button */
+.next-button:hover {
+  background-color: #43a047; /* Slightly darker green background on hover */
+}
+
+
+/* Ensure the button is not too wide on larger screens */
+/* .quiz-container .answers {
+  max-width: 500px;
+  margin: auto;
+} */
+
+.input-text {
+  padding: 10px; /* Adjusts the padding inside the input box */
+  margin: 10px 0; /* Adds space above and below the input box */
+  border: 1px solid #ccc; /* Sets the border color and width */
+  border-radius: 5px; /* Rounds the corners of the input box */
+  width: 40%; /* Sets the width to fill the container */
+  box-sizing: border-box; /* Ensures padding doesn't affect the overall width */
+  font-size: 16px; /* Sets the font size */
+  color: #333; /* Sets the font color */
+  background-color: #fff; /* Sets the background color */
+}
+
+.input-text:focus {
+  border-color: #4caf50; /* Changes the border color when the input is focused */
+  outline: none; /* Removes the default focus outline */
+}
+
+.completion-message {
+  font-size: 24px; /* Adjusts the size of the font */
+  color: white; /* Sets the color of the text */
+  font-weight: bold; /* Makes the font bold */
+  text-align: center; /* Centers the text */
+  margin-top: 20px; /* Adds space at the top */
+  margin-bottom: 20px; /* Adds space at the bottom */
+  padding: 10px; /* Adds padding inside the paragraph */
+  border-radius: 8px; /* Rounds the corners of the border */
+  width: fit-content; /* Adjusts the width to fit the content */
+  margin-left: auto; /* These two margin properties */
+  margin-right: auto; /* Center the block element horizontally */
+}
