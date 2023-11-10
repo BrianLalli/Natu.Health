@@ -90,7 +90,6 @@ const QuizComponent = () => {
         // This is a placeholder for your branching logic
         const nextQuestionIndex = prevCurrentQuestion + 1;
         console.log("Setting next question index to:", nextQuestionIndex);
-        console.log('Setting current question to:', newQuestion);
         return nextQuestionIndex;
       });
     }
