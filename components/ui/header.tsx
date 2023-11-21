@@ -36,7 +36,7 @@ export default function Header() {
                   href="/signin"
                   className="font-medium text-purple-600 hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out"
                   style={{
-                    borderRadius: '5px', // You can adjust the value for the desired roundness
+                    borderRadius: '25px', // You can adjust the value for the desired roundness
                   }}
                 >
                   Sign in
@@ -47,7 +47,7 @@ export default function Header() {
                   href="/signup"
                   className="btn-sm text-white bg-purple-600 hover:bg-purple-700 ml-3"
                   style={{
-                    borderRadius: '5px', // You can adjust the value for the desired roundness
+                    borderRadius: '25px', // You can adjust the value for the desired roundness
                   }}
                 >
                   Sign up

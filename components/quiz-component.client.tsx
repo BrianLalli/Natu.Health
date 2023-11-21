@@ -2,8 +2,6 @@
 import "../app/css/additional-styles/quiz.css";
 import React, { useState, useEffect } from 'react';
 
-
-
 interface Answer {
   questionId: string;
   value: string | number;
@@ -14,61 +12,11 @@ interface Answers {
   [key: string]: Answer;
 }
 
-
-
 const QuizComponent = () => {
   const [currentQuestion, setCurrentQuestion] = useState<number>(0);
   const [answers, setAnswers] = useState<Answers>({});
   const [temporaryInput, setTemporaryInput] = useState<Answers>({});
   const totalQuestions = 12;
-
-  // const handleAnswerSelect = (selectedAnswer: Answer) => {
-  //   // Check if the answer is from an input field
-  //   console.log('Selected answer:', selectedAnswer);
-  //   console.log('Current question before update:', currentQuestion);
-  //   if (selectedAnswer.input) {
-  //     // If from an input, update the temporary input state
-  //     setTemporaryInput((prevInput) => ({
-  //       ...prevInput,
-  //       [selectedAnswer.questionId]: {
-  //         ...prevInput[selectedAnswer.questionId], // Copy existing answer properties if needed
-  //         value: selectedAnswer.value, // Update the value
-  //       },
-  //     }));
-  //     console.log('Current question after update:', currentQuestion);
-  //   } else {
-  //     // If from a button, update the answers state and move to the next question
-  //     setAnswers((prevAnswers) => ({
-  //       ...prevAnswers,
-  //       [selectedAnswer.questionId]: selectedAnswer, // Ensure selectedAnswer is of type Answer
-  //     }));
-
-  //     console.log('Updated answers state:', answers);
-
-  //     // Branching logic after Q1
-  //     if (selectedAnswer.questionId === "Q1") {
-  //       switch (selectedAnswer.value) {
-  //         case "A":
-  //           setCurrentQuestion(1);
-  //           break;
-  //         case "B":
-  //           setCurrentQuestion(2);
-  //           break;
-  //         case "C":
-  //           setCurrentQuestion(3);
-  //           break;
-  //         default:
-  //           console.error("Invalid answer for Q1:", selectedAnswer.value);
-  //           setCurrentQuestion(0);
-  //           break;
-  //       }
-  //     } else {
-  //       // For subsequent questions, move to the next one linearly or based on your specific logic
-  //       setCurrentQuestion(currentQuestion + 1);
-  //       console.log('Next question index:', currentQuestion + 1);
-  //     }
-  //   }
-  // };
 
   const handleAnswerSelect = (selectedAnswer: Answer) => {
     // Existing code to handle input fields remains the same
@@ -109,7 +57,6 @@ const QuizComponent = () => {
   }, [answers]);
   
   
-
   // Function to handle the submission of text input answers
   const handleInputSubmit = (questionId: string) => {
     const inputValue = temporaryInput[questionId];
@@ -417,7 +364,7 @@ const QuizComponent = () => {
               >
                 Sexual
               </button>
-              <input
+              {/* <input
                 type="text"
                 className="input-text"
                 placeholder="Type in answer"
@@ -432,7 +379,7 @@ const QuizComponent = () => {
                     },
                   })
                 }
-              />
+              /> */}
             </div>
             <button className="next-button" onClick={() => handleInputSubmit("Q3")}>Next</button>
           </div>
@@ -552,7 +499,7 @@ const QuizComponent = () => {
                 >
                   I'm just interested
                 </button>
-                <input
+                {/* <input
                   type="text"
                   className="input-text"
                   placeholder="Type in answer"
@@ -567,7 +514,7 @@ const QuizComponent = () => {
                       },
                     })
                   }
-                />
+                /> */}
                 <button className="next-button" onClick={() => handleInputSubmit("Q5")}>Next</button>
               </div>
             </div>
@@ -711,22 +658,17 @@ const QuizComponent = () => {
               >
                 Prefer not to say
               </button>
-              <input
-                type="text"
-                className="input-text"
-                placeholder="Type in answer"
-                maxLength={25}
-                onChange={(e) =>
-                  setTemporaryInput({
-                    ...temporaryInput,
-                    ["Q7"]: {
-                      questionId: "Q7",
-                      value: e.target.value,
-                      input: true,
-                    },
+              <button
+                className="answer-bubble"
+                onClick={() =>
+                  handleAnswerSelect({
+                    questionId: "Q7",
+                    value: "None of the above",
                   })
                 }
-              />
+              >
+                None of the above
+              </button>
             </div>
             <button className="next-button" onClick={() => handleInputSubmit("Q7")}>Next</button>
           </div>
@@ -856,3 +798,53 @@ const QuizComponent = () => {
 };
 
 export default QuizComponent;
+
+
+
+  // const handleAnswerSelect = (selectedAnswer: Answer) => {
+  //   // Check if the answer is from an input field
+  //   console.log('Selected answer:', selectedAnswer);
+  //   console.log('Current question before update:', currentQuestion);
+  //   if (selectedAnswer.input) {
+  //     // If from an input, update the temporary input state
+  //     setTemporaryInput((prevInput) => ({
+  //       ...prevInput,
+  //       [selectedAnswer.questionId]: {
+  //         ...prevInput[selectedAnswer.questionId], // Copy existing answer properties if needed
+  //         value: selectedAnswer.value, // Update the value
+  //       },
+  //     }));
+  //     console.log('Current question after update:', currentQuestion);
+  //   } else {
+  //     // If from a button, update the answers state and move to the next question
+  //     setAnswers((prevAnswers) => ({
+  //       ...prevAnswers,
+  //       [selectedAnswer.questionId]: selectedAnswer, // Ensure selectedAnswer is of type Answer
+  //     }));
+
+  //     console.log('Updated answers state:', answers);
+
+  //     // Branching logic after Q1
+  //     if (selectedAnswer.questionId === "Q1") {
+  //       switch (selectedAnswer.value) {
+  //         case "A":
+  //           setCurrentQuestion(1);
+  //           break;
+  //         case "B":
+  //           setCurrentQuestion(2);
+  //           break;
+  //         case "C":
+  //           setCurrentQuestion(3);
+  //           break;
+  //         default:
+  //           console.error("Invalid answer for Q1:", selectedAnswer.value);
+  //           setCurrentQuestion(0);
+  //           break;
+  //       }
+  //     } else {
+  //       // For subsequent questions, move to the next one linearly or based on your specific logic
+  //       setCurrentQuestion(currentQuestion + 1);
+  //       console.log('Next question index:', currentQuestion + 1);
+  //     }
+  //   }
+  // };

@@ -1,6 +1,7 @@
 // import VideoThumb from '@/public/images/hero-image-01.jpg'
 // import ModalVideo from '@/components/modal-video'
 import Link from "next/link";
+import "../app/css/additional-styles/buttons.css"
 
 export default function Hero() {
   return (
@@ -63,9 +64,7 @@ export default function Hero() {
                 <Link
                   href="/quiz"
                   className="btn text-white bg-purple-600 hover:bg-purple-700 w-full mb-4 sm:w-auto sm:mb-0"
-                  style={{
-                    borderRadius: '5px', // You can adjust the value for the desired roundness
-                  }}
+                  // Inline styles removed since they are now in the CSS file
                 >
                   Get Started
                 </Link>
