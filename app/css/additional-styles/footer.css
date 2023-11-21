@@ -1,0 +1,30 @@
+@media (max-width: 600px) { /* Adjust this value based on your design */
+    .fixed-footer {
+      /* Styles to center and wrap elements */
+      flex-direction: column; /* Stack elements vertically */
+      align-items: center; /* Center items horizontally */
+      text-align: center; /* Center text */
+      margin: 0 auto; /* Center block elements */
+    }
+  }
+  
+  /* Ensure the class name matches the one used in your component */
+.social-links {
+    display: flex; /* existing style */
+    /* other styles */
+  }
+  
+  /* Media Query for Mobile Devices */
+  @media (max-width: 600px) { /* Adjust the breakpoint as needed */
+    .social-links {
+      justify-content: center; /* Center flex items horizontally */
+      flex-wrap: wrap; /* Allow items to wrap to the next line */
+      margin-left: 0; /* Override any margin if necessary */
+      margin-right: 0; /* Override any margin if necessary */
+    }
+  
+    .social-links li {
+      margin-left: 0.5rem; /* Adjust the spacing between items */
+      margin-right: 0.5rem; /* Adjust the spacing between items */
+    }
+  }
