@@ -68,22 +68,36 @@
 }
 
 .quiz-container {
-    padding-bottom: 6rem;
-    max-width: 750px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10rem;
-    min-height: 100vh;
-    max-height: 100%;
-  }
+  padding-bottom: 6rem;
+  max-width: 750px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10rem;
+  margin-bottom: 0; /* Explicitly set the bottom margin to zero */
+  min-height: 100vh;
+  max-height: 100%;
+}
+
   
 
+/* Styles for the progress bar container on desktop */
+.progress-bar-container {
+  width: 400px; /* Fixed width for desktop, adjust as needed */
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  margin: 20px auto;
+}
+
+/* Media Query for Mobile Devices */
+@media (max-width: 600px) {
   .progress-bar-container {
-    width: 100%;
-    background-color: #e0e0e0;
-    border-radius: 5px;
-    margin: 20px auto;
+    width: 350px; /* Smaller fixed width for mobile, adjust as needed */
+    margin: 10px auto; /* Smaller margin for mobile */
+    /* Add any other styles you need for mobile here */
   }
+  
+}
+
   
   .progress-bar {
     height: 20px;
@@ -100,14 +114,13 @@
   margin: 20px auto;        /* Centering the button horizontally with top and bottom margin */
   padding: 10px 30px;       /* Padding to make the button larger */
   background-color: #4caf50; /* Green background */
-  color: white;             /* Black text color */
+  color: white;             /* White text color */
   border: none;             /* No border */
   cursor: pointer;          /* Changes the cursor to signify it's clickable */
   text-align: center;       /* Ensures the text inside the button is centered */
-  font-size: 20px;          /* Sets the font size */
-  border-radius: 20px;      /* Rounded edges */
-  width: auto;  
-  font-weight: bold;            /* Auto width based on content and padding */
+  font-size: 1.3rem; /* Example font size */
+  border-radius: 25px;      /* Rounded edges */
+  width: auto;              /* Auto width based on content and padding */
 }
 
 /* Hover effect for the Next button */
@@ -122,22 +135,32 @@
   margin: auto;
 } */
 
+/* Styles for the input text on desktop */
 .input-text {
-  padding: 10px; /* Adjusts the padding inside the input box */
-  margin: 10px 0; /* Adds space above and below the input box */
-  border: 1px solid #ccc; /* Sets the border color and width */
-  border-radius: 5px; /* Rounds the corners of the input box */
-  width: 50%; /* Sets the width to fill the container */
-  box-sizing: border-box; /* Ensures padding doesn't affect the overall width */
-  font-size: 16px; /* Sets the font size */
-  color: #333; /* Sets the font color */
-  background-color: #fff; /* Sets the background color */
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 400px; /* Fixed width to match the progress bar container */
+  box-sizing: border-box;
+  font-size: 16px;
+  color: #333;
+  background-color: #fff;
 }
 
 .input-text:focus {
-  border-color: #4caf50; /* Changes the border color when the input is focused */
-  outline: none; /* Removes the default focus outline */
+  border-color: #4caf50;
+  outline: none;
 }
+
+/* Media Query for Mobile Devices */
+@media (max-width: 600px) {
+  .input-text {
+    width: 300px; /* Smaller fixed width for mobile to match the progress bar container */
+    /* Keep other styles the same */
+  }
+}
+
 
 .completion-message {
   font-size: 24px; /* Adjusts the size of the font */

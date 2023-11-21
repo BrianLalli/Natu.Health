@@ -1,0 +1,18 @@
+/* Existing styles for the button */
+.btn {
+    /* your existing styles */
+    border-radius: 25px; /* This value might need to be adjusted based on your design */
+  }
+  
+  /* Media Query for Mobile Devices */
+  @media (max-width: 600px) {
+    .btn {
+      font-size: 16px; /* Example: Smaller font size for mobile */
+      padding: 10px 30px; /* Adjust padding for a better fit */
+      width: auto; /* Adjust width as needed */
+      border-radius: 25px; /* Keep the smooth edges on mobile as well */
+      /* Add any other styles you need for mobile here */
+    }
+  }
+  
+  
