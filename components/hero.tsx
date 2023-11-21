@@ -63,6 +63,9 @@ export default function Hero() {
                 <Link
                   href="/quiz"
                   className="btn text-white bg-purple-600 hover:bg-purple-700 w-full mb-4 sm:w-auto sm:mb-0"
+                  style={{
+                    borderRadius: '5px', // You can adjust the value for the desired roundness
+                  }}
                 >
                   Get Started
                 </Link>

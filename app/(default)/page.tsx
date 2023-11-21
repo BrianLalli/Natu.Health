@@ -1,5 +1,5 @@
 export const metadata = {
-  title: 'Home - Open PRO',
+  title: 'Natu.Health',
   description: 'Page description',
 };
 
@@ -7,7 +7,7 @@ import Hero from '@/components/hero';
 import Zigzag from '@/components/zigzag';
 import SecondaryHero from '../../components/secondaryHero';
 import FAQ from '../../components/faq';
-import QuizComponent from '../../components/quiz-component.client';
+// import QuizComponent from '../../components/quiz-component.client';
 
 export default function Home() {
   return (
@@ -15,7 +15,7 @@ export default function Home() {
       <Hero />
       <Zigzag />
       <SecondaryHero />
-      <QuizComponent />
+      {/* <QuizComponent /> */}
       <FAQ />
     </>
   );
