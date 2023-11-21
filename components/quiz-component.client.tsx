@@ -1,6 +1,6 @@
 "use client";
 import "../app/css/additional-styles/quiz.css";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 interface Answer {
   questionId: string;
@@ -16,51 +16,50 @@ const QuizComponent = () => {
   const [currentQuestion, setCurrentQuestion] = useState<number>(0);
   const [answers, setAnswers] = useState<Answers>({});
   const [temporaryInput, setTemporaryInput] = useState<Answers>({});
-  const totalQuestions = 12;
+  const totalQuestions = 11;
 
   const handleAnswerSelect = (selectedAnswer: Answer) => {
     // Existing code to handle input fields remains the same
-  
+
     // Update the answers state
     setAnswers((prevAnswers) => ({
       ...prevAnswers,
       [selectedAnswer.questionId]: selectedAnswer,
     }));
-  
+
     // Removed the direct call to setCurrentQuestion here
   };
 
   useEffect(() => {
     const lastAnsweredQuestionId = Object.keys(answers).pop(); // Get the ID of the last answered question
-  
+
     // Ensure that the effect runs only if there's an answer for the current question
     if (lastAnsweredQuestionId && answers[lastAnsweredQuestionId]) {
-      if (lastAnsweredQuestionId === 'Q1') {
+      if (lastAnsweredQuestionId === "Q1") {
         // Branching logic for Q1
-        switch (answers['Q1'].value) {
-          case "A":
+        switch (answers["Q1"].value) {
+          case "Help with current symptoms":
             setCurrentQuestion(1);
             break;
-          case "B":
+          case "Proactive care":
             setCurrentQuestion(2);
             break;
-          case "C":
+          case "Just exploring":
             setCurrentQuestion(3);
             break;
           // Handle default or error case if needed
         }
       } else {
         // For other questions, increment linearly
-        setCurrentQuestion(prev => prev + 1);
+        setCurrentQuestion((prev) => prev + 1);
       }
     }
   }, [answers]);
-  
-  
+
   // Function to handle the submission of text input answers
   const handleInputSubmit = (questionId: string) => {
     const inputValue = temporaryInput[questionId];
-    console.log('Input submitted for:', questionId, 'with value:', inputValue);
+    console.log("Input submitted for:", questionId, "with value:", inputValue);
     if (inputValue) {
       console.log("inputValue:", JSON.stringify(inputValue, null, 2));
       console.log("temporaryInput:", JSON.stringify(temporaryInput, null, 2));
@@ -82,9 +81,13 @@ const QuizComponent = () => {
       // Logic to set the next question goes here
       setCurrentQuestion((prevCurrentQuestion) => {
         // Determine the next question based on current logic
-        // This is a placeholder for your branching logic
         const nextQuestionIndex = prevCurrentQuestion + 1;
-        console.log('Updating currentQuestion from:', prevCurrentQuestion, 'to:', prevCurrentQuestion + 1);
+        console.log(
+          "Updating currentQuestion from:",
+          prevCurrentQuestion,
+          "to:",
+          prevCurrentQuestion + 1
+        );
         return nextQuestionIndex;
       });
     }
@@ -109,7 +112,7 @@ const QuizComponent = () => {
   };
 
   const renderQuestion = () => {
-    console.log('Rendering question for index:', currentQuestion);
+    console.log("Rendering question for index:", currentQuestion);
     switch (currentQuestion) {
       // Question 1: Are you looking for?
       case 0:
@@ -120,7 +123,7 @@ const QuizComponent = () => {
               <button
                 className="answer-bubble"
                 onClick={() =>
-                  handleAnswerSelect({ questionId: "Q1", value: "A" })
+                  handleAnswerSelect({ questionId: "Q1", value: "Help with current symptoms" })
                 }
               >
                 Help with current symptoms
@@ -128,7 +131,7 @@ const QuizComponent = () => {
               <button
                 className="answer-bubble"
                 onClick={() =>
-                  handleAnswerSelect({ questionId: "Q1", value: "B" })
+                  handleAnswerSelect({ questionId: "Q1", value: "Proactive care" })
                 }
               >
                 Proactive care
@@ -136,7 +139,7 @@ const QuizComponent = () => {
               <button
                 className="answer-bubble"
                 onClick={() =>
-                  handleAnswerSelect({ questionId: "Q1", value: "C" })
+                  handleAnswerSelect({ questionId: "Q1", value: "Just exploring" })
                 }
               >
                 Just exploring
@@ -145,160 +148,86 @@ const QuizComponent = () => {
           </div>
         );
 
-      // Question 2A: What do you need help with? (If 'Help with current symptoms' was chosen)
+      // Question 2: Are you looking for specific care?
       case 1:
-        if (answers["Q1"] && answers["Q1"].value === "A") {
-          return (
-            <div className="question">
-              <p>What do you need help with?</p>
-              <div className="answers">
-                <input
-                  type="text"
-                  className="input-text"
-                  placeholder="Type in answer"
-                  maxLength={25}
-                  onChange={(e) =>
-                    setTemporaryInput({
-                      ...temporaryInput,
-                      ["Q2"]: {
-                        questionId: "Q2",
-                        value: e.target.value,
-                        input: true,
-                      },
-                    })
-                  }
-                />
-              </div>
-              <button className="next-button" onClick={() => handleInputSubmit("Q2")}>Next</button>
-            </div>
-          );
-          // } else {
-          //   // If this case is reached without the expected answer, reset or handle accordingly
-          //   setCurrentQuestion(0);
-          //   return null;
-        }
-
-      // Question 2B: Are you looking for specific care? (If 'Proactive care' was chosen)
-      case 2:
-        if (answers["Q1"] && answers["Q1"].value === "B") {
-          return (
-            <div className="question">
-              <p>Are you looking for specific care?</p>
-              <div className="answers">
-                <input
-                  type="text"
-                  className="input-text"
-                  placeholder="Type in answer"
-                  maxLength={25}
-                  onChange={(e) =>
-                    setTemporaryInput({
-                      ...temporaryInput,
-                      ["Q2"]: {
-                        questionId: "Q2",
-                        value: e.target.value,
-                        input: true,
-                      },
-                    })
-                  }
-                />
-              </div>
-              <button className="next-button" onClick={() => handleInputSubmit("Q2")}>Next</button>
-            </div>
-          );
-          // } else {
-          //   // Handle the unexpected path
-          //   setCurrentQuestion(0);
-          //   return null;
-        }
-      // Question 2C: Are there specific areas you’re interested in exploring? (If 'Just exploring' was chosen)
-      case 3:
-        if (answers["Q1"] && answers["Q1"].value === "C") {
-          return (
-            <div className="question">
-              <p>Are there specific areas you’re interested in exploring?</p>
-              <div className="answers">
-                <button
-                  className="answer-bubble"
-                  onClick={() =>
-                    handleAnswerSelect({ questionId: "Q2", value: "Digestive" })
-                  }
-                >
-                  Digestive
-                </button>
-                <button
-                  className="answer-bubble"
-                  onClick={() =>
-                    handleAnswerSelect({ questionId: "Q2", value: "Cognitive" })
-                  }
-                >
-                  Cognitive
-                </button>
-                <button
-                  className="answer-bubble"
-                  onClick={() =>
-                    handleAnswerSelect({ questionId: "Q2", value: "Hormones" })
-                  }
-                >
-                  Hormones
-                </button>
-                <button
-                  className="answer-bubble"
-                  onClick={() =>
-                    handleAnswerSelect({
-                      questionId: "Q2",
-                      value: "Respiratory",
-                    })
-                  }
-                >
-                  Respiratory
-                </button>
-                <button
-                  className="answer-bubble"
-                  onClick={() =>
-                    handleAnswerSelect({ questionId: "Q2", value: "Pain" })
-                  }
-                >
-                  Pain
-                </button>
-                <button
-                  className="answer-bubble"
-                  onClick={() =>
-                    handleAnswerSelect({ questionId: "Q2", value: "Movement" })
-                  }
-                >
-                  Movement
-                </button>
-                <button
-                  className="answer-bubble"
-                  onClick={() =>
-                    handleAnswerSelect({ questionId: "Q2", value: "Pregnancy" })
-                  }
-                >
-                  Pregnancy
-                </button>
-              </div>
-            </div>
-          );
-          // } else {
-          //   // Handle the unexpected path
-          //   setCurrentQuestion(0);
-          //   return null;
-        }
-      // Question 3: Digging a little deeper, what else are you looking for help with?
-      case 4:
         return (
           <div className="question">
-            <p>
-              Digging a little deeper, what else are you looking for help with?
-            </p>
+            <p>Are you looking for specific care?</p>
             <div className="answers">
               <button
                 className="answer-bubble"
                 onClick={() =>
-                  handleAnswerSelect({ questionId: "Q3", value: "Sleep" })
+                  handleAnswerSelect({ questionId: "Q2", value: "Yes" })
                 }
               >
-                Sleep
+                Yes
+              </button>
+              <button
+                className="answer-bubble"
+                onClick={() =>
+                  handleAnswerSelect({ questionId: "Q2", value: "No" })
+                }
+              >
+                No
+              </button>
+            </div>
+            <button
+              className="next-button"
+              onClick={() => handleInputSubmit("Q2")}
+            >
+              Next
+            </button>
+          </div>
+        );
+
+      // Question 3: Are there specific areas you’re interested in exploring?
+      case 2:
+        return (
+          <div className="question">
+            <p>What specific area are you interested in exploring?</p>
+            <div className="answers">
+              <button
+                className="answer-bubble"
+                onClick={() =>
+                  handleAnswerSelect({ questionId: "Q3", value: "Digestive" })
+                }
+              >
+                Digestive
+              </button>
+              <button
+                className="answer-bubble"
+                onClick={() =>
+                  handleAnswerSelect({ questionId: "Q3", value: "Cognitive" })
+                }
+              >
+                Cognitive
+              </button>
+              <button
+                className="answer-bubble"
+                onClick={() =>
+                  handleAnswerSelect({ questionId: "Q3", value: "Hormones" })
+                }
+              >
+                Hormones
+              </button>
+              <button
+                className="answer-bubble"
+                onClick={() =>
+                  handleAnswerSelect({
+                    questionId: "Q3",
+                    value: "Respiratory",
+                  })
+                }
+              >
+                Respiratory
+              </button>
+              <button
+                className="answer-bubble"
+                onClick={() =>
+                  handleAnswerSelect({ questionId: "Q3", value: "Pain" })
+                }
+              >
+                Pain
               </button>
               <button
                 className="answer-bubble"
@@ -311,7 +240,43 @@ const QuizComponent = () => {
               <button
                 className="answer-bubble"
                 onClick={() =>
-                  handleAnswerSelect({ questionId: "Q3", value: "Digestion" })
+                  handleAnswerSelect({ questionId: "Q3", value: "Pregnancy" })
+                }
+              >
+                Pregnancy
+              </button>
+            </div>
+          </div>
+        );
+
+      // Question 4: Digging a little deeper, what else are you looking for help with?
+      case 3:
+        return (
+          <div className="question">
+            <p>
+              Digging a little deeper, what else are you looking for help with?
+            </p>
+            <div className="answers">
+              <button
+                className="answer-bubble"
+                onClick={() =>
+                  handleAnswerSelect({ questionId: "Q4", value: "Sleep" })
+                }
+              >
+                Sleep
+              </button>
+              <button
+                className="answer-bubble"
+                onClick={() =>
+                  handleAnswerSelect({ questionId: "Q4", value: "Movement" })
+                }
+              >
+                Movement
+              </button>
+              <button
+                className="answer-bubble"
+                onClick={() =>
+                  handleAnswerSelect({ questionId: "Q4", value: "Digestion" })
                 }
               >
                 Digestion
@@ -319,7 +284,7 @@ const QuizComponent = () => {
               <button
                 className="answer-bubble"
                 onClick={() =>
-                  handleAnswerSelect({ questionId: "Q3", value: "Allergies" })
+                  handleAnswerSelect({ questionId: "Q4", value: "Allergies" })
                 }
               >
                 Allergies
@@ -327,7 +292,7 @@ const QuizComponent = () => {
               <button
                 className="answer-bubble"
                 onClick={() =>
-                  handleAnswerSelect({ questionId: "Q3", value: "Poop" })
+                  handleAnswerSelect({ questionId: "Q4", value: "Poop" })
                 }
               >
                 Poop
@@ -335,7 +300,7 @@ const QuizComponent = () => {
               <button
                 className="answer-bubble"
                 onClick={() =>
-                  handleAnswerSelect({ questionId: "Q3", value: "Nutrition" })
+                  handleAnswerSelect({ questionId: "Q4", value: "Nutrition" })
                 }
               >
                 Nutrition
@@ -343,7 +308,7 @@ const QuizComponent = () => {
               <button
                 className="answer-bubble"
                 onClick={() =>
-                  handleAnswerSelect({ questionId: "Q3", value: "Supplements" })
+                  handleAnswerSelect({ questionId: "Q4", value: "Supplements" })
                 }
               >
                 Supplements
@@ -351,7 +316,7 @@ const QuizComponent = () => {
               <button
                 className="answer-bubble"
                 onClick={() =>
-                  handleAnswerSelect({ questionId: "Q3", value: "Vaccines" })
+                  handleAnswerSelect({ questionId: "Q4", value: "Vaccines" })
                 }
               >
                 Vaccines
@@ -359,173 +324,135 @@ const QuizComponent = () => {
               <button
                 className="answer-bubble"
                 onClick={() =>
-                  handleAnswerSelect({ questionId: "Q3", value: "Sexual" })
+                  handleAnswerSelect({ questionId: "Q4", value: "Sexual" })
                 }
               >
                 Sexual
               </button>
-              {/* <input
-                type="text"
-                className="input-text"
-                placeholder="Type in answer"
-                maxLength={25}
-                onChange={(e) =>
-                  setTemporaryInput({
-                    ...temporaryInput,
-                    ["Q3"]: {
-                      questionId: "Q3",
-                      value: e.target.value,
-                      input: true,
-                    },
-                  })
-                }
-              /> */}
             </div>
-            <button className="next-button" onClick={() => handleInputSubmit("Q3")}>Next</button>
           </div>
         );
-      // Question 4: How long have you experienced your symptoms? (If 'Help with current symptoms' was chosen)
+      // Question 5: How long have you experienced your symptoms?
+      case 4:
+        return (
+          <div className="question">
+            <p>How long have you experienced your symptoms?</p>
+            <div className="answers">
+              <button
+                className="answer-bubble"
+                onClick={() =>
+                  handleAnswerSelect({
+                    questionId: "Q5",
+                    value: "Less Than 1 Month",
+                  })
+                }
+              >
+                Less Than 1 Month
+              </button>
+              <button
+                className="answer-bubble"
+                onClick={() =>
+                  handleAnswerSelect({
+                    questionId: "Q5",
+                    value: "2-6 Months",
+                  })
+                }
+              >
+                2-6 Months
+              </button>
+              <button
+                className="answer-bubble"
+                onClick={() =>
+                  handleAnswerSelect({
+                    questionId: "Q5",
+                    value: "Over 6 Months",
+                  })
+                }
+              >
+                Over 6 Months
+              </button>
+              <button
+                className="answer-bubble"
+                onClick={() =>
+                  handleAnswerSelect({
+                    questionId: "Q5",
+                    value: "Over 1 Year",
+                  })
+                }
+              >
+                Over 1 Year
+              </button>
+              <button
+                className="answer-bubble"
+                onClick={() =>
+                  handleAnswerSelect({
+                    questionId: "Q5",
+                    value: "N/A",
+                  })
+                }
+              >
+                N/A
+              </button>
+            </div>
+          </div>
+        );
+
+      // Question 6: Are there specific reasons you’re looking for care?
       case 5:
-        if (
-          answers["Q1"] &&
-          answers["Q1"].value === "Help with current symptoms"
-        ) {
-          return (
-            <div className="question">
-              <p>How long have you experienced your symptoms?</p>
-              <div className="answers">
-                <button
-                  className="answer-bubble"
-                  onClick={() =>
-                    handleAnswerSelect({
-                      questionId: "Q4",
-                      value: "Less Than 1 Month",
-                    })
-                  }
-                >
-                  Less Than 1 Month
-                </button>
-                <button
-                  className="answer-bubble"
-                  onClick={() =>
-                    handleAnswerSelect({
-                      questionId: "Q4",
-                      value: "2-6 Months",
-                    })
-                  }
-                >
-                  2-6 Months
-                </button>
-                <button
-                  className="answer-bubble"
-                  onClick={() =>
-                    handleAnswerSelect({
-                      questionId: "Q4",
-                      value: "Over 6 Months",
-                    })
-                  }
-                >
-                  Over 6 Months
-                </button>
-                <button
-                  className="answer-bubble"
-                  onClick={() =>
-                    handleAnswerSelect({
-                      questionId: "Q4",
-                      value: "Over 1 Year",
-                    })
-                  }
-                >
-                  Over 1 Year
-                </button>
-              </div>
+        return (
+          <div className="question">
+            <p>Are there specific reasons you’re looking for care?</p>
+            <div className="answers">
+              <button
+                className="answer-bubble"
+                onClick={() =>
+                  handleAnswerSelect({
+                    questionId: "Q7",
+                    value: "General Health",
+                  })
+                }
+              >
+                General Health
+              </button>
+              <button
+                className="answer-bubble"
+                onClick={() =>
+                  handleAnswerSelect({
+                    questionId: "Q7",
+                    value: "Family History",
+                  })
+                }
+              >
+                Family History
+              </button>
+              <button
+                className="answer-bubble"
+                onClick={() =>
+                  handleAnswerSelect({
+                    questionId: "Q7",
+                    value: "I'm Training For Something",
+                  })
+                }
+              >
+                I'm Training For Something
+              </button>
+              <button
+                className="answer-bubble"
+                onClick={() =>
+                  handleAnswerSelect({
+                    questionId: "Q7",
+                    value: "I'm just interested",
+                  })
+                }
+              >
+                I'm just interested
+              </button>
             </div>
-          );
-          // } else {
-          //   // Handle the unexpected path
-          //   setCurrentQuestion(0);
-          //   return null;
-        }
-      // Question 5: Are there specific reasons you’re looking for proactive care?
+          </div>
+        );
+
+      // Question 7: Have you had experience with any of the following?
       case 6:
-        if (answers["Q1"] && answers["Q1"].value === "Proactive care") {
-          return (
-            <div className="question">
-              <p>
-                Are there specific reasons you’re looking for proactive care?
-              </p>
-              <div className="answers">
-                <button
-                  className="answer-bubble"
-                  onClick={() =>
-                    handleAnswerSelect({
-                      questionId: "Q5",
-                      value: "General Health",
-                    })
-                  }
-                >
-                  General Health
-                </button>
-                <button
-                  className="answer-bubble"
-                  onClick={() =>
-                    handleAnswerSelect({
-                      questionId: "Q5",
-                      value: "Family History",
-                    })
-                  }
-                >
-                  Family History
-                </button>
-                <button
-                  className="answer-bubble"
-                  onClick={() =>
-                    handleAnswerSelect({
-                      questionId: "Q5",
-                      value: "I'm Training For Something",
-                    })
-                  }
-                >
-                  I'm Training For Something
-                </button>
-                <button
-                  className="answer-bubble"
-                  onClick={() =>
-                    handleAnswerSelect({
-                      questionId: "Q5",
-                      value: "I'm just interested",
-                    })
-                  }
-                >
-                  I'm just interested
-                </button>
-                {/* <input
-                  type="text"
-                  className="input-text"
-                  placeholder="Type in answer"
-                  maxLength={25}
-                  onChange={(e) =>
-                    setTemporaryInput({
-                      ...temporaryInput,
-                      ["Q5"]: {
-                        questionId: "Q5",
-                        value: e.target.value,
-                        input: true,
-                      },
-                    })
-                  }
-                /> */}
-                <button className="next-button" onClick={() => handleInputSubmit("Q5")}>Next</button>
-              </div>
-            </div>
-          );
-          // } else {
-          //   // Handle the unexpected path
-          //   setCurrentQuestion(0);
-          //   return null;
-        }
-      // Question 6: Have you had experience with any of the following?
-      case 7:
         return (
           <div className="question">
             <p>Have you had experience with any of the following?</p>
@@ -534,7 +461,7 @@ const QuizComponent = () => {
                 className="answer-bubble"
                 onClick={() =>
                   handleAnswerSelect({
-                    questionId: "Q6",
+                    questionId: "Q7",
                     value: "Chiropractor",
                   })
                 }
@@ -545,7 +472,7 @@ const QuizComponent = () => {
                 className="answer-bubble"
                 onClick={() =>
                   handleAnswerSelect({
-                    questionId: "Q6",
+                    questionId: "Q7",
                     value: "Acupuncturist",
                   })
                 }
@@ -555,7 +482,7 @@ const QuizComponent = () => {
               <button
                 className="answer-bubble"
                 onClick={() =>
-                  handleAnswerSelect({ questionId: "Q6", value: "Naturopath" })
+                  handleAnswerSelect({ questionId: "Q7", value: "Naturopath" })
                 }
               >
                 Naturopath
@@ -563,7 +490,7 @@ const QuizComponent = () => {
               <button
                 className="answer-bubble"
                 onClick={() =>
-                  handleAnswerSelect({ questionId: "Q6", value: "Osteopath" })
+                  handleAnswerSelect({ questionId: "Q7", value: "Osteopath" })
                 }
               >
                 Osteopath
@@ -571,7 +498,7 @@ const QuizComponent = () => {
               <button
                 className="answer-bubble"
                 onClick={() =>
-                  handleAnswerSelect({ questionId: "Q6", value: "None" })
+                  handleAnswerSelect({ questionId: "Q7", value: "None" })
                 }
               >
                 None
@@ -579,8 +506,8 @@ const QuizComponent = () => {
             </div>
           </div>
         );
-      // Question 7: What is your gender?
-      case 8:
+      // Question 8: What is your gender?
+      case 7:
         return (
           <div className="question">
             <p>What is your gender?</p>
@@ -588,7 +515,7 @@ const QuizComponent = () => {
               <button
                 className="answer-bubble"
                 onClick={() =>
-                  handleAnswerSelect({ questionId: "Q7", value: "Man" })
+                  handleAnswerSelect({ questionId: "Q8", value: "Man" })
                 }
               >
                 Man
@@ -596,7 +523,7 @@ const QuizComponent = () => {
               <button
                 className="answer-bubble"
                 onClick={() =>
-                  handleAnswerSelect({ questionId: "Q7", value: "Woman" })
+                  handleAnswerSelect({ questionId: "Q8", value: "Woman" })
                 }
               >
                 Woman
@@ -604,7 +531,7 @@ const QuizComponent = () => {
               <button
                 className="answer-bubble"
                 onClick={() =>
-                  handleAnswerSelect({ questionId: "Q7", value: "Non-Binary" })
+                  handleAnswerSelect({ questionId: "Q8", value: "Non-Binary" })
                 }
               >
                 Non-Binary
@@ -612,7 +539,7 @@ const QuizComponent = () => {
               <button
                 className="answer-bubble"
                 onClick={() =>
-                  handleAnswerSelect({ questionId: "Q7", value: "Genderqueer" })
+                  handleAnswerSelect({ questionId: "Q8", value: "Genderqueer" })
                 }
               >
                 Genderqueer
@@ -620,7 +547,7 @@ const QuizComponent = () => {
               <button
                 className="answer-bubble"
                 onClick={() =>
-                  handleAnswerSelect({ questionId: "Q7", value: "Genderfluid" })
+                  handleAnswerSelect({ questionId: "Q8", value: "Genderfluid" })
                 }
               >
                 Genderfluid
@@ -629,7 +556,7 @@ const QuizComponent = () => {
                 className="answer-bubble"
                 onClick={() =>
                   handleAnswerSelect({
-                    questionId: "Q7",
+                    questionId: "Q8",
                     value: "Transgender Woman",
                   })
                 }
@@ -640,7 +567,7 @@ const QuizComponent = () => {
                 className="answer-bubble"
                 onClick={() =>
                   handleAnswerSelect({
-                    questionId: "Q7",
+                    questionId: "Q8",
                     value: "Transgender Man",
                   })
                 }
@@ -651,7 +578,7 @@ const QuizComponent = () => {
                 className="answer-bubble"
                 onClick={() =>
                   handleAnswerSelect({
-                    questionId: "Q7",
+                    questionId: "Q8",
                     value: "Prefer Not to Say",
                   })
                 }
@@ -662,7 +589,7 @@ const QuizComponent = () => {
                 className="answer-bubble"
                 onClick={() =>
                   handleAnswerSelect({
-                    questionId: "Q7",
+                    questionId: "Q8",
                     value: "None of the above",
                   })
                 }
@@ -670,18 +597,23 @@ const QuizComponent = () => {
                 None of the above
               </button>
             </div>
-            <button className="next-button" onClick={() => handleInputSubmit("Q7")}>Next</button>
+            <button
+              className="next-button"
+              onClick={() => handleInputSubmit("Q8")}
+            >
+              Next
+            </button>
           </div>
         );
-      // Question 8: How old are you?
-      case 9:
+      // Question 9: How old are you?
+      case 8:
         return (
           <div className="question">
             <p>How old are you?</p>
             <select
               className="age-dropdown" // Add a class for styling
               onChange={(e) =>
-                handleAnswerSelect({ questionId: "Q8", value: e.target.value })
+                handleAnswerSelect({ questionId: "Q9", value: e.target.value })
               }
             >
               <option value="">Select your age</option>
@@ -696,8 +628,8 @@ const QuizComponent = () => {
             </select>
           </div>
         );
-      // Question 9: Do you use a wearable fitness device?
-      case 10:
+      // Question 10: Do you use a wearable fitness device?
+      case 9:
         return (
           <div className="question">
             <p>Do you use a wearable fitness device?</p>
@@ -705,7 +637,7 @@ const QuizComponent = () => {
               <button
                 className="answer-bubble"
                 onClick={() =>
-                  handleAnswerSelect({ questionId: "Q9", value: "Whoop" })
+                  handleAnswerSelect({ questionId: "Q10", value: "Whoop" })
                 }
               >
                 Whoop
@@ -713,7 +645,7 @@ const QuizComponent = () => {
               <button
                 className="answer-bubble"
                 onClick={() =>
-                  handleAnswerSelect({ questionId: "Q9", value: "Apple Watch" })
+                  handleAnswerSelect({ questionId: "Q10", value: "Apple Watch" })
                 }
               >
                 Apple Watch
@@ -721,7 +653,7 @@ const QuizComponent = () => {
               <button
                 className="answer-bubble"
                 onClick={() =>
-                  handleAnswerSelect({ questionId: "Q9", value: "Oura Ring" })
+                  handleAnswerSelect({ questionId: "Q10", value: "Oura Ring" })
                 }
               >
                 Oura Ring
@@ -729,7 +661,7 @@ const QuizComponent = () => {
               <button
                 className="answer-bubble"
                 onClick={() =>
-                  handleAnswerSelect({ questionId: "Q9", value: "Garmin" })
+                  handleAnswerSelect({ questionId: "Q10", value: "Garmin" })
                 }
               >
                 Garmin
@@ -737,7 +669,7 @@ const QuizComponent = () => {
               <button
                 className="answer-bubble"
                 onClick={() =>
-                  handleAnswerSelect({ questionId: "Q9", value: "Fitbit" })
+                  handleAnswerSelect({ questionId: "Q10", value: "Fitbit" })
                 }
               >
                 Fitbit
@@ -745,7 +677,7 @@ const QuizComponent = () => {
               <button
                 className="answer-bubble"
                 onClick={() =>
-                  handleAnswerSelect({ questionId: "Q9", value: "Other" })
+                  handleAnswerSelect({ questionId: "Q10", value: "Other" })
                 }
               >
                 Other
@@ -753,8 +685,8 @@ const QuizComponent = () => {
             </div>
           </div>
         );
-      // Question 10: What is your zip code?
-      case 11:
+      // Question 11: What is your zip code?
+      case 10:
         return (
           <div className="question">
             <p>Zip Code</p>
@@ -766,15 +698,20 @@ const QuizComponent = () => {
               onChange={(e) =>
                 setTemporaryInput({
                   ...temporaryInput,
-                  ["Q10"]: {
-                    questionId: "Q10",
+                  ["Q11"]: {
+                    questionId: "Q11",
                     value: e.target.value,
                     input: true,
                   },
                 })
               }
             />
-            <button className="next-button" onClick={() => handleInputSubmit("Q10")}>Next</button>
+            <button
+              className="next-button"
+              onClick={() => handleInputSubmit("Q11")}
+            >
+              Next
+            </button>
           </div>
         );
     }
@@ -789,8 +726,12 @@ const QuizComponent = () => {
         </>
       ) : (
         <div>
-          <p className="completion-message">Thank you for completing the quiz!</p>
-          <button className="next-button" onClick={handleSubmit}>Submit</button>
+          <p className="completion-message">
+            Thank you for completing the quiz!
+          </p>
+          <button className="next-button" onClick={handleSubmit}>
+            Submit
+          </button>
         </div>
       )}
     </div>
@@ -799,52 +740,3 @@ const QuizComponent = () => {
 
 export default QuizComponent;
 
-
-
-  // const handleAnswerSelect = (selectedAnswer: Answer) => {
-  //   // Check if the answer is from an input field
-  //   console.log('Selected answer:', selectedAnswer);
-  //   console.log('Current question before update:', currentQuestion);
-  //   if (selectedAnswer.input) {
-  //     // If from an input, update the temporary input state
-  //     setTemporaryInput((prevInput) => ({
-  //       ...prevInput,
-  //       [selectedAnswer.questionId]: {
-  //         ...prevInput[selectedAnswer.questionId], // Copy existing answer properties if needed
-  //         value: selectedAnswer.value, // Update the value
-  //       },
-  //     }));
-  //     console.log('Current question after update:', currentQuestion);
-  //   } else {
-  //     // If from a button, update the answers state and move to the next question
-  //     setAnswers((prevAnswers) => ({
-  //       ...prevAnswers,
-  //       [selectedAnswer.questionId]: selectedAnswer, // Ensure selectedAnswer is of type Answer
-  //     }));
-
-  //     console.log('Updated answers state:', answers);
-
-  //     // Branching logic after Q1
-  //     if (selectedAnswer.questionId === "Q1") {
-  //       switch (selectedAnswer.value) {
-  //         case "A":
-  //           setCurrentQuestion(1);
-  //           break;
-  //         case "B":
-  //           setCurrentQuestion(2);
-  //           break;
-  //         case "C":
-  //           setCurrentQuestion(3);
-  //           break;
-  //         default:
-  //           console.error("Invalid answer for Q1:", selectedAnswer.value);
-  //           setCurrentQuestion(0);
-  //           break;
-  //       }
-  //     } else {
-  //       // For subsequent questions, move to the next one linearly or based on your specific logic
-  //       setCurrentQuestion(currentQuestion + 1);
-  //       console.log('Next question index:', currentQuestion + 1);
-  //     }
-  //   }
-  // };
