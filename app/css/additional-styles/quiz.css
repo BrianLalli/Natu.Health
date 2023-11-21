@@ -51,7 +51,7 @@
   }
   
   .age-dropdown {
-    width: 50%; /* Ensures the dropdown fills the container */
+    width: 100%; /* Ensures the dropdown fills the container */
     padding: 10px; /* Adjust padding for comfort */
     border-radius: 20px; /* Consistent with the bubble style */
     background-color: #f0f0f0; /* Light background for the dropdown */
@@ -72,6 +72,7 @@
     max-width: 750px;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 10rem;
   }
   
 
