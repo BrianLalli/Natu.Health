@@ -3,6 +3,7 @@ import "../app/css/additional-styles/quiz.css";
 import React, { useState, useEffect } from 'react';
 
 
+
 interface Answer {
   questionId: string;
   value: string | number;

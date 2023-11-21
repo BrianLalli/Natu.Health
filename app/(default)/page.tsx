@@ -1,6 +1,6 @@
 export const metadata = {
   title: 'Natu.Health',
-  description: 'Page description',
+  description: 'Home page with website description',
 };
 
 import Hero from '@/components/hero';
