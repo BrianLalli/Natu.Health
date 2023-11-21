@@ -60,6 +60,18 @@
     font-size: 1rem; /* Match font size with your design */
     cursor: pointer; /* Indicates it's an interactive element */
   }
+
+  @media (max-width: 768px) {
+    .age-dropdown {
+      width: 90%; /* Make the dropdown full width on smaller screens */
+      padding: 8px; /* Slightly reduce padding for smaller screens */
+      border-radius: 15px; /* Adjust for smaller screens */
+      font-size: 0.9rem; /* Slightly smaller font size for readability on mobile */
+      /* Other properties can remain the same */
+    }
+  }
+  
+  
   
 .progress-bar-wrapper {
   max-width: 500px; /* Adjust as needed for desktop size */
@@ -95,7 +107,6 @@
     margin: 10px auto; /* Smaller margin for mobile */
     /* Add any other styles you need for mobile here */
   }
-  
 }
 
   
