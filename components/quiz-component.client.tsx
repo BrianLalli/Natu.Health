@@ -1,6 +1,7 @@
 "use client";
-import React, { useState } from "react";
 import "../app/css/additional-styles/quiz.css";
+import React, { useState, useEffect } from 'react';
+
 
 interface Answer {
   questionId: string;
@@ -12,36 +13,82 @@ interface Answers {
   [key: string]: Answer;
 }
 
+
+
 const QuizComponent = () => {
   const [currentQuestion, setCurrentQuestion] = useState<number>(0);
   const [answers, setAnswers] = useState<Answers>({});
   const [temporaryInput, setTemporaryInput] = useState<Answers>({});
   const totalQuestions = 12;
 
-  const handleAnswerSelect = (selectedAnswer: Answer) => {
-    // Check if the answer is from an input field
-    console.log('Selected answer:', selectedAnswer);
-    console.log('Current question before update:', currentQuestion);
-    if (selectedAnswer.input) {
-      // If from an input, update the temporary input state
-      setTemporaryInput((prevInput) => ({
-        ...prevInput,
-        [selectedAnswer.questionId]: {
-          ...prevInput[selectedAnswer.questionId], // Copy existing answer properties if needed
-          value: selectedAnswer.value, // Update the value
-        },
-      }));
-      console.log('Current question after update:', currentQuestion);
-    } else {
-      // If from a button, update the answers state and move to the next question
-      setAnswers((prevAnswers) => ({
-        ...prevAnswers,
-        [selectedAnswer.questionId]: selectedAnswer, // Ensure selectedAnswer is of type Answer
-      }));
+  // const handleAnswerSelect = (selectedAnswer: Answer) => {
+  //   // Check if the answer is from an input field
+  //   console.log('Selected answer:', selectedAnswer);
+  //   console.log('Current question before update:', currentQuestion);
+  //   if (selectedAnswer.input) {
+  //     // If from an input, update the temporary input state
+  //     setTemporaryInput((prevInput) => ({
+  //       ...prevInput,
+  //       [selectedAnswer.questionId]: {
+  //         ...prevInput[selectedAnswer.questionId], // Copy existing answer properties if needed
+  //         value: selectedAnswer.value, // Update the value
+  //       },
+  //     }));
+  //     console.log('Current question after update:', currentQuestion);
+  //   } else {
+  //     // If from a button, update the answers state and move to the next question
+  //     setAnswers((prevAnswers) => ({
+  //       ...prevAnswers,
+  //       [selectedAnswer.questionId]: selectedAnswer, // Ensure selectedAnswer is of type Answer
+  //     }));
 
-      // Branching logic after Q1
-      if (selectedAnswer.questionId === "Q1") {
-        switch (selectedAnswer.value) {
+  //     console.log('Updated answers state:', answers);
+
+  //     // Branching logic after Q1
+  //     if (selectedAnswer.questionId === "Q1") {
+  //       switch (selectedAnswer.value) {
+  //         case "A":
+  //           setCurrentQuestion(1);
+  //           break;
+  //         case "B":
+  //           setCurrentQuestion(2);
+  //           break;
+  //         case "C":
+  //           setCurrentQuestion(3);
+  //           break;
+  //         default:
+  //           console.error("Invalid answer for Q1:", selectedAnswer.value);
+  //           setCurrentQuestion(0);
+  //           break;
+  //       }
+  //     } else {
+  //       // For subsequent questions, move to the next one linearly or based on your specific logic
+  //       setCurrentQuestion(currentQuestion + 1);
+  //       console.log('Next question index:', currentQuestion + 1);
+  //     }
+  //   }
+  // };
+
+  const handleAnswerSelect = (selectedAnswer: Answer) => {
+    // Existing code to handle input fields remains the same
+  
+    // Update the answers state
+    setAnswers((prevAnswers) => ({
+      ...prevAnswers,
+      [selectedAnswer.questionId]: selectedAnswer,
+    }));
+  
+    // Removed the direct call to setCurrentQuestion here
+  };
+
+  useEffect(() => {
+    const lastAnsweredQuestionId = Object.keys(answers).pop(); // Get the ID of the last answered question
+  
+    // Ensure that the effect runs only if there's an answer for the current question
+    if (lastAnsweredQuestionId && answers[lastAnsweredQuestionId]) {
+      if (lastAnsweredQuestionId === 'Q1') {
+        // Branching logic for Q1
+        switch (answers['Q1'].value) {
           case "A":
             setCurrentQuestion(1);
             break;
@@ -51,21 +98,21 @@ const QuizComponent = () => {
           case "C":
             setCurrentQuestion(3);
             break;
-          default:
-            console.error("Invalid answer for Q1:", selectedAnswer.value);
-            setCurrentQuestion(0);
-            break;
+          // Handle default or error case if needed
         }
       } else {
-        // For subsequent questions, move to the next one linearly or based on your specific logic
-        setCurrentQuestion(currentQuestion + 1);
+        // For other questions, increment linearly
+        setCurrentQuestion(prev => prev + 1);
       }
     }
-  };
+  }, [answers]);
+  
+  
 
   // Function to handle the submission of text input answers
   const handleInputSubmit = (questionId: string) => {
     const inputValue = temporaryInput[questionId];
+    console.log('Input submitted for:', questionId, 'with value:', inputValue);
     if (inputValue) {
       console.log("inputValue:", JSON.stringify(inputValue, null, 2));
       console.log("temporaryInput:", JSON.stringify(temporaryInput, null, 2));
@@ -89,7 +136,7 @@ const QuizComponent = () => {
         // Determine the next question based on current logic
         // This is a placeholder for your branching logic
         const nextQuestionIndex = prevCurrentQuestion + 1;
-        console.log("Setting next question index to:", nextQuestionIndex);
+        console.log('Updating currentQuestion from:', prevCurrentQuestion, 'to:', prevCurrentQuestion + 1);
         return nextQuestionIndex;
       });
     }
@@ -114,6 +161,7 @@ const QuizComponent = () => {
   };
 
   const renderQuestion = () => {
+    console.log('Rendering question for index:', currentQuestion);
     switch (currentQuestion) {
       // Question 1: Are you looking for?
       case 0:

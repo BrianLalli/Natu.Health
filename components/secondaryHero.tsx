@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function SecondaryHero() {
     return (
       <section>
@@ -22,11 +24,15 @@ export default function SecondaryHero() {
             {/* Section header */}
             <div className="max-w-3xl mx-auto text-center">
               <h1 className="h1 mb-1" data-aos="fade-up">Ready to get started?</h1>
-              {/* <div className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center">
-                <div data-aos="fade-up" data-aos-delay="400">
-                  <a className="btn text-white bg-purple-600 hover:bg-purple-700 w-full mb-4 sm:w-auto sm:mb-0" href="#0">Sign Up</a>
-                </div>
-              </div> */}
+              <Link
+                  href="/quiz"
+                  className="btn text-white bg-purple-600 hover:bg-purple-700 w-full mb-4 sm:w-auto sm:mb-0"
+                  style={{
+                    margin: '10px',
+                    borderRadius: '5px', // You can adjust the value for the desired roundness
+                  }}                                  >
+                  Get Started
+                </Link>
             </div>
           </div>
         </div>
