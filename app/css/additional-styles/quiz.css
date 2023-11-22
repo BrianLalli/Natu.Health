@@ -51,7 +51,7 @@
   }
   
   .age-dropdown {
-    width: 100%; /* Ensures the dropdown fills the container */
+    width: 400px; /* Ensures the dropdown fills the container */
     padding: 10px; /* Adjust padding for comfort */
     border-radius: 20px; /* Consistent with the bubble style */
     background-color: #f0f0f0; /* Light background for the dropdown */
@@ -71,8 +71,6 @@
     }
   }
   
-  
-  
 .progress-bar-wrapper {
   max-width: 500px; /* Adjust as needed for desktop size */
   margin: 20px auto; /* Centers the container */
@@ -80,17 +78,44 @@
 }
 
 .quiz-container {
+  /* Existing styles */
   padding-bottom: 6rem;
   max-width: 750px;
   margin-left: auto;
   margin-right: auto;
   margin-top: 10rem;
-  margin-bottom: 0; /* Explicitly set the bottom margin to zero */
+  margin-bottom: 0;
   min-height: 100vh;
   max-height: 100%;
 }
 
-  
+/* Media query for mobile devices */
+@media (max-width: 600px) {
+  .quiz-container {
+      padding-bottom: 3rem; /* Reduce bottom padding */
+      margin-top: 10rem; /* Reduce top margin */
+      min-height: 100vh;
+      max-height: 100%;
+      margin-bottom: 0;
+      /* Other adjustments can be made here if needed */
+  }
+}
+
+.quiz-svg-illustration {
+  position: absolute;
+  top: -600px; /* Adjust this value to move illustration higher */
+  left: 0;
+  z-index: -1; /* Ensures the illustration stays behind the quiz content */
+  width: 600px; /* Adjust width as needed */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.custom-page-illustration-wrapper {
+  position: absolute;
+  top: 150px;
+  left: 50px;
+  z-index: -1;
+}
 
 /* Styles for the progress bar container on desktop */
 .progress-bar-container {
