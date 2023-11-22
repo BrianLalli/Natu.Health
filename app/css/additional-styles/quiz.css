@@ -51,7 +51,7 @@
   }
   
   .age-dropdown {
-    width: 100%; /* Ensures the dropdown fills the container */
+    width: 400px; /* Ensures the dropdown fills the container */
     padding: 10px; /* Adjust padding for comfort */
     border-radius: 20px; /* Consistent with the bubble style */
     background-color: #f0f0f0; /* Light background for the dropdown */
@@ -70,8 +70,6 @@
       /* Other properties can remain the same */
     }
   }
-  
-  
   
 .progress-bar-wrapper {
   max-width: 500px; /* Adjust as needed for desktop size */
@@ -103,8 +101,21 @@
   }
 }
 
+.quiz-svg-illustration {
+  position: absolute;
+  top: -600px; /* Adjust this value to move illustration higher */
+  left: 0;
+  z-index: -1; /* Ensures the illustration stays behind the quiz content */
+  width: 600px; /* Adjust width as needed */
+  height: auto; /* Maintain aspect ratio */
+}
 
-  
+.custom-page-illustration-wrapper {
+  position: absolute;
+  top: 150px;
+  left: 50px;
+  z-index: -1;
+}
 
 /* Styles for the progress bar container on desktop */
 .progress-bar-container {
