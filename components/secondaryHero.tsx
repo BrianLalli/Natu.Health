@@ -52,7 +52,7 @@ export default function SecondaryHero() {
               href="/quiz"
               className="btn text-white bg-purple-600 hover:bg-purple-700 w-full mb-4 sm:w-auto sm:mb-0"
               style={{
-                margin: "10px", // Adjust the margin value as needed
+                margin: "20px", // Adjust the margin value as needed
               }}
             >
               Get Started

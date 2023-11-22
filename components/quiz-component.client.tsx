@@ -171,12 +171,6 @@ const QuizComponent = () => {
                 No
               </button>
             </div>
-            <button
-              className="next-button"
-              onClick={() => handleInputSubmit("Q2")}
-            >
-              Next
-            </button>
           </div>
         );
 
@@ -597,12 +591,6 @@ const QuizComponent = () => {
                 None of the above
               </button>
             </div>
-            <button
-              className="next-button"
-              onClick={() => handleInputSubmit("Q8")}
-            >
-              Next
-            </button>
           </div>
         );
       // Question 9: How old are you?

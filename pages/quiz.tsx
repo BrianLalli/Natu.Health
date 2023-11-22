@@ -1,15 +1,16 @@
 // pages/quiz.tsx
 import React from 'react';
 import QuizComponent from '../components/quiz-component.client';
-import DefaultLayout from '../app/layout'; // Update the path as needed
-// import Footer from '@/components/ui/footer';
-// import PageIllustration from '../components/page-illustration'
-
+import DefaultLayout from './layout'; // Ensure this is the correct path
+import '../app/css/style.css'; // Importing styles.css from the app folder
 
 const QuizPage = () => {
   return (
     <DefaultLayout>
-      <QuizComponent />
+      {/* Use a main tag for semantic structuring of the primary content */}
+      <main className="quiz-main-content">
+        <QuizComponent />
+      </main>
     </DefaultLayout>
   );
 };
