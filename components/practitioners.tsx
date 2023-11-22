@@ -87,7 +87,7 @@ const PractitionersComponent = () => {
               <img
                 src={practitioner.image}
                 alt={`Dr. ${practitioner.name}`}
-                className="rounded-full w-32 h-32 mx-auto"
+                className="rounded-full w-40 h-40 mx-auto" // Adjusted size to w-40 and h-40
               />
               <h2 className="text-xl font-semibold mt-3">
                 {practitioner.name}

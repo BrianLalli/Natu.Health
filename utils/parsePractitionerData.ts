@@ -12,7 +12,7 @@ export function parsePractitionerData(data) {
   jsonData.forEach((row, index) => {
     if (index > 0) { // Skip the header row
       const practitioner = {
-        image: '', // Placeholder for image URL or path
+        image: row[18], // Placeholder for image URL or path
         name: row[1], // Clinician/s
         businessName: row[0], // Clinic/s
         specialty: row[2], // Specialty (corrected field name)
