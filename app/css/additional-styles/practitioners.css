@@ -1,0 +1,61 @@
+.my-grid-container {
+    /* display: grid; */
+    grid-template-columns: repeat(1, 1fr); /* Adjust the repeat value as needed */
+    gap: 10px !important; /* Adjust the gap as needed */
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 6rem;
+    max-width: 750px;
+    margin-top: 2rem;
+    margin-bottom: 0;
+    /* min-height: 100vh; */
+    max-height: 100%;
+  }
+  
+  /* For medium and larger screens, adjust the grid columns */
+  @media (min-width: 768px) { /* Adjust breakpoint as needed */
+    .my-grid-container {
+      grid-template-columns: repeat(2, 1fr); /* 2 columns for medium screens */
+      justify-content: center;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 0;
+    }
+  }
+  
+  @media (min-width: 1024px) { /* Adjust breakpoint as needed */
+    .my-grid-container {
+      grid-template-columns: repeat(3, 1fr); /* 3 columns for large screens */
+      justify-content: center;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 0;
+    }
+  }
+
+  .card {
+    /* Existing styles */
+    padding: 25px !important; /* Adjust as needed */
+    width: 350px; /* Adjust as needed */
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px solid #ccc; /* Add a light gray border */
+  
+    /* New style for rounded edges */
+    border-radius: 25px !important; /* Adjust the value to your preference */
+  }
+  
+  
+  .recommendation {
+      text-align: center;
+      max-width: 700px;
+      max-height: 100px;
+      justify-content: center;
+      margin-bottom: 0;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 7rem;
+  }
+
+  
