@@ -37,7 +37,7 @@
   .card {
     /* Existing styles */
     padding: 25px !important; /* Adjust as needed */
-    width: 300px; /* Adjust as needed */
+    width: 350px; /* Adjust as needed */
     margin-left: auto;
     margin-right: auto;
     border: 2px solid #ccc; /* Add a light gray border */
@@ -57,3 +57,5 @@
       margin-right: auto;
       margin-top: 7rem;
   }
+
+  
