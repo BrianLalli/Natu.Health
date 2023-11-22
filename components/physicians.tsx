@@ -17,6 +17,8 @@ const dummyPhysicians = [
     email: "john.doe@example.com",
     phone: "123-456-7890",
     website: "http://www.doemedicalclinic.com",
+    rating: 3.5,
+    specialty: "Chiropractor", // Add the specialty field for each physician
   },
   {
     id: "2",
@@ -27,8 +29,9 @@ const dummyPhysicians = [
     email: "john.smith@example.com",
     phone: "987-654-3210",
     website: "http://www.smithwellnesscenter.com",
+    rating: 4.2,
+    specialty: "Naturopath", // Add the specialty field for each physician
   },
-
   // Add more mock physicians as needed
 ];
 
@@ -41,37 +44,79 @@ const PhysiciansComponent: React.FC<PhysiciansComponentProps> = ({
   }
 
   return (
-    <div className="my-grid-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2">
-      {physicians.map((physician) => (
-        <div key={physician.id} className="card shadow-lg rounded p-4">
-          <img
-            src={physician.image}
-            alt={`Dr. ${physician.name}`}
-            className="rounded-full w-32 h-32 mx-auto"
-          />
-          <h2 className="text-xl font-semibold mt-3 text-center">
-            {physician.name}
-          </h2>
-          <p className="text-gray-600 text-center">{physician.businessName}</p>
-          <p className="text-center">{physician.address}</p>{" "}
-          <div className="flex justify-between items-center mt-4">
-            <a href={`mailto:${physician.email}`} className="text-blue-500">
-              Email
-            </a>
-            <a href={`tel:${physician.phone}`} className="text-blue-500">
-              Call
-            </a>
-            <a
-              href={physician.website}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-500"
-            >
-              Website
-            </a>
+    <div>
+      <h1 className="text-2xl font-semibold recommendation">
+        Based on your needs and proximity to your location, we recommend the following physicians for your care:
+      </h1>
+      <div className="my-grid-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2">
+        {physicians.map((physician) => (
+          <div key={physician.id} className="card shadow-lg rounded p-4">
+            <img
+              src={physician.image}
+              alt={`Dr. ${physician.name}`}
+              className="rounded-full w-32 h-32 mx-auto"
+            />
+            <h2 className="text-xl font-semibold mt-3 text-center">
+              {physician.name}
+            </h2>
+            <p className="text-center mt-2 text-blue-500">
+              Specialty: {physician.specialty}
+            </p> {/* Display the physician's specialty */}
+            <p className="text-white-600 text-center">
+              {physician.businessName}
+            </p>
+            <p className="text-center">{physician.address}</p>
+            {/* Star rating section */}
+            <div className="flex items-center justify-center mt-2">
+              {[...Array(Math.floor(physician.rating))].map((_, index) => (
+                <span key={index} className="text-yellow-400">
+                  {/* Filled star */}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor"
+                    className="w-5 h-5"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M0 0h24v24H0z" fill="none" />
+                    <path d="M12 2l2.3 6.2 6.9.6-5.3 4.7 1.6 7-6.5-3.9-6.5 3.9 1.6-7-5.3-4.7 6.9-.6z" />
+                  </svg>
+                </span>
+              ))}
+              {[...Array(5 - Math.floor(physician.rating))].map((_, index) => (
+                <span key={index} className="text-gray-500">
+                  {/* Empty star */}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor"
+                    className="w-5 h-5"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M0 0h24v24H0z" fill="none" />
+                    <path d="M12 2l2.3 6.2 6.9.6-5.3 4.7 1.6 7-6.5-3.9-6.5 3.9 1.6-7-5.3-4.7 6.9-.6z" />
+                  </svg>
+                </span>
+              ))}
+            </div>
+            {/* End of star rating section */}
+            <div className="flex justify-between items-center mt-4">
+              <a href={`mailto:${physician.email}`} className="text-blue-500">
+                Email
+              </a>
+              <a href={`tel:${physician.phone}`} className="text-blue-500">
+                Call
+              </a>
+              <a
+                href={physician.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-500"
+              >
+                Website
+              </a>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };

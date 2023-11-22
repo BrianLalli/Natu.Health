@@ -7,7 +7,7 @@
     margin-right: auto;
     padding-bottom: 6rem;
     max-width: 750px;
-    margin-top: 13rem;
+    margin-top: 2rem;
     margin-bottom: 0;
     /* min-height: 100vh; */
     max-height: 100%;
@@ -36,12 +36,21 @@
 
   .card {
     /* Increase padding */
-    padding: 5px; /* Adjust as needed */
+    padding: 25px !important; /* Adjust as needed */
     /* Optionally, set a specific width */
     width: 300px; /* Adjust as needed */
     margin-left: auto;
     margin-right: auto;
-    border: 1px solid #ccc; /* Add a light gray border */
+    border: 2px solid #ccc; /* Add a light gray border */
   }
   
-  
+  .recommendation {
+      text-align: center;
+      max-width: 700px;
+      max-height: 100px;
+      justify-content: center;
+      margin-bottom: 0;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 7rem;
+  }
