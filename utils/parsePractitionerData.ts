@@ -19,7 +19,7 @@ export function parsePractitionerData(data) {
         address: ` ${row[14]}, ${row[15]}, ${row[16]}`, // Full address
         email: row[12], // Email Address
         phone: row[13], // Phone Number
-        website: row[3], // Website
+        website: row[8], // Website
         googleReviews: parseFloat(row[4] || '0'), // Google Reviews
         numberOfReviews: parseFloat(row[5] || '0'),
         focusAreas: [row[9], row[10], row[11]].filter(Boolean), // Combining all focus areas

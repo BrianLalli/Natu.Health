@@ -78,7 +78,7 @@ const PractitionersComponent = () => {
     <div>
       <h1 className="text-2xl font-semibold recommendation">
         Based on your needs and proximity to your location, we recommend the
-        following Practitioners for your care:
+        following Practitioner(s) for your care:
       </h1>
       <div className="my-grid-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2">
         {practitioners.map((practitioner, index) => (
