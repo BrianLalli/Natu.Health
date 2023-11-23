@@ -87,7 +87,7 @@ const PractitionersComponent = () => {
               <img
                 src={practitioner.image}
                 alt={`Dr. ${practitioner.name}`}
-                className="rounded-full w-40 h-40 mx-auto" // Adjusted size to w-40 and h-40
+                className="rounded-full w-40 h-40 mx-auto border-2 border-purple-600" // Added border-2 and border-purple-600
               />
               <h2 className="text-xl font-semibold mt-3">
                 {practitioner.name}
@@ -130,7 +130,7 @@ const PractitionersComponent = () => {
                 href={practitioner.website}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-purple-600 text-white px-4 py-2 rounded text-center"
+                className="bg-purple-600 text-white px-4 py-2 rounded-25px text-center btn"
               >
                 Book Now
               </a>

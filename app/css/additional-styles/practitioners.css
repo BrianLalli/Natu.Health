@@ -36,14 +36,21 @@
 
   .card {
     /* Existing styles */
-    padding: 25px !important; /* Adjust as needed */
-    width: 350px; /* Adjust as needed */
+    padding: 25px;
+    width: 350px;
     margin-left: auto;
     margin-right: auto;
-    border: 2px solid #ccc; /* Add a light gray border */
+    border: 2px solid #ccc;
+    border-radius: 25px !important;
+    /* background-color: white; Or another light color for contrast */
+    /* color: #333; Dark text for readability */
+    font-family: 'Roboto', sans-serif; /* Legible font */
+    box-sizing: border-box; /* Ensures padding doesn't affect width */
+  }
   
-    /* New style for rounded edges */
-    border-radius: 25px !important; /* Adjust the value to your preference */
+  .card:hover {
+    background-color: #25282C;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Subtle shadow for depth */
   }
   
   
@@ -57,5 +64,26 @@
       margin-right: auto;
       margin-top: 7rem;
   }
+
+  .btn {
+    /* Your existing button styles */
+    /* Example */
+    padding: 10px 20px;
+    border: none;
+    background-color: #5D5DFF; /* Primary button color */
+    color: white;
+    border-radius: 25px !important;
+    cursor: pointer; /* Changes cursor to a pointer to indicate it's clickable */
+    transition: background-color 0.3s, box-shadow 0.3s; /* Smooth transition for hover effect */
+  }
+  
+  .btn:hover {
+    background-color: #4b4bff; /* Slightly darker shade on hover */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  }
+  
+  .rounded-25px {
+    border-radius: 25px;
+}
 
   
