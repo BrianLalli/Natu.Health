@@ -96,7 +96,7 @@ const QuizComponent = () => {
   const handleSubmit = () => {
     console.log("Final Answers:", answers);
     // Redirect to the /physicians page
-    window.location.href = "/physicians";
+    window.location.href = "/practitioners";
   };
 
   const renderProgressBar = () => {
