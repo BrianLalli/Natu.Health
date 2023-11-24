@@ -1,6 +1,7 @@
 // PractitionerInfo.ts (or .tsx if you're including React components)
 
 export interface PractitionerInfo {
+    id: number;
     image: string;
     name: string;
     businessName: string;

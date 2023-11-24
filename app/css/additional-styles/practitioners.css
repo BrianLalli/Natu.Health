@@ -1,13 +1,13 @@
 .my-grid-container {
     /* display: grid; */
     grid-template-columns: repeat(1, 1fr); /* Adjust the repeat value as needed */
-    gap: 10px !important; /* Adjust the gap as needed */
+    gap: 1rem !important; /* Adjust the gap as needed */
     justify-content: center;
     margin-left: auto;
     margin-right: auto;
     padding-bottom: 6rem;
     max-width: 750px;
-    margin-top: 2rem;
+    margin-top: 3rem;
     margin-bottom: 0;
     /* min-height: 100vh; */
     max-height: 100%;
@@ -40,6 +40,7 @@
     width: 350px;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 1rem;
     border: 2px solid #ccc;
     border-radius: 25px !important;
     /* background-color: white; Or another light color for contrast */

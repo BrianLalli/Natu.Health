@@ -3,55 +3,6 @@ import { PractitionerInfo } from "../models/PractitionerInfo";
 import { parsePractitionerData } from "../utils/parsePractitionerData";
 import "../app/css/additional-styles/practitioners.css";
 
-const StarRating = ({ rating }) => {
-  const fullStars = Math.floor(rating);
-  const fractionalPart = rating % 1;
-  let quarterStar = 0,
-    halfStar = 0,
-    threeQuarterStar = 0;
-
-  if (fractionalPart >= 0.75) {
-    threeQuarterStar = 1;
-  } else if (fractionalPart >= 0.5) {
-    halfStar = 1;
-  } else if (fractionalPart >= 0.25) {
-    quarterStar = 1;
-  }
-
-  const totalStars = fullStars + quarterStar + halfStar + threeQuarterStar;
-  const emptyStars = Math.max(5 - totalStars, 0); // Ensure it's not negative
-
-  return (
-    <div className="star-rating">
-      {[...Array(fullStars)].map((_, i) => (
-        <span key={`full-${i}`} className="text-yellow-400">
-          ★
-        </span>
-      ))}
-      {quarterStar === 1 && (
-        <span key="quarter" className="text-yellow-400">
-          ☆
-        </span>
-      )}
-      {halfStar === 1 && (
-        <span key="half" className="text-yellow-400">
-          ☆
-        </span>
-      )}
-      {threeQuarterStar === 1 && (
-        <span key="three-quarter" className="text-yellow-400">
-          ☆
-        </span>
-      )}
-      {[...Array(emptyStars)].map((_, i) => (
-        <span key={`empty-${i}`} className="text-gray-300">
-          ☆
-        </span>
-      ))}
-    </div>
-  );
-};
-
 const PractitionersComponent = () => {
   const [practitioners, setPractitioners] = useState<PractitionerInfo[]>([]);
 
@@ -62,13 +13,19 @@ const PractitionersComponent = () => {
         const reader = new FileReader();
         reader.onload = (e) => {
           const data = e.target.result;
-          const parsedData = parsePractitionerData(data);
-          setPractitioners(parsedData);
+          const { practitioners } = parsePractitionerData(data);
+          console.log("Parsed practitioners data:", practitioners); // Debug log
+          setPractitioners(practitioners);
         };
         reader.readAsBinaryString(blob);
       })
-      .catch((error) => console.error("Error loading the Excel file:", error));
+      .catch((error) => {
+        console.error("Error loading the Excel file:", error);
+        console.error(error);
+      });
   }, []);
+
+  console.log("Practitioners state:", practitioners); // Debug log
 
   if (practitioners.length === 0) {
     return <div>Loading Practitioners data...</div>;
@@ -87,7 +44,7 @@ const PractitionersComponent = () => {
               <img
                 src={practitioner.image}
                 alt={`Dr. ${practitioner.name}`}
-                className="rounded-full w-40 h-40 mx-auto border-2 border-purple-600" // Added border-2 and border-purple-600
+                className="rounded-full w-40 h-40 mx-auto border-2 border-purple-600"
               />
               <h2 className="text-xl font-semibold mt-3">
                 {practitioner.name}
@@ -109,7 +66,7 @@ const PractitionersComponent = () => {
               </p>
             </div>
             <div className="mt-4">
-              <p className="text-white-600 text-center font-semibold">
+              <p className="text-xl font-semibold mt-3 text-center">
                 {practitioner.businessName}
               </p>
               <p className="text-white-600 text-center">

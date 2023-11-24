@@ -29,7 +29,7 @@ export default function FAQ() {
   const faqs = [
     {
       question: "How does this service work?",
-      answer: "You start by completing our comprehensive quiz, which helps us understand your health goals and challenges. Based on your answers, we provide personalized recommendations for services and products that align with your health journey."
+      answer: "You start by completing our comprehensive quiz, which helps us understand your health goals and challenges. Based on your answers, we provide personalized recommendations for practitioners that align with your health journey."
     },
     {
       question: "Is my personal information kept confidential?",
@@ -45,7 +45,7 @@ export default function FAQ() {
     },
     {
       question: "How are your health experts qualified?",
-      answer: "Our team consists of certified professionals with extensive experience in their respective fields, including nutritionists, personal trainers, and medical advisors."
+      answer: "Our team consists of certified professionals with extensive experience in their respective fields, including acupuncturists, chiropractors, and naturopathic doctors."
     },
     {
       question: "What makes your approach different?",

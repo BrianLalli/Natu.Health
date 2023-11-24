@@ -67,7 +67,7 @@ export default function Zigzag() {
                       </svg>
                       <span>
                         Select the right path for you - whether that’s meeting
-                        with a specialized provider or engaging in a library of
+                        with a specialized practitioner or engaging in a library of
                         resources that can help guide you on your path to a
                         healthier you
                       </span>
@@ -81,7 +81,7 @@ export default function Zigzag() {
             {/* 2nd item */}
             <div className="max-w-3xl mx-auto text-center">
               <div className="inline-flex text-base font-semibold py-2 px-4 text-green-600 bg-green-200 rounded-full">
-                Diverse Provider Network
+                Diverse Practitioner Network
               </div>
             </div>
 
@@ -109,14 +109,14 @@ export default function Zigzag() {
                     More options. Easy access.
                   </div>
                   <h3 className="h3 mb-3">
-                    Access a diverse network of providers within the natural
+                    Access a diverse network of practitioners within the natural
                     medicine space, and get care that’s tailored to your
                     specific needs{" "}
                   </h3>
                   <p className="text-xl text-gray-400 mb-4">
                     Natu’s responsive approach to care supports people across a
                     wide range of needs, interests and goals. Our personalized
-                    options are backed up by a provider network with varying
+                    options are backed up by a practitioner network with varying
                     clinical expertise and modality to help make access to care
                     easier than ever.
                   </p>
