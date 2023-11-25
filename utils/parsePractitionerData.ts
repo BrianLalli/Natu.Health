@@ -69,6 +69,7 @@ function parsePractitioners(data, zipCodes) {
         if (zipCodeData) {
           practitioner.latitude = zipCodeData.latitude;
           practitioner.longitude = zipCodeData.longitude;
+          console.warn(`Zip code data not found for practitioner with ID ${practitioner.id}`);
         }
       }
 
