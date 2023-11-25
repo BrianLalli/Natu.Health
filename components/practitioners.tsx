@@ -35,11 +35,8 @@ const PractitionersComponent = () => {
                   practitionerZipData.latitude,
                   practitionerZipData.longitude
                 );
-                console.log(
-                  `Distance for ${
-                    practitioner.name
-                  }: ${practitioner.distance.toFixed(2)} km`
-                );
+              } else {
+                practitioner.distance = Infinity; // Assign a large value if no zip data is found
               }
             });
 
@@ -47,19 +44,13 @@ const PractitionersComponent = () => {
               .filter((practitioner) =>
                 practitioner.focusAreas.includes(userFocusArea)
               )
-              .sort(
-                (a, b) => (a.distance || Infinity) - (b.distance || Infinity)
-              );
-
-            // Log sorted practitioners
-            console.log(
-              "Sorted Practitioners:",
-              filteredAndSortedPractitioners
-            );
+              .sort((a, b) => a.distance - b.distance);
 
             setPractitioners(filteredAndSortedPractitioners);
           } else {
-            setPractitioners(practitioners);
+            // Handle the case where user's zip code is not found
+            console.error("User zip code not found in the data");
+            setPractitioners([]);
           }
         };
         reader.readAsBinaryString(blob);
@@ -95,7 +86,7 @@ const PractitionersComponent = () => {
                 {practitioner.specialty}
               </p>
               <div className="flex items-center justify-center mt-2">
-                <p className="text-blue-500">
+                <p className="text-purple-500">
                   {
                     typeof practitioner.googleReviews === "number"
                       ? practitioner.googleReviews.toFixed(1)
@@ -103,19 +94,13 @@ const PractitionersComponent = () => {
                   }
                 </p>
                 <div className="text-yellow-500 ml-1">★</div>
-                <p className="text-blue-500 ml-1">
+                <p className="text-purple-500 ml-1">
                   ({practitioner.numberOfReviews || "N/A"})
                 </p>
               </div>
               <p className="text-white-600 text-center">
                 Focus Areas: {practitioner.focusAreas.join(", ")}
               </p>
-              {/* Displaying distance if available */}
-              {practitioner.distance !== undefined && (
-                <p className="text-blue-500 text-center">
-                  Distance: {practitioner.distance.toFixed(2)} km
-                </p>
-              )}
             </div>
             <div className="mt-4">
               <p className="text-xl font-semibold mt-3 text-center">
@@ -124,15 +109,21 @@ const PractitionersComponent = () => {
               <p className="text-white-600 text-center">
                 {practitioner.address}
               </p>
+              {/* Displaying distance if available */}
+              {practitioner.distance !== undefined && (
+                <p className="text-purple-500 text-center">
+                  Distance: {practitioner.distance.toFixed(2)} mi
+                </p>
+              )}
             </div>
             <div className="flex flex-col items-center mt-4">
               <a
                 href={`mailto:${practitioner.email}`}
-                className="text-blue-500 text-center mb-2"
+                className="text-purple-500 text-center mb-2"
               >
                 {practitioner.email}
               </a>
-              <p className="text-blue-500 text-center mb-2">
+              <p className="text-purple-500 text-center mb-2">
                 {practitioner.phone}
               </p>
               <a

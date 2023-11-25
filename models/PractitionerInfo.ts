@@ -14,7 +14,10 @@ export interface PractitionerInfo {
     numberOfReviews: number;
     focusAreas: string[];
     zipCode: string;
-    distance?: number;
+    latitude: number;  // Added
+    longitude: number; // Added
+    distance?: number; // Made optional
   }
+  
   
   
