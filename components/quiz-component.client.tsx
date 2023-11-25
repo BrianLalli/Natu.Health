@@ -95,9 +95,12 @@ const QuizComponent = () => {
 
   const handleSubmit = () => {
     console.log("Final Answers:", answers);
-    // Redirect to the /physicians page
-    window.location.href = "/practitioners";
-  };
+    const focusArea = answers.Q3?.value || ""; // Get the value of the answer to Q3
+    const userZipCode = answers.Q11?.value || ''; // Get the user's zip code from Q11
+  
+    // Redirect to the /practitioners page with both focusArea and userZipCode as query parameters
+    window.location.href = `/practitioners?focusArea=${encodeURIComponent(focusArea)}&zipCode=${encodeURIComponent(userZipCode)}`;
+  };  
 
   const renderProgressBar = () => {
     const progress = ((currentQuestion + 1) / totalQuestions) * 100; // Ensure this is 100 to represent the percentage
