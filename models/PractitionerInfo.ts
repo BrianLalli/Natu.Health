@@ -1,4 +1,4 @@
-// PractitionerInfo.ts (or .tsx if you're including React components)
+// PractitionerInfo.ts
 
 export interface PractitionerInfo {
     id: number;
@@ -13,5 +13,8 @@ export interface PractitionerInfo {
     googleReviews: number;
     numberOfReviews: number;
     focusAreas: string[];
+    zipCode: string;
+    distance?: number;
   }
+  
   

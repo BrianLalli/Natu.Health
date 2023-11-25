@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { PractitionerInfo } from "../models/PractitionerInfo";
-import { parsePractitionerData, calculateDistance } from "../utils/parsePractitionerData";
+import {
+  parsePractitionerData,
+  calculateHaversineDistance,
+} from "../utils/parsePractitionerData";
 import "../app/css/additional-styles/practitioners.css";
 
 const PractitionersComponent = () => {
@@ -8,32 +11,51 @@ const PractitionersComponent = () => {
 
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
-    const userFocusArea = queryParams.get('focusArea') || '';
-    const userZipCode = queryParams.get('zipCode') || '';
+    const userFocusArea = queryParams.get("focusArea") || "";
+    const userZipCode = queryParams.get("zipCode") || "";
 
     fetch("/data/practitioners.xlsx")
-      .then(response => response.blob())
-      .then(blob => {
+      .then((response) => response.blob())
+      .then((blob) => {
         const reader = new FileReader();
-        reader.onload = e => {
+        reader.onload = (e) => {
           const data = e.target.result;
           const { practitioners, zipCodes } = parsePractitionerData(data);
-          const userZipData = zipCodes.find(zip => zip.code === userZipCode);
+          const userZipData = zipCodes.find((zip) => zip.code === userZipCode);
 
           if (userZipData) {
-            practitioners.forEach(practitioner => {
-              const practitionerZipData = zipCodes.find(zip => zip.code === practitioner.zipCode);
+            practitioners.forEach((practitioner) => {
+              const practitionerZipData = zipCodes.find(
+                (zip) => zip.code === practitioner.zipCode
+              );
               if (practitionerZipData) {
-                practitioner.distance = calculateDistance(
-                  userZipData.latitude, userZipData.longitude,
-                  practitionerZipData.latitude, practitionerZipData.longitude
+                practitioner.distance = calculateHaversineDistance(
+                  userZipData.latitude,
+                  userZipData.longitude,
+                  practitionerZipData.latitude,
+                  practitionerZipData.longitude
+                );
+                console.log(
+                  `Distance for ${
+                    practitioner.name
+                  }: ${practitioner.distance.toFixed(2)} km`
                 );
               }
             });
 
             const filteredAndSortedPractitioners = practitioners
-              .filter(practitioner => practitioner.focusAreas.includes(userFocusArea))
-              .sort((a, b) => (a.distance || Infinity) - (b.distance || Infinity));
+              .filter((practitioner) =>
+                practitioner.focusAreas.includes(userFocusArea)
+              )
+              .sort(
+                (a, b) => (a.distance || Infinity) - (b.distance || Infinity)
+              );
+
+            // Log sorted practitioners
+            console.log(
+              "Sorted Practitioners:",
+              filteredAndSortedPractitioners
+            );
 
             setPractitioners(filteredAndSortedPractitioners);
           } else {
@@ -42,31 +64,10 @@ const PractitionersComponent = () => {
         };
         reader.readAsBinaryString(blob);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("Error loading the Excel file:", error);
       });
   }, []);
-
-  if (practitioners.length === 0) {
-    return <div>Loading Practitioners data...</div>;
-  }
-
-  // Haversine formula to calculate distance
-  const calculateDistance = (lat1, lon1, lat2, lon2) => {
-    const toRad = (x) => (x * Math.PI) / 180;
-    const R = 6371; // Earth's radius in km
-
-    const dLat = toRad(lat2 - lat1);
-    const dLon = toRad(lon2 - lon1);
-    const a =
-      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(toRad(lat1)) *
-        Math.cos(toRad(lat2)) *
-        Math.sin(dLon / 2) *
-        Math.sin(dLon / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    return R * c;
-  };
 
   if (practitioners.length === 0) {
     return <div>Loading Practitioners data...</div>;
@@ -110,7 +111,7 @@ const PractitionersComponent = () => {
                 Focus Areas: {practitioner.focusAreas.join(", ")}
               </p>
               {/* Displaying distance if available */}
-              {practitioner.distance && (
+              {practitioner.distance !== undefined && (
                 <p className="text-blue-500 text-center">
                   Distance: {practitioner.distance.toFixed(2)} km
                 </p>
