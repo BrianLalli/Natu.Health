@@ -35,26 +35,36 @@ const QuizComponent = () => {
 
     // Ensure that the effect runs only if there's an answer for the current question
     if (lastAnsweredQuestionId && answers[lastAnsweredQuestionId]) {
-      if (lastAnsweredQuestionId === "Q1") {
-        // Branching logic for Q1
-        switch (answers["Q1"].value) {
-          case "Help with current symptoms":
-            setCurrentQuestion(1);
-            break;
-          case "Proactive care":
-            setCurrentQuestion(2);
-            break;
-          case "Just exploring":
-            setCurrentQuestion(3);
-            break;
-          // Handle default or error case if needed
-        }
-      } else {
-        // For other questions, increment linearly
-        setCurrentQuestion((prev) => prev + 1);
-      }
+      // Increment the question index linearly
+      setCurrentQuestion((prevCurrentQuestion) => prevCurrentQuestion + 1);
     }
   }, [answers]);
+
+  // useEffect(() => {
+  //   const lastAnsweredQuestionId = Object.keys(answers).pop(); // Get the ID of the last answered question
+
+  //   // Ensure that the effect runs only if there's an answer for the current question
+  //   if (lastAnsweredQuestionId && answers[lastAnsweredQuestionId]) {
+  //     if (lastAnsweredQuestionId === "Q1") {
+  //       // Branching logic for Q1
+  //       switch (answers["Q1"].value) {
+  //         case "Help with current symptoms":
+  //           setCurrentQuestion(1);
+  //           break;
+  //         case "Proactive care":
+  //           setCurrentQuestion(2);
+  //           break;
+  //         case "Just exploring":
+  //           setCurrentQuestion(3);
+  //           break;
+  //         // Handle default or error case if needed
+  //       }
+  //     } else {
+  //       // For other questions, increment linearly
+  //       setCurrentQuestion((prev) => prev + 1);
+  //     }
+  //   }
+  // }, [answers]);
 
   // Function to handle the submission of text input answers
   const handleInputSubmit = (questionId: string) => {
@@ -95,8 +105,13 @@ const QuizComponent = () => {
 
   const handleSubmit = () => {
     console.log("Final Answers:", answers);
-    // Redirect to the /physicians page
-    window.location.href = "/practitioners";
+    const focusArea = answers.Q3?.value || ""; // Get the value of the answer to Q3
+    const userZipCode = answers.Q11?.value || ""; // Get the user's zip code from Q11
+
+    // Redirect to the /practitioners page with both focusArea and userZipCode as query parameters
+    window.location.href = `/practitioners?focusArea=${encodeURIComponent(
+      focusArea
+    )}&zipCode=${encodeURIComponent(userZipCode)}`;
   };
 
   const renderProgressBar = () => {
@@ -249,6 +264,14 @@ const QuizComponent = () => {
               >
                 Pregnancy
               </button>
+              <button
+                className="answer-bubble"
+                onClick={() =>
+                  handleAnswerSelect({ questionId: "Q3", value: "Allergies" })
+                }
+              >
+                Allergies
+              </button>
             </div>
           </div>
         );
@@ -269,7 +292,7 @@ const QuizComponent = () => {
               >
                 Sleep
               </button>
-              <button
+              {/* <button
                 className="answer-bubble"
                 onClick={() =>
                   handleAnswerSelect({ questionId: "Q4", value: "Movement" })
@@ -292,7 +315,7 @@ const QuizComponent = () => {
                 }
               >
                 Allergies
-              </button>
+              </button> */}
               <button
                 className="answer-bubble"
                 onClick={() =>
@@ -688,6 +711,28 @@ const QuizComponent = () => {
         );
       // Question 11: What is your zip code?
       case 10:
+        const zipCodeRegex = /^\d{5}$/; // Regular expression for a 5-digit zip code
+
+        const handleZipCodeChange = (e) => {
+          const userInput = e.target.value;
+          if (zipCodeRegex.test(userInput)) {
+            // Valid zip code
+            setTemporaryInput({
+              ...temporaryInput,
+              ["Q11"]: {
+                questionId: "Q11",
+                value: userInput,
+                input: true,
+              },
+            });
+          } else {
+            // Invalid zip code, you can take appropriate action here
+            // For example, display an error message to the user or disable the "Next" button
+            // Here, I'll just log an error message to the console
+            console.error("Please enter a valid 5-digit zip code.");
+          }
+        };
+
         return (
           <div className="question">
             <p>Zip Code</p>
@@ -695,17 +740,8 @@ const QuizComponent = () => {
               type="text"
               className="input-text"
               placeholder="Enter 5 Digit Zip Code"
-              maxLength={25}
-              onChange={(e) =>
-                setTemporaryInput({
-                  ...temporaryInput,
-                  ["Q11"]: {
-                    questionId: "Q11",
-                    value: e.target.value,
-                    input: true,
-                  },
-                })
-              }
+              maxLength={5}
+              onChange={handleZipCodeChange}
             />
             <button
               className="next-button"

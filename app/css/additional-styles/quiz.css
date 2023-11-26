@@ -51,7 +51,7 @@
   }
   
   .age-dropdown {
-    width: 400px; /* Ensures the dropdown fills the container */
+    width: 200px; /* Ensures the dropdown fills the container */
     padding: 10px; /* Adjust padding for comfort */
     border-radius: 20px; /* Consistent with the bubble style */
     background-color: #f0f0f0; /* Light background for the dropdown */
@@ -63,13 +63,14 @@
 
   @media (max-width: 768px) {
     .age-dropdown {
-      width: 90%; /* Make the dropdown full width on smaller screens */
-      padding: 8px; /* Slightly reduce padding for smaller screens */
-      border-radius: 15px; /* Adjust for smaller screens */
-      font-size: 0.9rem; /* Slightly smaller font size for readability on mobile */
-      /* Other properties can remain the same */
+      width: 90%; /* Use percentage for responsive width */
+      padding: 10px; /* Optimal padding for touch interfaces */
+      border-radius: 8px; /* A moderate border-radius for a balanced look */
+      font-size: 16px; /* A legible font size for mobile screens */
+      /* Retain other properties as needed */
     }
   }
+  
   
 .progress-bar-wrapper {
   max-width: 500px; /* Adjust as needed for desktop size */
@@ -105,7 +106,7 @@
   position: absolute;
   top: -600px; /* Adjust this value to move illustration higher */
   left: 0;
-  z-index: -1; /* Ensures the illustration stays behind the quiz content */
+  z-index: -1; /* Increase the z-index value to place it behind the text */
   width: 600px; /* Adjust width as needed */
   height: auto; /* Maintain aspect ratio */
 }
@@ -177,7 +178,7 @@
   margin: 10px 0;
   border: 1px solid #ccc;
   border-radius: 5px;
-  width: 400px; /* Fixed width to match the progress bar container */
+  width: 200px; /* Fixed width to match the progress bar container */
   box-sizing: border-box;
   font-size: 16px;
   color: #333;
@@ -192,7 +193,7 @@
 /* Media Query for Mobile Devices */
 @media (max-width: 600px) {
   .input-text {
-    width: 300px; /* Smaller fixed width for mobile to match the progress bar container */
+    width: 200px; /* Smaller fixed width for mobile to match the progress bar container */
     /* Keep other styles the same */
   }
 }
