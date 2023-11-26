@@ -32,29 +32,40 @@ const QuizComponent = () => {
 
   useEffect(() => {
     const lastAnsweredQuestionId = Object.keys(answers).pop(); // Get the ID of the last answered question
-
+  
     // Ensure that the effect runs only if there's an answer for the current question
     if (lastAnsweredQuestionId && answers[lastAnsweredQuestionId]) {
-      if (lastAnsweredQuestionId === "Q1") {
-        // Branching logic for Q1
-        switch (answers["Q1"].value) {
-          case "Help with current symptoms":
-            setCurrentQuestion(1);
-            break;
-          case "Proactive care":
-            setCurrentQuestion(2);
-            break;
-          case "Just exploring":
-            setCurrentQuestion(3);
-            break;
-          // Handle default or error case if needed
-        }
-      } else {
-        // For other questions, increment linearly
-        setCurrentQuestion((prev) => prev + 1);
-      }
+      // Increment the question index linearly
+      setCurrentQuestion((prevCurrentQuestion) => prevCurrentQuestion + 1);
     }
   }, [answers]);
+  
+
+  // useEffect(() => {
+  //   const lastAnsweredQuestionId = Object.keys(answers).pop(); // Get the ID of the last answered question
+
+  //   // Ensure that the effect runs only if there's an answer for the current question
+  //   if (lastAnsweredQuestionId && answers[lastAnsweredQuestionId]) {
+  //     if (lastAnsweredQuestionId === "Q1") {
+  //       // Branching logic for Q1
+  //       switch (answers["Q1"].value) {
+  //         case "Help with current symptoms":
+  //           setCurrentQuestion(1);
+  //           break;
+  //         case "Proactive care":
+  //           setCurrentQuestion(2);
+  //           break;
+  //         case "Just exploring":
+  //           setCurrentQuestion(3);
+  //           break;
+  //         // Handle default or error case if needed
+  //       }
+  //     } else {
+  //       // For other questions, increment linearly
+  //       setCurrentQuestion((prev) => prev + 1);
+  //     }
+  //   }
+  // }, [answers]);
 
   // Function to handle the submission of text input answers
   const handleInputSubmit = (questionId: string) => {
@@ -252,6 +263,14 @@ const QuizComponent = () => {
               >
                 Pregnancy
               </button>
+              <button
+                className="answer-bubble"
+                onClick={() =>
+                  handleAnswerSelect({ questionId: "Q3", value: "Allergies" })
+                }
+              >
+                Allergies
+              </button>
             </div>
           </div>
         );
@@ -272,7 +291,7 @@ const QuizComponent = () => {
               >
                 Sleep
               </button>
-              <button
+              {/* <button
                 className="answer-bubble"
                 onClick={() =>
                   handleAnswerSelect({ questionId: "Q4", value: "Movement" })
@@ -295,7 +314,7 @@ const QuizComponent = () => {
                 }
               >
                 Allergies
-              </button>
+              </button> */}
               <button
                 className="answer-bubble"
                 onClick={() =>

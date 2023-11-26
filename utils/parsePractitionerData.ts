@@ -51,7 +51,7 @@ function parsePractitioners(data, zipCodes) {
         name: row[2], // Clinician/s
         businessName: row[1], // Clinic/s
         specialty: row[3], // Specialty
-        address: `${row[15]}, ${row[16]}, ${row[17]}`, // Full address
+        address: `${row[15]}, ${row[16]}, ${row[17]}, ${row[18]}`, // Full address
         email: row[13], // Email Address
         phone: row[14], // Phone Number
         website: row[9], // Website
