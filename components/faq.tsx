@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import '../app/css/additional-styles/faq.css'
 
 interface FAQItemProps {
   question: string;
@@ -16,12 +17,12 @@ const FAQItem = ({ question, answer }: FAQItemProps) => {
         className="flex justify-between items-center w-full p-5"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <h5 className="text-lg font-medium">{question}</h5>
+        <h5 className="text-lg font-medium faq-question">{question}</h5>
         <span>{isOpen ? "-" : "+"}</span>
       </button>
-      {isOpen && <p className="p-5">{answer}</p>}
+      {isOpen && <p className="p-5 faq-answer">{answer}</p>}
     </div>
-  );
+  );  
 };
 
 // Main FAQ component

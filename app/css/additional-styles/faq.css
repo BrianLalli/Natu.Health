@@ -1,0 +1,12 @@
+/* Align text to the left for all devices */
+.faq-question, .faq-answer {
+    text-align: left;
+  }
+  
+  /* Optional: Specific styles for mobile devices */
+  @media (max-width: 600px) {
+    .faq-question, .faq-answer {
+      /* Any mobile-specific styling */
+    }
+  }
+  
