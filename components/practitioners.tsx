@@ -61,8 +61,14 @@ const PractitionersComponent = () => {
   }, []);
 
   if (practitioners.length === 0) {
-    return <div>Loading Practitioners data...</div>;
+    return (
+      <div className="loading-message">
+        <p>Sorry, this app is currently available only in the Denver, CO area.</p>
+        <div className="spinner"></div>
+      </div>
+    );
   }
+  
 
   return (
     <div>

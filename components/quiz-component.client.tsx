@@ -32,14 +32,13 @@ const QuizComponent = () => {
 
   useEffect(() => {
     const lastAnsweredQuestionId = Object.keys(answers).pop(); // Get the ID of the last answered question
-  
+
     // Ensure that the effect runs only if there's an answer for the current question
     if (lastAnsweredQuestionId && answers[lastAnsweredQuestionId]) {
       // Increment the question index linearly
       setCurrentQuestion((prevCurrentQuestion) => prevCurrentQuestion + 1);
     }
   }, [answers]);
-  
 
   // useEffect(() => {
   //   const lastAnsweredQuestionId = Object.keys(answers).pop(); // Get the ID of the last answered question
@@ -107,11 +106,13 @@ const QuizComponent = () => {
   const handleSubmit = () => {
     console.log("Final Answers:", answers);
     const focusArea = answers.Q3?.value || ""; // Get the value of the answer to Q3
-    const userZipCode = answers.Q11?.value || ''; // Get the user's zip code from Q11
-  
+    const userZipCode = answers.Q11?.value || ""; // Get the user's zip code from Q11
+
     // Redirect to the /practitioners page with both focusArea and userZipCode as query parameters
-    window.location.href = `/practitioners?focusArea=${encodeURIComponent(focusArea)}&zipCode=${encodeURIComponent(userZipCode)}`;
-  };  
+    window.location.href = `/practitioners?focusArea=${encodeURIComponent(
+      focusArea
+    )}&zipCode=${encodeURIComponent(userZipCode)}`;
+  };
 
   const renderProgressBar = () => {
     const progress = ((currentQuestion + 1) / totalQuestions) * 100; // Ensure this is 100 to represent the percentage
@@ -710,6 +711,28 @@ const QuizComponent = () => {
         );
       // Question 11: What is your zip code?
       case 10:
+        const zipCodeRegex = /^\d{5}$/; // Regular expression for a 5-digit zip code
+
+        const handleZipCodeChange = (e) => {
+          const userInput = e.target.value;
+          if (zipCodeRegex.test(userInput)) {
+            // Valid zip code
+            setTemporaryInput({
+              ...temporaryInput,
+              ["Q11"]: {
+                questionId: "Q11",
+                value: userInput,
+                input: true,
+              },
+            });
+          } else {
+            // Invalid zip code, you can take appropriate action here
+            // For example, display an error message to the user or disable the "Next" button
+            // Here, I'll just log an error message to the console
+            console.error("Please enter a valid 5-digit zip code.");
+          }
+        };
+
         return (
           <div className="question">
             <p>Zip Code</p>
@@ -717,17 +740,8 @@ const QuizComponent = () => {
               type="text"
               className="input-text"
               placeholder="Enter 5 Digit Zip Code"
-              maxLength={25}
-              onChange={(e) =>
-                setTemporaryInput({
-                  ...temporaryInput,
-                  ["Q11"]: {
-                    questionId: "Q11",
-                    value: e.target.value,
-                    input: true,
-                  },
-                })
-              }
+              maxLength={5}
+              onChange={handleZipCodeChange}
             />
             <button
               className="next-button"
