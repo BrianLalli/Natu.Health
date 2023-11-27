@@ -40,31 +40,6 @@ const QuizComponent = () => {
     }
   }, [answers]);
 
-  // useEffect(() => {
-  //   const lastAnsweredQuestionId = Object.keys(answers).pop(); // Get the ID of the last answered question
-
-  //   // Ensure that the effect runs only if there's an answer for the current question
-  //   if (lastAnsweredQuestionId && answers[lastAnsweredQuestionId]) {
-  //     if (lastAnsweredQuestionId === "Q1") {
-  //       // Branching logic for Q1
-  //       switch (answers["Q1"].value) {
-  //         case "Help with current symptoms":
-  //           setCurrentQuestion(1);
-  //           break;
-  //         case "Proactive care":
-  //           setCurrentQuestion(2);
-  //           break;
-  //         case "Just exploring":
-  //           setCurrentQuestion(3);
-  //           break;
-  //         // Handle default or error case if needed
-  //       }
-  //     } else {
-  //       // For other questions, increment linearly
-  //       setCurrentQuestion((prev) => prev + 1);
-  //     }
-  //   }
-  // }, [answers]);
 
   // Function to handle the submission of text input answers
   const handleInputSubmit = (questionId: string) => {
@@ -629,7 +604,7 @@ const QuizComponent = () => {
       case 10:
         const zipCodeRegex = /^\d{5}$/; // Regular expression for a 5-digit zip code
 
-        const handleZipCodeChange = (e) => {
+        const handleZipCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
           const userInput = e.target.value;
           if (zipCodeRegex.test(userInput)) {
             // Valid zip code
@@ -643,11 +618,10 @@ const QuizComponent = () => {
             });
           } else {
             // Invalid zip code, you can take appropriate action here
-            // For example, display an error message to the user or disable the "Next" button
-            // Here, I'll just log an error message to the console
             console.error("Please enter a valid 5-digit zip code.");
           }
         };
+        
 
         return (
           <div className="question">
