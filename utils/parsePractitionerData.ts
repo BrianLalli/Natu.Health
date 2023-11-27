@@ -1,9 +1,15 @@
 import * as XLSX from "xlsx";
+import { PractitionerInfo } from "../models/PractitionerInfo"; // Update the import path as necessary
 
-// Haversine formula to calculate distance in miles
-export function calculateHaversineDistance(lat1, lon1, lat2, lon2) {
-  const toRad = (x) => (x * Math.PI) / 180;
-  const R = 3958.8; // Earth's radius in miles (approximately 6371 km)
+interface ZipCode {
+  code: string;
+  latitude: number;
+  longitude: number;
+}
+
+export function calculateHaversineDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
+  const toRad = (x: number): number => (x * Math.PI) / 180;
+  const R = 3958.8; // Radius of Earth in miles
 
   const dLat = toRad(lat2 - lat1);
   const dLon = toRad(lon2 - lon1);
@@ -18,57 +24,52 @@ export function calculateHaversineDistance(lat1, lon1, lat2, lon2) {
   return R * c;
 }
 
-export function parsePractitionerData(data) {
+export function parsePractitionerData(data: any): { practitioners: PractitionerInfo[], zipCodes: ZipCode[] } {
   const workbook = XLSX.read(data, { type: "binary" });
 
-  // Process MVP Practitioners Sheet
   const practitionersSheet = workbook.Sheets[workbook.SheetNames[0]];
-  const practitionersData = XLSX.utils.sheet_to_json(practitionersSheet, {
-    header: 1,
-  });
+  const practitionersData = XLSX.utils.sheet_to_json(practitionersSheet, { header: 1 });
 
-  // Process Zip Code Infrastructure Sheet
   const zipCodeSheet = workbook.Sheets[workbook.SheetNames[1]];
   const zipCodeData = XLSX.utils.sheet_to_json(zipCodeSheet, { header: 1 });
 
-  const zipCodes = parseZipCodes(zipCodeData); // Parse zip codes data
-
+  const zipCodes = parseZipCodes(zipCodeData);
   return {
-    practitioners: parsePractitioners(practitionersData, zipCodes), // Pass zip codes data to parsePractitioners
-    zipCodes: zipCodes, // Return zip codes data as well
+    practitioners: parsePractitioners(practitionersData, zipCodes),
+    zipCodes: zipCodes,
   };
 }
 
-function parsePractitioners(data, zipCodes) {
-  const practitioners = [];
+function parsePractitioners(data: any[], zipCodes: ZipCode[]): PractitionerInfo[] {
+  const practitioners: PractitionerInfo[] = [];
   data.forEach((row, index) => {
     if (index > 0) {
-      // Skip the header row
       const focusAreas = [row[10], row[11], row[12]].filter(Boolean);
-      const practitioner = {
+      const practitioner: PractitionerInfo = {
         id: row[0],
-        image: row[19], // Placeholder for image URL or path
-        name: row[2], // Clinician/s
-        businessName: row[1], // Clinic/s
-        specialty: row[3], // Specialty
-        address: `${row[15]}, ${row[16]}, ${row[17]}, ${row[18]}`, // Full address
-        email: row[13], // Email Address
-        phone: row[14], // Phone Number
-        website: row[9], // Website
-        googleReviews: parseFloat(row[5] || "0"), // Google Reviews
+        image: row[19],
+        name: row[2],
+        businessName: row[1],
+        specialty: row[3],
+        address: `${row[15]}, ${row[16]}, ${row[17]}, ${row[18]}`,
+        email: row[13],
+        phone: row[14],
+        website: row[9],
+        googleReviews: parseFloat(row[5] || "0"),
         numberOfReviews: parseFloat(row[6] || "0"),
-        focusAreas: focusAreas, // Combining all focus areas
-        zipCode: row[18] ? row[18].toString() : null, // Convert zipCode to string if exists
-        latitude: 0, // Initialize latitude to 0
-        longitude: 0, // Initialize longitude to 0
+        focusAreas: focusAreas,
+        zipCode: row[18] ? row[18].toString() : "",
+        latitude: 0,
+        longitude: 0,
+        distance: undefined,
       };
 
-      // Find latitude and longitude for practitioner's zip code
       if (practitioner.zipCode) {
         const zipCodeData = zipCodes.find(zip => zip.code === practitioner.zipCode);
         if (zipCodeData) {
           practitioner.latitude = zipCodeData.latitude;
           practitioner.longitude = zipCodeData.longitude;
+        } else {
           console.warn(`Zip code data not found for practitioner with ID ${practitioner.id}`);
         }
       }
@@ -79,11 +80,11 @@ function parsePractitioners(data, zipCodes) {
   return practitioners;
 }
 
-function parseZipCodes(data) {
-  const zipCodes = [];
+function parseZipCodes(data: any[]): ZipCode[] {
+  const zipCodes: ZipCode[] = [];
   data.forEach((row, index) => {
     if (index > 0 && row[0] !== undefined) {
-      const zipCode = {
+      const zipCode: ZipCode = {
         code: row[0].toString(),
         latitude: parseFloat(row[3]),
         longitude: parseFloat(row[4]),

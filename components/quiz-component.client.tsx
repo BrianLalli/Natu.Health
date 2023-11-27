@@ -40,31 +40,6 @@ const QuizComponent = () => {
     }
   }, [answers]);
 
-  // useEffect(() => {
-  //   const lastAnsweredQuestionId = Object.keys(answers).pop(); // Get the ID of the last answered question
-
-  //   // Ensure that the effect runs only if there's an answer for the current question
-  //   if (lastAnsweredQuestionId && answers[lastAnsweredQuestionId]) {
-  //     if (lastAnsweredQuestionId === "Q1") {
-  //       // Branching logic for Q1
-  //       switch (answers["Q1"].value) {
-  //         case "Help with current symptoms":
-  //           setCurrentQuestion(1);
-  //           break;
-  //         case "Proactive care":
-  //           setCurrentQuestion(2);
-  //           break;
-  //         case "Just exploring":
-  //           setCurrentQuestion(3);
-  //           break;
-  //         // Handle default or error case if needed
-  //       }
-  //     } else {
-  //       // For other questions, increment linearly
-  //       setCurrentQuestion((prev) => prev + 1);
-  //     }
-  //   }
-  // }, [answers]);
 
   // Function to handle the submission of text input answers
   const handleInputSubmit = (questionId: string) => {
@@ -224,14 +199,6 @@ const QuizComponent = () => {
               <button
                 className="answer-bubble"
                 onClick={() =>
-                  handleAnswerSelect({ questionId: "Q3", value: "Hormones" })
-                }
-              >
-                Hormones
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
                   handleAnswerSelect({
                     questionId: "Q3",
                     value: "Respiratory",
@@ -239,14 +206,6 @@ const QuizComponent = () => {
                 }
               >
                 Respiratory
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q3", value: "Pain" })
-                }
-              >
-                Pain
               </button>
               <button
                 className="answer-bubble"
@@ -263,14 +222,6 @@ const QuizComponent = () => {
                 }
               >
                 Pregnancy
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q3", value: "Allergies" })
-                }
-              >
-                Allergies
               </button>
             </div>
           </div>
@@ -292,21 +243,13 @@ const QuizComponent = () => {
               >
                 Sleep
               </button>
-              {/* <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q4", value: "Movement" })
-                }
-              >
-                Movement
-              </button>
               <button
                 className="answer-bubble"
                 onClick={() =>
-                  handleAnswerSelect({ questionId: "Q4", value: "Digestion" })
+                  handleAnswerSelect({ questionId: "Q4", value: "Pain" })
                 }
               >
-                Digestion
+                Pain
               </button>
               <button
                 className="answer-bubble"
@@ -315,7 +258,15 @@ const QuizComponent = () => {
                 }
               >
                 Allergies
-              </button> */}
+              </button>
+              <button
+                className="answer-bubble"
+                onClick={() =>
+                  handleAnswerSelect({ questionId: "Q4", value: "Hormones" })
+                }
+              >
+                Hormones
+              </button>
               <button
                 className="answer-bubble"
                 onClick={() =>
@@ -533,11 +484,11 @@ const QuizComponent = () => {
             </div>
           </div>
         );
-      // Question 8: What is your gender?
+      // Question 8: What is your sex assigned at birth?
       case 7:
         return (
           <div className="question">
-            <p>What is your gender?</p>
+            <p>What is your sex assigned at birth?</p>
             <div className="answers">
               <button
                 className="answer-bubble"
@@ -558,70 +509,10 @@ const QuizComponent = () => {
               <button
                 className="answer-bubble"
                 onClick={() =>
-                  handleAnswerSelect({ questionId: "Q8", value: "Non-Binary" })
+                  handleAnswerSelect({ questionId: "Q8", value: "Other" })
                 }
               >
-                Non-Binary
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q8", value: "Genderqueer" })
-                }
-              >
-                Genderqueer
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q8", value: "Genderfluid" })
-                }
-              >
-                Genderfluid
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({
-                    questionId: "Q8",
-                    value: "Transgender Woman",
-                  })
-                }
-              >
-                Transgender Woman
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({
-                    questionId: "Q8",
-                    value: "Transgender Man",
-                  })
-                }
-              >
-                Transgender Man
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({
-                    questionId: "Q8",
-                    value: "Prefer Not to Say",
-                  })
-                }
-              >
-                Prefer not to say
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({
-                    questionId: "Q8",
-                    value: "None of the above",
-                  })
-                }
-              >
-                None of the above
+                Other
               </button>
             </div>
           </div>
@@ -713,7 +604,7 @@ const QuizComponent = () => {
       case 10:
         const zipCodeRegex = /^\d{5}$/; // Regular expression for a 5-digit zip code
 
-        const handleZipCodeChange = (e) => {
+        const handleZipCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
           const userInput = e.target.value;
           if (zipCodeRegex.test(userInput)) {
             // Valid zip code
@@ -727,11 +618,10 @@ const QuizComponent = () => {
             });
           } else {
             // Invalid zip code, you can take appropriate action here
-            // For example, display an error message to the user or disable the "Next" button
-            // Here, I'll just log an error message to the console
             console.error("Please enter a valid 5-digit zip code.");
           }
         };
+        
 
         return (
           <div className="question">
