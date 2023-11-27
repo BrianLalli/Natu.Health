@@ -5,7 +5,11 @@ class MyDocument extends Document {
   render() {
     return (
       <Html lang="en">
-        <Head />
+        <Head>
+          {/* Favicon */}
+          <link rel="icon" href="/favicon.ico" />
+          {/* You can also include other head elements here, like meta tags */}
+        </Head>
         <body className="font-inter antialiased bg-gray-900 text-gray-200 tracking-tight">
           <Main />
           <NextScript />
@@ -16,3 +20,4 @@ class MyDocument extends Document {
 }
 
 export default MyDocument
+
