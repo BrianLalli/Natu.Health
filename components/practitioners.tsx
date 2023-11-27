@@ -25,7 +25,9 @@ const PractitionersComponent = () => {
           if (e.target && e.target.result) {
             const data = e.target.result;
             const { practitioners, zipCodes } = parsePractitionerData(data);
-            const userZipData = zipCodes.find((zip) => zip.code === userZipCode);
+            const userZipData = zipCodes.find(
+              (zip) => zip.code === userZipCode
+            );
 
             if (userZipData) {
               practitioners.forEach((practitioner) => {
@@ -48,7 +50,13 @@ const PractitionersComponent = () => {
                 .filter((practitioner) =>
                   practitioner.focusAreas.includes(userFocusArea)
                 )
-                .sort((a, b) => a.distance - b.distance);
+                .sort((a, b) => {
+                  const distanceA =
+                    a.distance !== undefined ? a.distance : Infinity;
+                  const distanceB =
+                    b.distance !== undefined ? b.distance : Infinity;
+                  return distanceA - distanceB;
+                });
 
               if (sortedPractitioners.length > 0) {
                 setBestMatch(sortedPractitioners[0]);
@@ -71,7 +79,6 @@ const PractitionersComponent = () => {
         console.error("Error loading the Excel file:", error);
       });
   }, []);
-
 
   if (!bestMatch && additionalPractitioners.length === 0) {
     return (
@@ -113,12 +120,13 @@ const PractitionersComponent = () => {
   );
 };
 
-// Updated PractitionerCard component with explicit type definition
 interface PractitionerCardProps {
   practitioner: PractitionerInfo;
 }
 
-const PractitionerCard: React.FC<PractitionerCardProps> = ({ practitioner }) => (
+const PractitionerCard: React.FC<PractitionerCardProps> = ({
+  practitioner,
+}) => (
   <div className="card shadow-lg rounded p-4">
     <div className="text-center">
       <img
