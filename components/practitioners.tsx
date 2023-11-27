@@ -22,44 +22,47 @@ const PractitionersComponent = () => {
       .then((blob) => {
         const reader = new FileReader();
         reader.onload = (e) => {
-          const data = e.target.result;
-          const { practitioners, zipCodes } = parsePractitionerData(data);
-          const userZipData = zipCodes.find((zip) => zip.code === userZipCode);
+          if (e.target && e.target.result) {
+            const data = e.target.result;
+            const { practitioners, zipCodes } = parsePractitionerData(data);
+            const userZipData = zipCodes.find((zip) => zip.code === userZipCode);
 
-          if (userZipData) {
-            practitioners.forEach((practitioner) => {
-              const practitionerZipData = zipCodes.find(
-                (zip) => zip.code === practitioner.zipCode
-              );
-              if (practitionerZipData) {
-                practitioner.distance = calculateHaversineDistance(
-                  userZipData.latitude,
-                  userZipData.longitude,
-                  practitionerZipData.latitude,
-                  practitionerZipData.longitude
+            if (userZipData) {
+              practitioners.forEach((practitioner) => {
+                const practitionerZipData = zipCodes.find(
+                  (zip) => zip.code === practitioner.zipCode
                 );
+                if (practitionerZipData) {
+                  practitioner.distance = calculateHaversineDistance(
+                    userZipData.latitude,
+                    userZipData.longitude,
+                    practitionerZipData.latitude,
+                    practitionerZipData.longitude
+                  );
+                } else {
+                  practitioner.distance = Infinity;
+                }
+              });
+
+              const sortedPractitioners = practitioners
+                .filter((practitioner) =>
+                  practitioner.focusAreas.includes(userFocusArea)
+                )
+                .sort((a, b) => a.distance - b.distance);
+
+              if (sortedPractitioners.length > 0) {
+                setBestMatch(sortedPractitioners[0]);
+                setAdditionalPractitioners(sortedPractitioners.slice(1));
               } else {
-                practitioner.distance = Infinity; // Assign a large value if no zip data is found
+                setBestMatch(null);
+                setAdditionalPractitioners([]);
               }
-            });
-
-            const sortedPractitioners = practitioners
-              .filter((practitioner) =>
-                practitioner.focusAreas.includes(userFocusArea)
-              )
-              .sort((a, b) => a.distance - b.distance);
-
-            if (sortedPractitioners.length > 0) {
-              setBestMatch(sortedPractitioners[0]);
-              setAdditionalPractitioners(sortedPractitioners.slice(1));
             } else {
-              setBestMatch(null);
+              console.error("User zip code not found in the data");
               setAdditionalPractitioners([]);
             }
           } else {
-            // Handle the case where user's zip code is not found
-            console.error("User zip code not found in the data");
-            setPractitioners([]);
+            console.error("Error reading the file");
           }
         };
         reader.readAsBinaryString(blob);
@@ -68,6 +71,7 @@ const PractitionersComponent = () => {
         console.error("Error loading the Excel file:", error);
       });
   }, []);
+
 
   if (!bestMatch && additionalPractitioners.length === 0) {
     return (
@@ -109,7 +113,12 @@ const PractitionersComponent = () => {
   );
 };
 
-const PractitionerCard = ({ practitioner }) => (
+// Updated PractitionerCard component with explicit type definition
+interface PractitionerCardProps {
+  practitioner: PractitionerInfo;
+}
+
+const PractitionerCard: React.FC<PractitionerCardProps> = ({ practitioner }) => (
   <div className="card shadow-lg rounded p-4">
     <div className="text-center">
       <img
