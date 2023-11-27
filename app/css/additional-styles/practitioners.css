@@ -130,4 +130,6 @@
   100% { transform: rotate(360deg); }
 }
 
-  
+.custom-grid-gap {
+  gap: 0rem !important; /* Adjust this value as needed */
+}

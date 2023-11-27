@@ -224,14 +224,6 @@ const QuizComponent = () => {
               <button
                 className="answer-bubble"
                 onClick={() =>
-                  handleAnswerSelect({ questionId: "Q3", value: "Hormones" })
-                }
-              >
-                Hormones
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
                   handleAnswerSelect({
                     questionId: "Q3",
                     value: "Respiratory",
@@ -239,14 +231,6 @@ const QuizComponent = () => {
                 }
               >
                 Respiratory
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q3", value: "Pain" })
-                }
-              >
-                Pain
               </button>
               <button
                 className="answer-bubble"
@@ -263,14 +247,6 @@ const QuizComponent = () => {
                 }
               >
                 Pregnancy
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q3", value: "Allergies" })
-                }
-              >
-                Allergies
               </button>
             </div>
           </div>
@@ -292,21 +268,13 @@ const QuizComponent = () => {
               >
                 Sleep
               </button>
-              {/* <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q4", value: "Movement" })
-                }
-              >
-                Movement
-              </button>
               <button
                 className="answer-bubble"
                 onClick={() =>
-                  handleAnswerSelect({ questionId: "Q4", value: "Digestion" })
+                  handleAnswerSelect({ questionId: "Q4", value: "Pain" })
                 }
               >
-                Digestion
+                Pain
               </button>
               <button
                 className="answer-bubble"
@@ -315,7 +283,15 @@ const QuizComponent = () => {
                 }
               >
                 Allergies
-              </button> */}
+              </button>
+              <button
+                className="answer-bubble"
+                onClick={() =>
+                  handleAnswerSelect({ questionId: "Q4", value: "Hormones" })
+                }
+              >
+                Hormones
+              </button>
               <button
                 className="answer-bubble"
                 onClick={() =>
@@ -533,11 +509,11 @@ const QuizComponent = () => {
             </div>
           </div>
         );
-      // Question 8: What is your gender?
+      // Question 8: What is your sex assigned at birth?
       case 7:
         return (
           <div className="question">
-            <p>What is your gender?</p>
+            <p>What is your sex assigned at birth?</p>
             <div className="answers">
               <button
                 className="answer-bubble"
@@ -558,70 +534,10 @@ const QuizComponent = () => {
               <button
                 className="answer-bubble"
                 onClick={() =>
-                  handleAnswerSelect({ questionId: "Q8", value: "Non-Binary" })
+                  handleAnswerSelect({ questionId: "Q8", value: "Other" })
                 }
               >
-                Non-Binary
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q8", value: "Genderqueer" })
-                }
-              >
-                Genderqueer
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q8", value: "Genderfluid" })
-                }
-              >
-                Genderfluid
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({
-                    questionId: "Q8",
-                    value: "Transgender Woman",
-                  })
-                }
-              >
-                Transgender Woman
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({
-                    questionId: "Q8",
-                    value: "Transgender Man",
-                  })
-                }
-              >
-                Transgender Man
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({
-                    questionId: "Q8",
-                    value: "Prefer Not to Say",
-                  })
-                }
-              >
-                Prefer not to say
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({
-                    questionId: "Q8",
-                    value: "None of the above",
-                  })
-                }
-              >
-                None of the above
+                Other
               </button>
             </div>
           </div>
