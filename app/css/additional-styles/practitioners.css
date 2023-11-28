@@ -133,3 +133,7 @@
 .custom-grid-gap {
   gap: 0rem !important; /* Adjust this value as needed */
 }
+
+.loading-message {
+  text-align: center;
+}
