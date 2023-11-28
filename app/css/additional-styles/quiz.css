@@ -2,76 +2,91 @@
 
 /* This will center your question on the page */
 .question {
-    text-align: center;
-    font-size: 1.5rem; /* Example font size */
-    margin-bottom: 1rem; /* Space between the question and the answers */
-  }
+  text-align: center;
+  font-size: 1.5rem; /* Example font size */
+  margin-bottom: 1rem; /* Space between the question and the answers */
+}
 
-  .answers {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px; /* This adds space between the buttons */
-    justify-content: space-evenly; /* This will distribute the space evenly */
-    align-items: center; /* This will align items vertically in the center */
+/* Media query for mobile devices */
+@media (max-width: 600px) {
+  .question {
+    font-size: 1.2rem; /* Smaller font size for mobile */
+    margin-bottom: 0.5rem; /* Less space on mobile */
   }
-  
-  
-  /* Styling for the answer bubbles */
-  .answer-bubble {
-    display: flex; /* Use flexbox for centering text inside the bubble */
-    justify-content: center; /* Center text horizontally */
-    align-items: center; /* Center text vertically */
-    margin: 0.5rem; /* This will add some space around the bubbles */
-    padding: 1rem; /* Adjust the padding if needed, but it may affect the overall size */
-    width: 350px; /* Set a fixed width */
-    height: 50px; /* Set a fixed height */
-    
-    background-color: #5D5DFF; /* The purple background color for the bubbles */
-    color: white; /* White text color */
-    border-radius: 9999px; /* Rounded corners for the bubble effect */
-  
-    cursor: pointer; /* Changes the cursor to indicate the bubble is clickable */
-  
-    /* Add some box shadow for depth, if desired */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  
-    /* A little transition for when the user hovers over the bubble */
-    transition: transform 0.2s ease-in-out;
-  
-    /* Prevent text from wrapping */
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  
-  
-  /* Hover effect for the bubbles */
+}
+
+.answers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; /* This adds space between the buttons */
+  justify-content: space-evenly; /* This will distribute the space evenly */
+  align-items: center; /* This will align items vertically in the center */
+}
+
+/* Styling for the answer bubbles */
+.answer-bubble {
+  display: flex; /* Use flexbox for centering text inside the bubble */
+  justify-content: center; /* Center text horizontally */
+  align-items: center; /* Center text vertically */
+  margin: 0.5rem; /* This will add some space around the bubbles */
+  padding: 1rem; /* Adjust the padding if needed, but it may affect the overall size */
+  width: 350px; /* Set a fixed width */
+  height: 50px; /* Set a fixed height */
+
+  background-color: #5d5dff; /* The purple background color for the bubbles */
+  color: white; /* White text color */
+  border-radius: 9999px; /* Rounded corners for the bubble effect */
+
+  cursor: pointer; /* Changes the cursor to indicate the bubble is clickable */
+
+  /* Add some box shadow for depth, if desired */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  /* A little transition for when the user hovers over the bubble */
+  transition: transform 0.2s ease-in-out;
+
+  /* Prevent text from wrapping */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Hover effect for desktop */
+@media (hover: hover) {
   .answer-bubble:hover {
-    transform: scale(1.05); /* The bubble will grow slightly when hovered */
+    transform: scale(1.05);
   }
-  
-  .age-dropdown {
-    width: 200px; /* Ensures the dropdown fills the container */
-    padding: 10px; /* Adjust padding for comfort */
-    border-radius: 20px; /* Consistent with the bubble style */
-    background-color: #f0f0f0; /* Light background for the dropdown */
-    border: 1px solid #ccc; /* Subtle border */
-    color: #333; /* Text color */
-    font-size: 1rem; /* Match font size with your design */
-    cursor: pointer; /* Indicates it's an interactive element */
-  }
+}
 
-  @media (max-width: 768px) {
-    .age-dropdown {
-      width: 90%; /* Use percentage for responsive width */
-      padding: 10px; /* Optimal padding for touch interfaces */
-      border-radius: 8px; /* A moderate border-radius for a balanced look */
-      font-size: 16px; /* A legible font size for mobile screens */
-      /* Retain other properties as needed */
-    }
+/* Styles for touch devices */
+@media (hover: none) {
+  .answer-bubble:active {
+    background-color: #4b4bff; /* Slightly different color on tap */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Adjust the shadow */
   }
-  
-  
+}
+
+.age-dropdown {
+  width: 200px; /* Ensures the dropdown fills the container */
+  padding: 10px; /* Adjust padding for comfort */
+  border-radius: 20px; /* Consistent with the bubble style */
+  background-color: #f0f0f0; /* Light background for the dropdown */
+  border: 1px solid #ccc; /* Subtle border */
+  color: #333; /* Text color */
+  font-size: 1rem; /* Match font size with your design */
+  cursor: pointer; /* Indicates it's an interactive element */
+}
+
+@media (max-width: 768px) {
+  .age-dropdown {
+    width: 70%; /* Use percentage for responsive width */
+    padding: 10px; /* Optimal padding for touch interfaces */
+    border-radius: 8px; /* A moderate border-radius for a balanced look */
+    font-size: 16px; /* A legible font size for mobile screens */
+    /* Retain other properties as needed */
+  }
+}
+
 .progress-bar-wrapper {
   max-width: 500px; /* Adjust as needed for desktop size */
   margin: 20px auto; /* Centers the container */
@@ -93,12 +108,12 @@
 /* Media query for mobile devices */
 @media (max-width: 600px) {
   .quiz-container {
-      padding-bottom: 3rem; /* Reduce bottom padding */
-      margin-top: 10rem; /* Reduce top margin */
-      min-height: 100vh;
-      max-height: 100%;
-      margin-bottom: 0;
-      /* Other adjustments can be made here if needed */
+    padding-bottom: 3rem; /* Reduce bottom padding */
+    margin-top: 10rem; /* Reduce top margin */
+    min-height: 100vh;
+    max-height: 100%;
+    margin-bottom: 0;
+    /* Other adjustments can be made here if needed */
   }
 }
 
@@ -135,36 +150,33 @@
   }
 }
 
-  
-  .progress-bar {
-    height: 20px;
-    background-color: #4caf50; /* Change to match your color scheme */
-    width: 0; /* Initial width should be 0 */
-    border-radius: 5px;
-    transition: width 0.4s ease-in-out; /* Adds a smooth transition effect */
-  }
-  
+.progress-bar {
+  height: 20px;
+  background-color: #4caf50; /* Change to match your color scheme */
+  width: 0; /* Initial width should be 0 */
+  border-radius: 5px;
+  transition: width 0.4s ease-in-out; /* Adds a smooth transition effect */
+}
 
 /* Style for the Next button */
 .next-button {
-  display: block;           /* Block display to fill the width of its container */
-  margin: 20px auto;        /* Centering the button horizontally with top and bottom margin */
-  padding: 10px 30px;       /* Padding to make the button larger */
+  display: block; /* Block display to fill the width of its container */
+  margin: 20px auto; /* Centering the button horizontally with top and bottom margin */
+  padding: 10px 30px; /* Padding to make the button larger */
   background-color: #4caf50; /* Green background */
-  color: white;             /* White text color */
-  border: none;             /* No border */
-  cursor: pointer;          /* Changes the cursor to signify it's clickable */
-  text-align: center;       /* Ensures the text inside the button is centered */
+  color: white; /* White text color */
+  border: none; /* No border */
+  cursor: pointer; /* Changes the cursor to signify it's clickable */
+  text-align: center; /* Ensures the text inside the button is centered */
   font-size: 1.3rem; /* Example font size */
-  border-radius: 25px;      /* Rounded edges */
-  width: auto;              /* Auto width based on content and padding */
+  border-radius: 25px; /* Rounded edges */
+  width: auto; /* Auto width based on content and padding */
 }
 
 /* Hover effect for the Next button */
 .next-button:hover {
   background-color: #43a047; /* Slightly darker green background on hover */
 }
-
 
 /* Ensure the button is not too wide on larger screens */
 /* .quiz-container .answers {
@@ -197,7 +209,6 @@
     /* Keep other styles the same */
   }
 }
-
 
 .completion-message {
   font-size: 24px; /* Adjusts the size of the font */
