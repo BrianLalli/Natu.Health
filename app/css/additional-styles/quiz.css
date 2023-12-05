@@ -51,6 +51,28 @@
   text-overflow: ellipsis;
 }
 
+/* Retain the existing styles for .answer-bubble */
+
+/* Additional styles specifically for question 4 answer bubbles */
+.question-4 .answer-bubble {
+  /* Inherits existing styles from .answer-bubble */
+
+  /* Changes for indicating multiple selection capability */
+  /* Slightly different background color to differentiate from other questions */
+  background-color: #5d5dff; 
+  
+
+  /* Change in scale and border color on hover for better UX */
+  transition: transform 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+.question-4 .answer-bubble.selected {
+  /* More distinct color for selected state */
+  background-color: #262668;
+  border-color: #262668;
+}
+
+
 /* Hover effect for desktop */
 @media (hover: hover) {
   .answer-bubble:hover {
@@ -171,18 +193,13 @@
   font-size: 1.3rem; /* Example font size */
   border-radius: 25px; /* Rounded edges */
   width: auto; /* Auto width based on content and padding */
+  z-index: 100 !important;
 }
 
 /* Hover effect for the Next button */
 .next-button:hover {
   background-color: #43a047; /* Slightly darker green background on hover */
 }
-
-/* Ensure the button is not too wide on larger screens */
-/* .quiz-container .answers {
-  max-width: 500px;
-  margin: auto;
-} */
 
 /* Styles for the input text on desktop */
 .input-text {
