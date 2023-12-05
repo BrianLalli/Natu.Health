@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 interface Answer {
   questionId: string;
   value: string | number;
-  input?: boolean; // This is the new optional property
+  input?: boolean;
 }
 
 interface Answers {
@@ -15,86 +15,103 @@ interface Answers {
 const QuizComponent = () => {
   const [currentQuestion, setCurrentQuestion] = useState<number>(0);
   const [answers, setAnswers] = useState<Answers>({});
+  const [selectedQ4Answers, setSelectedQ4Answers] = useState<Set<string>>(
+    new Set()
+  );
   const [temporaryInput, setTemporaryInput] = useState<Answers>({});
   const totalQuestions = 11;
 
   const handleAnswerSelect = (selectedAnswer: Answer) => {
-    // Existing code to handle input fields remains the same
+    if (selectedAnswer.questionId === "Q4") {
+      setSelectedQ4Answers((prevSelected) => {
+        const newSelected = new Set(prevSelected);
+        if (newSelected.has(selectedAnswer.value as string)) {
+          newSelected.delete(selectedAnswer.value as string);
+        } else {
+          newSelected.add(selectedAnswer.value as string);
+        }
 
-    // Update the answers state
-    setAnswers((prevAnswers) => ({
-      ...prevAnswers,
-      [selectedAnswer.questionId]: selectedAnswer,
-    }));
+        // Move to the next question if any option is selected
+        if (newSelected.size > 0) {
+          setCurrentQuestion((prevCurrentQuestion) => prevCurrentQuestion + 1);
+        }
+        return newSelected;
+      });
+    } else {
+      setAnswers((prevAnswers) => ({
+        ...prevAnswers,
+        [selectedAnswer.questionId]: selectedAnswer,
+      }));
+    }
+  };
 
-    // Removed the direct call to setCurrentQuestion here
+  const handleQ4AnswerSelect = (value: string) => {
+    setSelectedQ4Answers((prevSelected) => {
+      const newSelected = new Set(prevSelected);
+      if (newSelected.has(value)) {
+        newSelected.delete(value);
+      } else {
+        newSelected.add(value);
+      }
+      return newSelected;
+    });
   };
 
   useEffect(() => {
-    const lastAnsweredQuestionId = Object.keys(answers).pop(); // Get the ID of the last answered question
-
-    // Ensure that the effect runs only if there's an answer for the current question
-    if (lastAnsweredQuestionId && answers[lastAnsweredQuestionId]) {
-      // Increment the question index linearly
+    const lastAnsweredQuestionId = Object.keys(answers).pop();
+    if (
+      lastAnsweredQuestionId &&
+      answers[lastAnsweredQuestionId] &&
+      lastAnsweredQuestionId !== "Q4"
+    ) {
       setCurrentQuestion((prevCurrentQuestion) => prevCurrentQuestion + 1);
     }
   }, [answers]);
 
-
-  // Function to handle the submission of text input answers
   const handleInputSubmit = (questionId: string) => {
     const inputValue = temporaryInput[questionId];
-    console.log("Input submitted for:", questionId, "with value:", inputValue);
     if (inputValue) {
-      console.log("inputValue:", JSON.stringify(inputValue, null, 2));
-      console.log("temporaryInput:", JSON.stringify(temporaryInput, null, 2));
-      setAnswers((prevAnswers) => {
-        console.log(
-          "prevAnswers before update:",
-          JSON.stringify(prevAnswers, null, 2)
-        );
-        const newAnswers = {
-          ...prevAnswers,
-          [questionId]: { questionId, value: inputValue.value }, // Make sure to use inputValue.value
-        };
-        console.log(
-          "newAnswers after update:",
-          JSON.stringify(newAnswers, null, 2)
-        );
-        return newAnswers;
+      const newAnswers = {
+        ...answers,
+        [questionId]: { questionId, value: inputValue.value },
+      };
+
+      // Update answers state
+      setAnswers(newAnswers);
+
+      // Log the final answers including the latest input
+      console.log("Current Answers:", {
+        ...newAnswers,
+        Q4: Array.from(selectedQ4Answers),
       });
-      // Logic to set the next question goes here
-      setCurrentQuestion((prevCurrentQuestion) => {
-        // Determine the next question based on current logic
-        const nextQuestionIndex = prevCurrentQuestion + 1;
-        console.log(
-          "Updating currentQuestion from:",
-          prevCurrentQuestion,
-          "to:",
-          prevCurrentQuestion + 1
-        );
-        return nextQuestionIndex;
-      });
+
+      // Move to the next question or to the submission
+      setCurrentQuestion((prevCurrentQuestion) => prevCurrentQuestion + 1);
     }
   };
 
   const handleSubmit = () => {
-    console.log("Final Answers:", answers);
-    const focusArea = answers.Q3?.value || ""; // Get the value of the answer to Q3
-    const userZipCode = answers.Q11?.value || ""; // Get the user's zip code from Q11
+    const finalAnswers = {
+      ...answers,
+      Q4: Array.from(selectedQ4Answers),
+    };
 
-    // Redirect to the /practitioners page with both focusArea and userZipCode as query parameters
+    // Log the final answers
+    console.log("Final Answers:", finalAnswers);
+
+    const focusArea = answers.Q3?.value || "";
+    const userZipCode = answers.Q11?.value || "";
+
+    // Redirect or further process
     window.location.href = `/practitioners?focusArea=${encodeURIComponent(
       focusArea
     )}&zipCode=${encodeURIComponent(userZipCode)}`;
   };
 
   const renderProgressBar = () => {
-    const progress = ((currentQuestion + 1) / totalQuestions) * 100; // Ensure this is 100 to represent the percentage
+    const progress = ((currentQuestion + 1) / totalQuestions) * 100;
     return (
       <div className="progress-bar-wrapper">
-        {" "}
-        {/* Wrapper added */}
         <div className="progress-bar-container">
           <div className="progress-bar" style={{ width: `${progress}%` }}></div>
         </div>
@@ -174,11 +191,11 @@ const QuizComponent = () => {
           </div>
         );
 
-      // Question 3: Are there specific areas you’re interested in exploring?
+      // Question 3: What are you looking to explore?
       case 2:
         return (
           <div className="question">
-            <p>What specific area are you interested in exploring?</p>
+            <p>What are you looking to explore?</p>
             <div className="answers">
               <button
                 className="answer-bubble"
@@ -226,90 +243,48 @@ const QuizComponent = () => {
             </div>
           </div>
         );
-
-      // Question 4: Digging a little deeper, what else are you looking for help with?
+      // Question 4: Digging a little deeper, is there anything else you’re interested in exploring?
       case 3:
         return (
-          <div className="question">
+          <div className="question question-4">
             <p>
-              Digging a little deeper, what else are you looking for help with?
+              Digging a little deeper, which of the following are you interested
+              in exploring?
             </p>
+            <p><strong>Select all that apply.</strong></p>
             <div className="answers">
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q4", value: "Sleep" })
-                }
-              >
-                Sleep
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q4", value: "Pain" })
-                }
-              >
-                Pain
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q4", value: "Allergies" })
-                }
-              >
-                Allergies
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q4", value: "Hormones" })
-                }
-              >
-                Hormones
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q4", value: "Poop" })
-                }
-              >
-                Poop
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q4", value: "Nutrition" })
-                }
-              >
-                Nutrition
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q4", value: "Supplements" })
-                }
-              >
-                Supplements
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q4", value: "Vaccines" })
-                }
-              >
-                Vaccines
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q4", value: "Sexual" })
-                }
-              >
-                Sexual
-              </button>
+              {[
+                "Sleep",
+                "Pain",
+                "Allergies",
+                "Hormones",
+                "Poop",
+                "Nutrition",
+                "Supplements",
+                "Vaccines",
+                "Sexual",
+              ].map((option) => (
+                <button
+                  key={option}
+                  className={`answer-bubble ${
+                    selectedQ4Answers.has(option) ? "selected" : ""
+                  }`}
+                  onClick={() => handleQ4AnswerSelect(option)}
+                >
+                  {option}
+                </button>
+              ))}
             </div>
+            <button
+              className="next-button"
+              onClick={() => setCurrentQuestion(currentQuestion + 1)}
+              disabled={selectedQ4Answers.size === 0} // Disable if no option is selected
+            >
+              Next
+            </button>
           </div>
         );
+
       // Question 5: How long have you experienced your symptoms?
       case 4:
         return (
@@ -385,7 +360,7 @@ const QuizComponent = () => {
                 className="answer-bubble"
                 onClick={() =>
                   handleAnswerSelect({
-                    questionId: "Q7",
+                    questionId: "Q6",
                     value: "General Health",
                   })
                 }
@@ -396,7 +371,7 @@ const QuizComponent = () => {
                 className="answer-bubble"
                 onClick={() =>
                   handleAnswerSelect({
-                    questionId: "Q7",
+                    questionId: "Q6",
                     value: "Family History",
                   })
                 }
@@ -407,7 +382,7 @@ const QuizComponent = () => {
                 className="answer-bubble"
                 onClick={() =>
                   handleAnswerSelect({
-                    questionId: "Q7",
+                    questionId: "Q6",
                     value: "I'm Training For Something",
                   })
                 }
@@ -418,7 +393,7 @@ const QuizComponent = () => {
                 className="answer-bubble"
                 onClick={() =>
                   handleAnswerSelect({
-                    questionId: "Q7",
+                    questionId: "Q6",
                     value: "I'm just interested",
                   })
                 }
@@ -604,7 +579,9 @@ const QuizComponent = () => {
       case 10:
         const zipCodeRegex = /^\d{5}$/; // Regular expression for a 5-digit zip code
 
-        const handleZipCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const handleZipCodeChange = (
+          e: React.ChangeEvent<HTMLInputElement>
+        ) => {
           const userInput = e.target.value;
           if (zipCodeRegex.test(userInput)) {
             // Valid zip code
@@ -621,7 +598,6 @@ const QuizComponent = () => {
             console.error("Please enter a valid 5-digit zip code.");
           }
         };
-        
 
         return (
           <div className="question">
