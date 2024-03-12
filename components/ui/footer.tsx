@@ -4,8 +4,7 @@ import "../../app/css/additional-styles/footer.css";
 
 export default function Footer() {
   return (
-    <footer className="fixed-footer">
-      <div className="py-12 md:py-16">
+    <footer className="fixed-footer" style={{ backgroundColor: "#F7F7F7" /* off-white */ }}>      <div className="py-12 md:py-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           {/* Bottom area */}
           <div className="md:flex md:items-center md:justify-between">
@@ -16,6 +15,16 @@ export default function Footer() {
                   href="https://twitter.com/MoonRoosterLLC"
                   className="flex justify-center items-center text-purple-600 bg-gray-800 hover:text-gray-100 hover:bg-purple-600 rounded-full transition duration-150 ease-in-out"
                   aria-label="Twitter"
+                  style={{
+                    color: "#435373" /* deep-slate */,
+                    backgroundColor: "#e4e4e7" /* light-slate */,
+                    hover: {
+                      color: "#F7F7F7" /* off-white */,
+                      backgroundColor: "#949cff" /* lavender */,
+                    },
+                    borderRadius: "50%",
+                    transition: "background-color 0.15s ease-in-out, color 0.15s ease-in-out",
+                  }}
                 >
                   <svg
                     className="w-8 h-8 fill-current"
@@ -31,6 +40,16 @@ export default function Footer() {
                   href="https://github.com/BrianLalli"
                   className="flex justify-center items-center text-purple-600 bg-gray-800 hover:text-gray-100 hover:bg-purple-600 rounded-full transition duration-150 ease-in-out"
                   aria-label="Github"
+                  style={{
+                    color: "#435373" /* deep-slate */,
+                    backgroundColor: "#e4e4e7" /* light-slate */,
+                    hover: {
+                      color: "#F7F7F7" /* off-white */,
+                      backgroundColor: "#949cff" /* lavender */,
+                    },
+                    borderRadius: "50%",
+                    transition: "background-color 0.15s ease-in-out, color 0.15s ease-in-out",
+                  }}
                 >
                   <svg
                     className="w-8 h-8 fill-current"
@@ -46,6 +65,16 @@ export default function Footer() {
                   href="https://www.facebook.com/MoonRoosterLLC"
                   className="flex justify-center items-center text-purple-600 bg-gray-800 hover:text-gray-100 hover:bg-purple-600 rounded-full transition duration-150 ease-in-out"
                   aria-label="Facebook"
+                  style={{
+                    color: "#435373" /* deep-slate */,
+                    backgroundColor: "#e4e4e7" /* light-slate */,
+                    hover: {
+                      color: "#F7F7F7" /* off-white */,
+                      backgroundColor: "#949cff" /* lavender */,
+                    },
+                    borderRadius: "50%",
+                    transition: "background-color 0.15s ease-in-out, color 0.15s ease-in-out",
+                  }}
                 >
                   <svg
                     className="w-8 h-8 fill-current"
@@ -61,6 +90,16 @@ export default function Footer() {
                   href="https://www.instagram.com/moonrooster.llc"
                   className="flex justify-center items-center text-purple-600 bg-gray-800 hover:text-gray-100 hover:bg-purple-600 rounded-full transition duration-150 ease-in-out"
                   aria-label="Instagram"
+                  style={{
+                    color: "#435373" /* deep-slate */,
+                    backgroundColor: "#e4e4e7" /* light-slate */,
+                    hover: {
+                      color: "#F7F7F7" /* off-white */,
+                      backgroundColor: "#949cff" /* lavender */,
+                    },
+                    borderRadius: "50%",
+                    transition: "background-color 0.15s ease-in-out, color 0.15s ease-in-out",
+                  }}
                 >
                   <svg
                     className="w-8 h-8 fill-current"
@@ -78,6 +117,16 @@ export default function Footer() {
                   href="https://www.linkedin.com/company/moon-rooster-llc"
                   className="flex justify-center items-center text-purple-600 bg-gray-800 hover:text-gray-100 hover:bg-purple-600 rounded-full transition duration-150 ease-in-out"
                   aria-label="Linkedin"
+                  style={{
+                    color: "#435373" /* deep-slate */,
+                    backgroundColor: "#e4e4e7" /* light-slate */,
+                    hover: {
+                      color: "#F7F7F7" /* off-white */,
+                      backgroundColor: "#949cff" /* lavender */,
+                    },
+                    borderRadius: "50%",
+                    transition: "background-color 0.15s ease-in-out, color 0.15s ease-in-out",
+                  }}
                 >
                   <svg
                     className="w-8 h-8 fill-current"

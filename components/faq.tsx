@@ -11,19 +11,23 @@ interface FAQItemProps {
 const FAQItem = ({ question, answer }: FAQItemProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
+  const questionStyle = `text-lg font-medium faq-question ${isOpen ? 'text-off-white' : 'text-deep-slate'}`;
+  const answerStyle = "p-5 faq-answer text-medium-slate";
+
   return (
-    <div className="border-b">
+    <div className="border-b border-light-slate bg-off-white">
       <button
-        className="flex justify-between items-center w-full p-5"
+        className={`flex justify-between items-center w-full p-5 ${isOpen ? 'bg-lavender' : 'bg-transparent'}`}
         onClick={() => setIsOpen(!isOpen)}
       >
-        <h5 className="text-lg font-medium faq-question">{question}</h5>
-        <span>{isOpen ? "-" : "+"}</span>
+        <h5 className={questionStyle}>{question}</h5>
+        <span className={isOpen ? 'text-off-white' : 'text-deep-slate'}>{isOpen ? "-" : "+"}</span>
       </button>
-      {isOpen && <p className="p-5 faq-answer">{answer}</p>}
+      {isOpen && <p className={answerStyle}>{answer}</p>}
     </div>
   );  
 };
+
 
 // Main FAQ component
 export default function FAQ() {
@@ -56,8 +60,8 @@ export default function FAQ() {
   ];
 
   return (
-    <div className="max-w-3xl mx-auto my-12">
-      <h2 className="text-3xl font-bold mb-6 mx-auto text-center">
+    <div className="max-w-3xl mx-auto my-12 bg-off-white">
+      <h2 className="text-3xl font-bold mb-6 mx-auto text-center text-deep-slate">
         Frequently Asked Questions
       </h2>
       <div className="space-y-4">
