@@ -1,9 +1,12 @@
+import React from 'react'; // Import React
 import Link from "next/link";
 import MobileMenu from "./mobile-menu";
 
-export default function Header() {
+// Extend the component to accept props, including className
+export default function Header({ className }: { className?: string }) {
+  // Apply the className to the header element
   return (
-    <header className="absolute w-full z-30" style={{ backgroundColor: "#F7F7F7" /* off-white */ }}>
+    <header className={`absolute w-full z-30 ${className}`} style={{ backgroundColor: "#F7F7F7" /* off-white */ }}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-20">
           {/* Site branding */}
