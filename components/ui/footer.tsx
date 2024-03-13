@@ -18,10 +18,6 @@ export default function Footer() {
                   style={{
                     color: "#435373" /* deep-slate */,
                     backgroundColor: "#e4e4e7" /* light-slate */,
-                    hover: {
-                      color: "#F7F7F7" /* off-white */,
-                      backgroundColor: "#949cff" /* lavender */,
-                    },
                     borderRadius: "50%",
                     transition: "background-color 0.15s ease-in-out, color 0.15s ease-in-out",
                   }}
@@ -43,10 +39,6 @@ export default function Footer() {
                   style={{
                     color: "#435373" /* deep-slate */,
                     backgroundColor: "#e4e4e7" /* light-slate */,
-                    hover: {
-                      color: "#F7F7F7" /* off-white */,
-                      backgroundColor: "#949cff" /* lavender */,
-                    },
                     borderRadius: "50%",
                     transition: "background-color 0.15s ease-in-out, color 0.15s ease-in-out",
                   }}
@@ -68,10 +60,6 @@ export default function Footer() {
                   style={{
                     color: "#435373" /* deep-slate */,
                     backgroundColor: "#e4e4e7" /* light-slate */,
-                    hover: {
-                      color: "#F7F7F7" /* off-white */,
-                      backgroundColor: "#949cff" /* lavender */,
-                    },
                     borderRadius: "50%",
                     transition: "background-color 0.15s ease-in-out, color 0.15s ease-in-out",
                   }}
@@ -93,10 +81,6 @@ export default function Footer() {
                   style={{
                     color: "#435373" /* deep-slate */,
                     backgroundColor: "#e4e4e7" /* light-slate */,
-                    hover: {
-                      color: "#F7F7F7" /* off-white */,
-                      backgroundColor: "#949cff" /* lavender */,
-                    },
                     borderRadius: "50%",
                     transition: "background-color 0.15s ease-in-out, color 0.15s ease-in-out",
                   }}
@@ -120,10 +104,6 @@ export default function Footer() {
                   style={{
                     color: "#435373" /* deep-slate */,
                     backgroundColor: "#e4e4e7" /* light-slate */,
-                    hover: {
-                      color: "#F7F7F7" /* off-white */,
-                      backgroundColor: "#949cff" /* lavender */,
-                    },
                     borderRadius: "50%",
                     transition: "background-color 0.15s ease-in-out, color 0.15s ease-in-out",
                   }}
