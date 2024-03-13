@@ -2,9 +2,13 @@ import React from "react";
 import Link from "next/link";
 import "../../app/css/additional-styles/footer.css";
 
-export default function Footer() {
+export default function Footer({ className = "" }) {
   return (
-    <footer className="fixed-footer" style={{ backgroundColor: "#F7F7F7" /* off-white */ }}>      <div className="py-12 md:py-16">
+    <footer
+      className={`fixed-footer ${className}`}
+      style={{ backgroundColor: "#F7F7F7" /* off-white */ }}
+    >
+      <div className="py-12 md:py-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           {/* Bottom area */}
           <div className="md:flex md:items-center md:justify-between">
@@ -19,7 +23,8 @@ export default function Footer() {
                     color: "#435373" /* deep-slate */,
                     backgroundColor: "#e4e4e7" /* light-slate */,
                     borderRadius: "50%",
-                    transition: "background-color 0.15s ease-in-out, color 0.15s ease-in-out",
+                    transition:
+                      "background-color 0.15s ease-in-out, color 0.15s ease-in-out",
                   }}
                 >
                   <svg
@@ -40,7 +45,8 @@ export default function Footer() {
                     color: "#435373" /* deep-slate */,
                     backgroundColor: "#e4e4e7" /* light-slate */,
                     borderRadius: "50%",
-                    transition: "background-color 0.15s ease-in-out, color 0.15s ease-in-out",
+                    transition:
+                      "background-color 0.15s ease-in-out, color 0.15s ease-in-out",
                   }}
                 >
                   <svg
@@ -61,7 +67,8 @@ export default function Footer() {
                     color: "#435373" /* deep-slate */,
                     backgroundColor: "#e4e4e7" /* light-slate */,
                     borderRadius: "50%",
-                    transition: "background-color 0.15s ease-in-out, color 0.15s ease-in-out",
+                    transition:
+                      "background-color 0.15s ease-in-out, color 0.15s ease-in-out",
                   }}
                 >
                   <svg
@@ -82,7 +89,8 @@ export default function Footer() {
                     color: "#435373" /* deep-slate */,
                     backgroundColor: "#e4e4e7" /* light-slate */,
                     borderRadius: "50%",
-                    transition: "background-color 0.15s ease-in-out, color 0.15s ease-in-out",
+                    transition:
+                      "background-color 0.15s ease-in-out, color 0.15s ease-in-out",
                   }}
                 >
                   <svg
@@ -105,7 +113,8 @@ export default function Footer() {
                     color: "#435373" /* deep-slate */,
                     backgroundColor: "#e4e4e7" /* light-slate */,
                     borderRadius: "50%",
-                    transition: "background-color 0.15s ease-in-out, color 0.15s ease-in-out",
+                    transition:
+                      "background-color 0.15s ease-in-out, color 0.15s ease-in-out",
                   }}
                 >
                   <svg
