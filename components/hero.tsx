@@ -1,7 +1,7 @@
 // import VideoThumb from '@/public/images/hero-image-01.jpg'
 // import ModalVideo from '@/components/modal-video'
 import Link from "next/link";
-import "../app/css/additional-styles/buttons.css"
+import "../app/css/additional-styles/buttons.css";
 
 export default function Hero() {
   return (
@@ -31,8 +31,8 @@ export default function Hero() {
                 y2="577.921"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop stopColor="#5D5DFF" stopOpacity=".01" />
-                <stop offset="1" stopColor="#5D5DFF" stopOpacity=".32" />
+                <stop stopColor="#949cff" stopOpacity=".01" />
+                <stop offset="1" stopColor="#8fcca0" stopOpacity=".32" />
               </linearGradient>
             </defs>
             <path
@@ -48,23 +48,27 @@ export default function Hero() {
         <div className="relative pt-32 pb-10 md:pt-40 md:pb-16">
           {/* Section header */}
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
-            <h1 className="h1 mb-4" data-aos="fade-up">
-              Find the best alternative path to care
+          <h1 className="h1 mb-4" data-aos="fade-up" style={{color: "#435373"}}>
+              A new way to find care
             </h1>
             <p
-              className="text-xl text-gray-400 mb-8"
+              className="text-xl mb-8"
               data-aos="fade-up"
               data-aos-delay="200"
+              style={{color: "#9fa4b7"}}
             >
-              Receive personalized care options, tailored to your needs and
-              goals.
+              Find evidence-based alternative and nontraditional medical care.
             </p>
             <div className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center">
               <div data-aos="fade-up" data-aos-delay="400">
                 <Link
                   href="/quiz"
                   className="btn text-white bg-purple-600 hover:bg-purple-700 w-full mb-4 sm:w-auto sm:mb-0"
-                  // Inline styles removed since they are now in the CSS file
+                  style={{
+                    backgroundColor: "#8fcca0", // Flora for button background
+                    color: "#ffffff", // White text on the button
+                    borderColor: "#8fcca0", // Flora for border to match
+                  }}
                 >
                   Get Started
                 </Link>

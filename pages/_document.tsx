@@ -1,3 +1,25 @@
+// // pages/_document.tsx
+// import Document, { Html, Head, Main, NextScript } from 'next/document'
+
+// class MyDocument extends Document {
+//   render() {
+//     return (
+//       <Html lang="en">
+//         <Head>
+//           <link rel="icon" href="/favicon.ico" />
+//           {/* Include other head elements like meta tags here */}
+//         </Head>
+//         <body className="font-inter antialiased bg-off-white text-gray-800 tracking-tight">
+//           <Main />
+//           <NextScript />
+//         </body>
+//       </Html>
+//     )
+//   }
+// }
+
+// export default MyDocument
+
 // pages/_document.tsx
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 
@@ -6,11 +28,14 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          {/* Favicon */}
           <link rel="icon" href="/favicon.ico" />
-          {/* You can also include other head elements here, like meta tags */}
+          {/* Fonts can be loaded here if switching to <link> method */}
+          {/* Example for Google Fonts (replace with your fonts if needed):
+          <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"> 
+          <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet"> */}
+          {/* Include other head elements like meta tags here */}
         </Head>
-        <body className="font-inter antialiased bg-gray-900 text-gray-200 tracking-tight">
+        <body className="font-inter antialiased bg-off-white text-gray-800 tracking-tight">
           <Main />
           <NextScript />
         </body>

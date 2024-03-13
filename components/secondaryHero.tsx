@@ -28,8 +28,8 @@ export default function SecondaryHero() {
                 y2="577.921"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop stopColor="#5D5DFF" stopOpacity=".01" />
-                <stop offset="1" stopColor="#5D5DFF" stopOpacity=".32" />
+                <stop stopColor="#949cff" stopOpacity=".01" />
+                <stop offset="1" stopColor="#8fcca0" stopOpacity=".32" />
               </linearGradient>
             </defs>
             <path
@@ -45,12 +45,16 @@ export default function SecondaryHero() {
         <div className="relative pt-32 pb-10 md:pt-10 md:pb-10">
           {/* Section header */}
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="h1 mb-1" data-aos="fade-up">
+            <h1
+              className="h1 mb-4"
+              data-aos="fade-up"
+              style={{ color: "#435373" }}
+            >
               Ready to get started?
             </h1>
             <Link
               href="/quiz"
-              className="btn text-white bg-purple-600 hover:bg-purple-700 w-full mb-4 sm:w-auto sm:mb-0"
+              className="btn text-white bg-flora hover:bg-lavender w-full mb-4 sm:w-auto sm:mb-0"
               style={{
                 margin: "20px", // Adjust the margin value as needed
               }}

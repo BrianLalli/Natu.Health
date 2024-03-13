@@ -113,7 +113,10 @@ const QuizComponent = () => {
     return (
       <div className="progress-bar-wrapper">
         <div className="progress-bar-container">
-          <div className="progress-bar" style={{ width: `${progress}%` }}></div>
+          <div
+            className="progress-bar"
+            style={{ width: `${progress}%`, backgroundColor: "#8fcca0" }}
+          ></div>
         </div>
       </div>
     );
@@ -251,7 +254,9 @@ const QuizComponent = () => {
               Digging a little deeper, which of the following are you interested
               in exploring?
             </p>
-            <p><strong>Select all that apply.</strong></p>
+            <p>
+              <strong>Select all that apply.</strong>
+            </p>
             <div className="answers">
               {[
                 "Sleep",
@@ -621,7 +626,7 @@ const QuizComponent = () => {
   };
 
   return (
-    <div className="quiz-container relative">
+    <div className="quiz-container relative bg-off-white text-deep-slate">
       {/* SVG Illustration */}
       <div
         className="illustration-behind-quiz absolute left-0 bottom-0 -ml-20 hidden lg:block pointer-events-none"
@@ -663,7 +668,7 @@ const QuizComponent = () => {
           </svg>
         </div>
       </div>
-      <div className="quiz-container">
+      <div className="quiz-container text-deep-slate">
         {currentQuestion < totalQuestions ? (
           <>
             {renderProgressBar()}
@@ -674,7 +679,10 @@ const QuizComponent = () => {
             <p className="completion-message">
               Thank you for completing the quiz!
             </p>
-            <button className="next-button" onClick={handleSubmit}>
+            <button
+              className="next-button bg-lavender text-off-white border-none"
+              onClick={handleSubmit}
+            >
               Submit
             </button>
           </div>
