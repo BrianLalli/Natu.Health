@@ -9,16 +9,21 @@ import SearchBar from '../components/search-bar.client'; // Assuming you have a 
 import Zigzag from '../components/zigzag';
 
 export default function HomePage() {
+  // Define the onSearch function
+  const handleSearch = (searchTerm) => {
+    console.log(`Search term: ${searchTerm}`);
+    // Implement the search functionality here or call another function that handles searching
+  };
+
   return (
     <RootLayout>
       {/* If the Header and Footer are not included within RootLayout, uncomment the next lines */}
       <Header />
       <Hero />
-      <SearchBar />
+      <SearchBar onSearch={handleSearch} />
       <Zigzag />
       <SecondaryHero />
       {/* Include the SearchBar if it's separate from the Hero component */}
-      {/* <SearchBar /> */}
       {/* Additional content can be placed here */}
       {/* <Footer /> */}
     </RootLayout>
