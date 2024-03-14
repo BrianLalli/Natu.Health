@@ -44,17 +44,18 @@ export default function Zigzag() {
                   More options. Easy access.
                 </div>
                 <h3 className="h3 mb-3" style={{ color: "#435373" }}>
-                  Access a diverse network of practitioners within the natural
-                  medicine space, and get care that’s tailored to your specific needs
+                  Access a diverse network of practitioners that help people
+                  find alternative and cutting-edge therapies to achieve a
+                  healthier and more fulfilling life.
                 </h3>
                 <p
                   className="text-xl mb-4"
                   style={{ color: "#9fa4b7" /* medium-slate */ }}
                 >
                   Natu’s responsive approach to care supports people across a
-                  wide range of needs, interests, and goals. Our personalized
+                  wide range of needs, interests and goals. Our personalized
                   options are backed up by a practitioner network with varying
-                  clinical expertise and modality to help make access to care
+                  clinical expertise and modalities to help make access to care
                   easier than ever.
                 </p>
               </div>
