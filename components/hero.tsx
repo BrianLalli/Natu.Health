@@ -50,14 +50,18 @@ export default function Hero() {
         <div className="relative pt-32 pb-10 md:pt-40 md:pb-16">
           {/* Section header */}
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
-          <h1 className="h1 mb-4" data-aos="fade-up" style={{color: "#435373"}}>
+            <h1
+              className="h1 mb-4"
+              data-aos="fade-up"
+              style={{ color: "#435373" }}
+            >
               A new way to find care
             </h1>
             <p
               className="text-xl mb-8"
               data-aos="fade-up"
               data-aos-delay="200"
-              style={{color: "#9fa4b7"}}
+              style={{ color: "#9fa4b7" }}
             >
               Find evidence-based alternative and nontraditional medical care.
             </p>
@@ -65,12 +69,7 @@ export default function Hero() {
               <div data-aos="fade-up" data-aos-delay="400">
                 <Link
                   href="/quiz"
-                  className="btn text-white bg-purple-600 hover:bg-purple-700 w-full mb-4 sm:w-auto sm:mb-0"
-                  style={{
-                    backgroundColor: "#8fcca0", // Flora for button background
-                    color: "#ffffff", // White text on the button
-                    borderColor: "#8fcca0", // Flora for border to match
-                  }}
+                  className="btn text-white bg-flora hover:bg-lavender w-full mb-4 sm:w-auto sm:mb-0"
                 >
                   Get Started
                 </Link>
