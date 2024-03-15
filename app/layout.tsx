@@ -28,6 +28,7 @@ export default function RootLayout({
 }) {
   return (
     <div className={`${inter.variable} ${architects_daughter.variable} font-inter antialiased bg-off-white text-dark-slate tracking-tight`}>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
       <Header />
       {children}
       {/* <Banner /> */}
