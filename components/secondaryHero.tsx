@@ -1,9 +1,10 @@
 import Link from "next/link";
+import PageIllustration from "./page-illustration";
 
 export default function SecondaryHero() {
   return (
     <section>
-      <div className="max-w-6xl mx-auto mt-15 mb-40 px-4 sm:px-6 relative">
+      <div className="max-w-6xl mx-auto mt-20 mb-40 px-4 sm:px-6 relative">
         {/* Illustration behind hero content */}
         <div
           className="absolute left-0 bottom-0 -ml-20 hidden lg:block pointer-events-none"
@@ -63,6 +64,9 @@ export default function SecondaryHero() {
             </Link>
           </div>
         </div>
+      </div>
+      <div style={{ transform: "scaleY(-1)" }}>
+        <PageIllustration />
       </div>
     </section>
   );

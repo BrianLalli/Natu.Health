@@ -5,7 +5,7 @@ export default function PageIllustration() {
     <div
       className="relative max-w-6xl mx-auto h-0 pointer-events-none"
       aria-hidden="true"
-      // style={{ backgroundColor: '#F7F7F7' }}
+      style={{ backgroundColor: '#F7F7F7' }}
     >
       <svg
         className="absolute top-0 right-0 transform translate-x-1/2 -mr-16"

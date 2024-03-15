@@ -1,37 +1,49 @@
-@media (max-width: 600px) {
-    .fixed-footer {
-        /* Existing styles */
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        margin: 0 auto;
-        position: relative; /* Fix position relative to the viewport */
-        left: 0; /* Align to the left edge of the viewport */
-        right: 0; /* Align to the right edge of the viewport */
-        bottom: 0; /* Align to the bottom of the viewport */
-        padding: 10px; /* Add some padding for spacing */
-    }
+/* Define color scheme based on the provided ZocDoc color scheme */
+:root {
+  --off-white: #F7F7F7;
+  --lavender: #949cff;
+  --deep-slate: #435373;
+  --light-slate: #e4e4e7;
+  --medium-slate: #9fa4b7;
+  --yellow: #ffc812;
+  --flora: #8fcca0;
 }
 
-  
-  /* Ensure the class name matches the one used in your component */
+.fixed-footer {
+  background-color: var(--deep-slate); /* Set the footer background color */
+  color: var(--off-white); /* Set the text color */
+  position: relative; /* Fix position to the bottom */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 2px; /* Adjust padding as needed */
+  text-align: center; /* Center the text */
+}
+
 .social-links {
-    display: flex; /* existing style */
-    /* other styles */
-  }
-  
-  /* Media Query for Mobile Devices */
-  @media (max-width: 600px) { /* Adjust the breakpoint as needed */
-    .social-links {
-      justify-content: center; /* Center flex items horizontally */
-      flex-wrap: wrap; /* Allow items to wrap to the next line */
-      margin-left: 0; /* Override any margin if necessary */
-      margin-right: 0; /* Override any margin if necessary */
-    }
-  
-    .social-links li {
-      margin-left: 0.5rem; /* Adjust the spacing between items */
-      margin-right: 0.5rem; /* Adjust the spacing between items */
-    }
+  color: var(--lavender); /* Set the color for social icons */
+}
+
+/* You might also want to adjust the hover styles for the links to match the ZocDoc's color scheme */
+
+.social-links a:hover {
+  color: var(--medium-slate);
+  background-color: var(--lavender); /* On hover, the background becomes lavender */
+}
+
+/* Adjustments for mobile views */
+@media (max-width: 600px) {
+  .fixed-footer {
+    flex-direction: column;
+    align-items: center;
   }
 
+  .social-links {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .social-links li {
+    margin: 0.5rem;
+  }
+}
