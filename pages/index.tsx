@@ -7,6 +7,7 @@ import Hero from '../components/hero'; // Adjust the import path
 import SecondaryHero from '../components/secondaryHero'; // Adjust the import path
 import SearchBar from '../components/search-bar.client'; // Assuming you have a separate SearchBar, and it's not already part of Hero
 import Zigzag from '../components/zigzag';
+import AboutUs from '../components/about-us'
 
 export default function HomePage() {
   // Explicitly define the type of searchTerm as string
@@ -20,6 +21,7 @@ export default function HomePage() {
       <Header />
       <Hero />
       <SearchBar onSearch={handleSearch} />
+      <AboutUs />
       <Zigzag />
       <SecondaryHero />
       {/* Additional content can be placed here */}

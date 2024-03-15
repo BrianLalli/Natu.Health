@@ -1,0 +1,93 @@
+/* Base Styles */
+body {
+  background-color: #f7f7f7; /* off-white for a clean, neutral background */
+  font-family: "Inter", sans-serif; /* A modern, clean font choice */
+}
+
+/* Zigzag Section Styling */
+.section {
+  color: #435373; /* deep-slate for main text color */
+}
+
+/* Section Headers Styling - Updated */
+.inline-flex {
+  font-size: 2rem; /* Larger font size for emphasis */
+  font-weight: bold;
+  color: #435373; /* deep-slate for the text color */
+  background-color: transparent;
+  position: relative;
+  padding: 0;
+  margin: 20px 0; /* Space above and below the header */
+  cursor: default; /* Non-pointer cursor to avoid button-like appearance */
+}
+
+.inline-flex::before {
+  content: '';
+  position: absolute;
+  top: -10px; left: 0; right: 0; bottom: -10px;
+  z-index: -1;
+  background: linear-gradient(135deg, #949cff 0%, #8fcca0 100%);
+  clip-path: polygon(0 0, 100% 0%, 85% 100%, 15% 100%);
+  transition: all 0.5s ease;
+}
+
+.inline-flex:hover::before {
+  clip-path: polygon(0 0, 100% 0%, 100% 100%, 0% 100%);
+}
+
+.inline-flex:hover {
+  color: #F7F7F7; /* Text color change on hover for contrast */
+}
+
+.inline-flex {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Grid Layout Adjustments */
+.grid {
+  gap: 40px; /* Increased gap for better visual separation of grid items */
+}
+
+/* Content Styling */
+.font-architects-daughter {
+  color: #949cff; /* lavender for headings within content blocks */
+}
+
+.text-lg, .h3, p {
+  color: #435373; /* deep-slate for better contrast and readability */
+}
+
+ul {
+  list-style: none; /* Removing default list styling */
+  padding-left: 0; /* Adjusting padding for custom list icons */
+}
+
+li {
+  margin-bottom: 10px; /* Spacing between list items */
+}
+
+li svg {
+  fill: #ffc812; /* yellow for the custom list item icons */
+}
+
+/* Image and Content Blocks */
+.md\:col-span-5, .md\:col-span-7 {
+  padding: 20px; /* Padding for spacing inside the blocks */
+  border-radius: 10px; /* Rounded corners for a modern, friendly look */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .md\:col-span-5, .md\:col-span-7 {
+    margin-bottom: 20px; /* Spacing between stacked blocks on smaller screens */
+  }
+}
