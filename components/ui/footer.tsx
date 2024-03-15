@@ -6,9 +6,8 @@ export default function Footer({ className = "" }) {
   return (
     <footer
       className={`fixed-footer ${className}`}
-      style={{ backgroundColor: "#F7F7F7" /* off-white */ }}
     >
-      <div className="py-12 md:py-16">
+      <div className="py-12 md:py-3">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           {/* Bottom area */}
           <div className="md:flex md:items-center md:justify-between">
@@ -129,7 +128,7 @@ export default function Footer({ className = "" }) {
             </ul>
 
             {/* Copyrights note */}
-            <div className="text-gray-400 text-sm mr-4">
+            <div className="text-light-slate text-sm mr-4">
               &copy; Moon Rooster LLC. All rights reserved.
             </div>
           </div>

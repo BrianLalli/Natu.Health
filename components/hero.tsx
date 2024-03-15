@@ -2,6 +2,7 @@
 // import ModalVideo from '@/components/modal-video'
 import Link from "next/link";
 import "../app/css/additional-styles/buttons.css";
+import PageIllustration from "./page-illustration";
 
 export default function Hero() {
   return (
@@ -43,6 +44,7 @@ export default function Hero() {
             />
           </svg>
         </div>
+        <PageIllustration />
 
         {/* Hero content */}
         <div className="relative pt-32 pb-10 md:pt-40 md:pb-16">
