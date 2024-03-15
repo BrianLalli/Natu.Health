@@ -6,7 +6,7 @@ import MobileMenu from "./mobile-menu";
 export default function Header({ className }: { className?: string }) {
   // Apply the className to the header element
   return (
-    <header className={`fixed w-full z-30 ${className}`} style={{ backgroundColor: "#F7F7F7" }}>
+    <header className={`w-full z-30 ${className}`} style={{ backgroundColor: "transparent" }}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-20">
           {/* Site branding */}

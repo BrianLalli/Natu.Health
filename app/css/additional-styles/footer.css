@@ -18,6 +18,7 @@
   bottom: 0;
   padding: 2px; /* Adjust padding as needed */
   text-align: center; /* Center the text */
+  width: 100%
 }
 
 .social-links {
