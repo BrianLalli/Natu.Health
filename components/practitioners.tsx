@@ -135,7 +135,7 @@ const PractitionerCard: React.FC<PractitionerCardProps> = ({
         className="rounded-full w-40 h-40 mx-auto border-2 border-lavender"
       />
       <h2 className="text-xl font-semibold mt-3 text-deep-slate">{practitioner.name}</h2>
-      <p className="font-semibold text-center text-medium-slate">
+      <p className="font-semibold text-center text-deep-slate">
         {practitioner.specialty}
       </p>
       <div className="flex items-center justify-center mt-2">

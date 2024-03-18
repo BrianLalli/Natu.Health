@@ -1,30 +1,31 @@
 import React from 'react';
-import { IoMdPeople, IoMdCheckmarkCircleOutline, IoMdHeart } from 'react-icons/io';
+import { IoMdPeople, IoMdSearch, IoMdHeart } from 'react-icons/io';
 import '../app/css/additional-styles/our-approach.css';
 
 const featureData = [
-  {
-    IconComponent: IoMdPeople,
-    title: "Find and compare top local doctors",
-    description:
-      "Read verified reviews from patients like you and see real-time availability for in-person and video visits.",
-    color: "#f0ad4e" // Replace with the actual icon color
-  },
-  {
-    IconComponent: IoMdCheckmarkCircleOutline,
-    title: "Check coverage and estimated costs",
-    description:
-      "Enter your insurance to find in-network doctors who accept your plan or compare doctors’ out-of-pocket costs.",
-    color: "#5cb85c" // Replace with the actual icon color
-  },
-  {
-    IconComponent: IoMdHeart,
-    title: "Get care anytime, anywhere",
-    description:
-      "Book appointments online and see the same great doctors from home with a video visit.",
-    color: "#d9534f" // Replace with the actual icon color
-  }
-];
+    {
+      IconComponent: IoMdPeople,
+      title: "Explore Evidence-Based Wellness Experts",
+      description:
+        "Find experts in non-traditional and alternative medicine, validated through peer reviews and evidence-based practices. Discover the right practitioner for your needs with options for in-person or virtual consultations.",
+      color: "#f0ad4e" // Confirm actual icon color
+    },
+    {
+      IconComponent: IoMdSearch,
+      title: "Personalized Triage and Matching",
+      description:
+        "Benefit from our unique triage process, designed to understand your individual health needs and goals. We'll match you with practitioners who specialize in the care you seek, ensuring a tailored wellness journey.",
+      color: "#34aadc" // Choose a new icon color that represents this feature
+    },
+    {
+      IconComponent: IoMdHeart,
+      title: "Access Care on Your Terms",
+      description:
+        "Book appointments effortlessly online, choosing between face-to-face or virtual visits. Our platform ensures that your path to wellness is both flexible and accommodating, suited to your lifestyle and preferences.",
+      color: "#d9534f" // Confirm actual icon color
+    }
+  ];
+  
 
 interface FeatureProps {
   IconComponent: React.ComponentType<{ color: string; size: string }>;

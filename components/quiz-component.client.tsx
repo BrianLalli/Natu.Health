@@ -68,27 +68,30 @@ const QuizComponent = () => {
     }
   }, [answers]);
 
-  const handleInputSubmit = (questionId: string) => {
+  const handleInputSubmit = (questionId: string, isFinal: boolean = false) => {
     const inputValue = temporaryInput[questionId];
     if (inputValue) {
       const newAnswers = {
         ...answers,
         [questionId]: { questionId, value: inputValue.value },
       };
-
+  
       // Update answers state
       setAnswers(newAnswers);
-
-      // Log the final answers including the latest input
-      console.log("Current Answers:", {
-        ...newAnswers,
-        Q4: Array.from(selectedQ4Answers),
-      });
-
-      // Move to the next question or to the submission
-      setCurrentQuestion((prevCurrentQuestion) => prevCurrentQuestion + 1);
+  
+      // If this is the final question, submit the quiz
+      if (isFinal) {
+        // You might want to perform any final validation here
+  
+        // Submit the quiz directly
+        handleSubmit(); // This now directly calls the final submission logic
+      } else {
+        // If not the final question, just move to the next question
+        setCurrentQuestion((prevCurrentQuestion) => prevCurrentQuestion + 1);
+      }
     }
   };
+  
 
   const handleSubmit = () => {
     const finalAnswers = {

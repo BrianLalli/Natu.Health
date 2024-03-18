@@ -38,7 +38,7 @@ export default function Zigzag() {
                 data-aos="fade-right"
               >
                 <div className="md:pr-4 lg:pr-12 xl:pr-16">
-                  <div className="font-architects-daughter text-xl text-purple-600 mb-2">
+                  <div className="font-architects-daughter text-xl text-600 mb-2">
                   Personalized recommendations
                   </div>
                   <h3 className="h3 mb-3">
@@ -108,7 +108,7 @@ export default function Zigzag() {
                   <h3 className="h3 mb-3">
                   Access a diverse network of practitioners helps people find alternative and cutting-edge therapies to achieve a healthier and more fulfilling life{" "}
                   </h3>
-                  <p className="text-xl text-gray-400 mb-4">
+                  <p className="text-xl text-400 mb-4">
                   Natu’s responsive approach to care supports people across a wide range of needs, interests and goals. Our personalized options are backed up by a practitioner network with varying clinical expertise and modalities to help make access to care easier than ever.
                   </p>
                 </div>
