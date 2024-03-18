@@ -1,4 +1,4 @@
-import React from 'react'; // Import React
+import React from "react"; // Import React
 import Link from "next/link";
 import MobileMenu from "./mobile-menu";
 
@@ -6,7 +6,8 @@ import MobileMenu from "./mobile-menu";
 export default function Header({ className }: { className?: string }) {
   // Apply the className to the header element
   return (
-    <header className={`w-full z-30 ${className}`} style={{ backgroundColor: "transparent" }}>
+    <header className={`w-full z-30 ${className}`}>
+      {" "}
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-20">
           {/* Site branding */}
@@ -22,10 +23,17 @@ export default function Header({ className }: { className?: string }) {
                 className="w-8 h-8 fill-current"
                 src="/images/logo3.png"
                 alt="Logo"
-                style={{ color: "#949cff" /* lavender for the logo if applicable */ }}
+                style={{
+                  color: "#949cff" /* lavender for the logo if applicable */,
+                }}
               />
               {/* Text for the logo */}
-              <span className="ml-2 text-xl font-bold" style={{ color: "#435373" /* deep-slate */ }}>Natu.Health</span>
+              <span
+                className="ml-2 text-xl font-bold"
+                style={{ color: "#435373" /* deep-slate */ }}
+              >
+                Natu.Health
+              </span>
             </Link>
           </div>
 
@@ -38,7 +46,7 @@ export default function Header({ className }: { className?: string }) {
                   href="/signin"
                   className="font-medium px-4 py-3 flex items-center transition duration-150 ease-in-out"
                   style={{
-                    borderRadius: '25px', // You can adjust the value for the desired roundness
+                    borderRadius: "25px", // You can adjust the value for the desired roundness
                     color: "#435373" /* deep-slate */,
                     backgroundColor: "transparent", // Clear or any desired color for the background
                     borderStyle: "solid", // Only if you want a border
@@ -52,7 +60,7 @@ export default function Header({ className }: { className?: string }) {
                   href="/signup"
                   className="btn-sm ml-3"
                   style={{
-                    borderRadius: '25px', // You can adjust the value for the desired roundness
+                    borderRadius: "25px", // You can adjust the value for the desired roundness
                     backgroundColor: "#8fcca0" /* flora */,
                     color: "#ffffff" /* white text */,
                     borderColor: "#8fcca0" /* flora for border to match */,
