@@ -143,7 +143,19 @@ const QuizComponent = () => {
     );
   };
 
-  const dynamicQ4Options = {
+  type DynamicQ4OptionKeys = "Male" | "Female" | "Prefer not to say";
+
+  interface CategoryOptions {
+    category: string;
+    options: string[];
+  }
+
+  // This maps the keys directly to an array of CategoryOptions
+  type DynamicQ4Options = {
+    [key in DynamicQ4OptionKeys]: CategoryOptions[];
+  };
+
+  const dynamicQ4Options: DynamicQ4Options = {
     Male: [
       {
         category: "Men’s Health",
@@ -388,539 +400,294 @@ const QuizComponent = () => {
     ],
   };
 
-  interface IQuizQuestion {
-    questionId: string,
-    questionHeading: string,
-    answerOptions: string[]
+  interface RenderQuizQuestionProps {
+    currentQuestionIndex: number;
+    answers: any; // Consider using a more specific type based on your application
+    setTemporaryInput?: (input: any) => void; // Function to update temporary input, if applicable
+    handleInputSubmit?: (questionId: string) => void; // Function to handle the submission of input
   }
 
+  interface IQuizQuestion {
+    questionId: string;
+    questionHeading: string | ((answers: any) => string);
+    answerOptions?: string[] | (() => string[]);
+    getDynamicAnswerOptions?: (answers: any) => string[];
+    inputType?: "button" | "dropdown" | "text"; // Include 'text' for text inputs
+    placeholder?: string; // Placeholder text for text inputs
+    validationRegex?: RegExp; // Optional validation logic for text inputs
+  }
 
   const quizQuestions: IQuizQuestion[] = [
     {
       questionId: "Q1",
       questionHeading: "What are you looking for help with?",
-      answerOptions: ["Current Symptoms", "Preventative Care", "General Health"] 
+      answerOptions: [
+        "Current Symptoms",
+        "Preventative Care",
+        "General Health",
+      ],
     },
-  ]
+    {
+      questionId: "Q2",
+      questionHeading: "What is your sex?",
+      answerOptions: ["Male", "Female", "Prefer not to say"],
+    },
+    {
+      questionId: "Q3",
+      questionHeading: "What type of care are you looking for?",
+      answerOptions: [
+        "Digestive",
+        "Cognitive",
+        "Respiratory",
+        "Movement",
+        "Pregnancy",
+      ],
+    },
+    {
+      questionId: "Q4",
+      questionHeading:
+        "Digging a little deeper, are you looking for care for any of the following?",
+      getDynamicAnswerOptions: (answers: Answers) => {
+        const genderResponse = answers["Q2"]?.value as
+          | DynamicQ4OptionKeys
+          | undefined;
 
-  const RenderQuizQuestion = ({currentQuestion}:{currentQuestion: number}) => {
-    if(!currentQuestion && currentQuestion !== 0) return;
-    const {questionId, questionHeading, answerOptions} = quizQuestions[currentQuestion];
-    return (<div className="question">
-    <p>{questionHeading}</p>
-    <div className="answers">
-      {answerOptions.map(answer => (
-      <button
-        className="answer-bubble"
-        key={answer}
-        onClick={() =>
-          handleAnswerSelect({
-            questionId,
-            value: answer,
-          })
-        }
-      >
-        {answer}
-      </button>
-      ))}
-    </div></div>)
-  }
+        // Use a default value if genderResponse is undefined or not a valid key
+        const optionsKey: DynamicQ4OptionKeys =
+          genderResponse || "Prefer not to say";
 
-  const renderQuestion = () => {
-    console.log("Rendering question for index:", currentQuestion);
-    switch (currentQuestion) {
-      // Question 1: What are you looking for help with?
-      case 0:
-        return (
-          <RenderQuizQuestion currentQuestion={currentQuestion}/>
+        const options = dynamicQ4Options[optionsKey];
+
+        // Use a flatMap for a cleaner approach to flatten the options
+        const flattenedOptions = options.flatMap((category) =>
+          category.options.map((option) => `${category.category}: ${option}`)
         );
 
-      // Question 2: What is your sex?
-      case 1:
-        console.log("Rendering Q2");
-        return (
-          <div className="question">
-            <p>What is your sex?</p>
-            <div className="answers">
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q2", value: "Male" })
-                }
-              >
-                Male
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q2", value: "Female" })
-                }
-              >
-                Female
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({
-                    questionId: "Q2",
-                    value: "Prefer not to say",
-                  })
-                }
-              >
-                Prefer not to say
-              </button>
-            </div>
-          </div>
-        );
-
-      // Question 3: What type of care are you looking for?
-      case 2:
-        return (
-          <div className="question">
-            <p>What type of care are you looking for?</p>
-            <div className="answers">
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q3", value: "Digestive" })
-                }
-              >
-                Digestive
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q3", value: "Cognitive" })
-                }
-              >
-                Cognitive
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({
-                    questionId: "Q3",
-                    value: "Respiratory",
-                  })
-                }
-              >
-                Respiratory
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q3", value: "Movement" })
-                }
-              >
-                Movement
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q3", value: "Pregnancy" })
-                }
-              >
-                Pregnancy
-              </button>
-            </div>
-          </div>
-        );
-      // Question 4: Digging a little deeper, are you looking for care for any of the following?
-      case 3: {
-        // Safely determine the key to use for dynamicQ4Options based on answers.Q2.value
-        console.log("Rendering Q4", {
-          selectedQ4Answers,
-          genderKey: answers.Q2?.value,
-        });
-        const genderKey = answers.Q2?.value
-          ? ["Male", "Female", "Prefer not to say"].includes(
-              answers.Q2.value.toString()
-            )
-            ? answers.Q2.value.toString()
-            : "Prefer not to say"
-          : "Prefer not to say";
-
-        // TypeScript now knows genderKey is one of the keys in dynamicQ4Options or "Prefer not to say"
-        const optionsToDisplay =
-          dynamicQ4Options[genderKey as keyof typeof dynamicQ4Options];
-
-        return (
-          <div className="question question-4">
-            <p>
-              Digging a little deeper, are you looking for care for any of the
-              following?
-            </p>
-            <p>
-              <strong>Select all that apply.</strong>
-            </p>
-            <div className="answers">
-              {optionsToDisplay.map((category) => (
-                <React.Fragment key={category.category}>
-                  <h3>{category.category}</h3>
-                  {category.options.map((option) => (
-                    <button
-                      key={option}
-                      className={`answer-bubble ${
-                        selectedQ4Answers.has(option) ? "selected" : ""
-                      }`}
-                      onClick={() => handleQ4AnswerSelect(option)}
-                    >
-                      {option}
-                    </button>
-                  ))}
-                </React.Fragment>
-              ))}
-            </div>
-            <button
-              className="next-button"
-              onClick={() => setCurrentQuestion(currentQuestion + 1)}
-              disabled={selectedQ4Answers.size === 0}
-            >
-              Next
-            </button>
-          </div>
-        );
-      }
-
-      // Question 5: How long have you experienced your symptoms?
-      case 4: {
-        // Determine the user's selection for Question 1
+        return flattenedOptions;
+      },
+    },
+    {
+      questionId: "Q5",
+      questionHeading: (answers) => {
         const q1Answer = answers["Q1"]?.value;
-
-        // Adjust the question and options for Q5 based on the Q1 answer
         if (q1Answer === "Current Symptoms") {
-          return (
-            <div className="question">
-              <p>How long have you experienced your symptoms?</p>
-              <div className="answers">
-                {[
-                  "Less Than 1 Month",
-                  "2-6 Months",
-                  "Over 6 Months",
-                  "Over 1 Year",
-                  "I don’t know",
-                ].map((option) => (
-                  <button
-                    key={option}
-                    className="answer-bubble"
-                    onClick={() =>
-                      handleAnswerSelect({ questionId: "Q5", value: option })
-                    }
-                  >
-                    {option}
-                  </button>
-                ))}
-              </div>
-            </div>
-          );
-        } else if (
-          q1Answer === "Preventative Care" ||
-          q1Answer === "General Health"
-        ) {
-          return (
-            <div className="question">
-              <p>
-                Are there other factors that are important to you when exploring
-                care options?
-              </p>
-              <div className="answers">
-                {[
-                  "Family History",
-                  "I’m training for something",
-                  "Lifestyle Factors",
-                  "Genetics",
-                  "Not sure",
-                ].map((option) => (
-                  <button
-                    key={option}
-                    className="answer-bubble"
-                    onClick={() =>
-                      handleAnswerSelect({ questionId: "Q5", value: option })
-                    }
-                  >
-                    {option}
-                  </button>
-                ))}
-              </div>
-            </div>
-          );
+          return "How long have you experienced your symptoms?";
+        } else {
+          return "Are there other factors that are important to you when exploring care options?";
         }
+      },
+      getDynamicAnswerOptions: (answers) => {
+        const q1Answer = answers["Q1"]?.value;
+        if (q1Answer === "Current Symptoms") {
+          return [
+            "Less Than 1 Month",
+            "2-6 Months",
+            "Over 6 Months",
+            "Over 1 Year",
+            "I don’t know",
+          ];
+        } else {
+          return [
+            "Family History",
+            "I’m training for something",
+            "Lifestyle Factors",
+            "Genetics",
+            "Not sure",
+          ];
+        }
+      },
+    },
+    {
+      questionId: "Q6",
+      questionHeading:
+        "Are there other factors that are important to you when exploring care options?",
+      answerOptions: [
+        "Family History",
+        "I'm Training For Something",
+        "Lifestyle Factors",
+        "Genetics",
+        "Not sure",
+      ],
+    },
+    {
+      questionId: "Q7",
+      questionHeading: "Have you had experience with any of the following?",
+      answerOptions: [
+        "Medical Doctor (MD)",
+        "Doctor of Osteopathic Medicine (DO)",
+        "Acupuncturist (LAc, OMD, DoCM)",
+        "Chiropractor (DC)",
+        "Naturopathic Doctor (ND)",
+        "Physical Therapist (PT)",
+        "Massage Therapist (LMT)",
+        "None",
+      ],
+    },
+    {
+      questionId: "Q8",
+      questionHeading: "How old are you?",
+      answerOptions: [
+        "Under 18",
+        "18-24",
+        "25-34",
+        "35-44",
+        "45-54",
+        "55-64",
+        "65-74",
+        "75 or older",
+      ],
+      inputType: "dropdown", // Specify that this question uses a dropdown
+    },
+    {
+      questionId: "Q9",
+      questionHeading: "Zip Code",
+      inputType: "text",
+      placeholder: "Enter 5 Digit Zip Code",
+      validationRegex: /^\d{5}$/, // Regular expression for validating a 5-digit zip code
+    },
+  ];
+
+  const RenderQuizQuestion = ({
+    currentQuestionIndex,
+    answers,
+    setTemporaryInput, // Assuming this function updates temporary input state
+    handleInputSubmit, // Assuming this function handles the final input submission
+  }: RenderQuizQuestionProps) => {
+    if (currentQuestionIndex === undefined) return null;
+
+    const question = quizQuestions[currentQuestionIndex];
+    const questionHeading =
+      typeof question.questionHeading === "function"
+        ? question.questionHeading(answers)
+        : question.questionHeading;
+
+    // Handle dynamic answer options if applicable
+    let determinedAnswerOptions = question.answerOptions;
+    if (question.getDynamicAnswerOptions) {
+      determinedAnswerOptions = question.getDynamicAnswerOptions(answers);
+    }
+
+    // Text input state for handling user input and validation
+    const [userInput, setUserInput] = useState("");
+
+    const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const input = e.target.value;
+      if (question.validationRegex && question.validationRegex.test(input)) {
+        setUserInput(input);
+        // Optionally update a temporary state if your application logic requires it
+        if (setTemporaryInput) {
+          setTemporaryInput({
+            ...answers, // Assuming answers is your current state of answers
+            [question.questionId]: {
+              questionId: question.questionId,
+              value: input,
+              valid: true,
+            },
+          });
+        }
+      } else {
+        // Handle invalid input if necessary
+        console.error("Invalid input");
       }
+    };
 
-      // Question 6: Are there other factors that are important to you when exploring care options?
-      case 5:
+    // Conditional rendering based on input type
+    switch (question.inputType) {
+      case "text":
         return (
           <div className="question">
-            <p>
-              Are there other factors that are important to you when exploring
-              care options?
-            </p>
-            <div className="answers">
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({
-                    questionId: "Q6",
-                    value: "Family History",
-                  })
-                }
-              >
-                Family History
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({
-                    questionId: "Q6",
-                    value: "I'm Training For Something",
-                  })
-                }
-              >
-                I'm Training For Something
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({
-                    questionId: "Q6",
-                    value: "Lifestyle Factors",
-                  })
-                }
-              >
-                Lifestyle Factors
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({
-                    questionId: "Q6",
-                    value: "Genetics",
-                  })
-                }
-              >
-                Genetics
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({
-                    questionId: "Q6",
-                    value: "Not sure",
-                  })
-                }
-              >
-                Not sure
-              </button>
-            </div>
-          </div>
-        );
-
-      // Question 7: Have you had experience with any of the following?
-      case 6:
-        return (
-          <div className="question">
-            <p>Have you had experience with any of the following?</p>
-            <div className="answers">
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({
-                    questionId: "Q7",
-                    value: "Medical Doctor (MD)",
-                  })
-                }
-              >
-                Medical Doctor (MD)
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({
-                    questionId: "Q7",
-                    value: "Doctor of Osteopathic Medicine (DO)",
-                  })
-                }
-              >
-                Doctor of Osteopathic Medicine (DO)
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q7", value: "Acupuncturist (LAc, OMD, DoCM)" })
-                }
-              >
-                Acupuncturist (LAc, OMD, DoCM)
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q7", value: "Chiropractor (DC)" })
-                }
-              >
-                Chiropractor (DC)
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q7", value: "Naturopathic Doctor (ND)" })
-                }
-              >
-                Naturopathic Doctor (ND)
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q7", value: "Physical Therapist (PT)" })
-                }
-              >
-                Physical Therapist (PT)
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q7", value: "Massage Therapist (LMT)" })
-                }
-              >
-                Massage Therapist (LMT)
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q7", value: "None" })
-                }
-              >
-                None
-              </button>
-            </div>
-          </div>
-        );
-
-      // Question 9: How old are you?
-      case 7:
-        return (
-          <div className="question">
-            <p>How old are you?</p>
-            <select
-              className="age-dropdown" // Add a class for styling
-              onChange={(e) =>
-                handleAnswerSelect({ questionId: "Q9", value: e.target.value })
-              }
-            >
-              <option value="">Select your age</option>
-              <option value="Under 18">Under 18</option>
-              <option value="18-24">18-24</option>
-              <option value="25-34">25-34</option>
-              <option value="35-44">35-44</option>
-              <option value="45-54">45-54</option>
-              <option value="55-64">55-64</option>
-              <option value="65-74">65-74</option>
-              <option value="75 or older">75 or older</option>
-            </select>
-          </div>
-        );
-      // // Question 10: Do you use a wearable fitness device?
-      // case 8:
-      //   return (
-      //     <div className="question">
-      //       <p>Do you use a wearable fitness device?</p>
-      //       <div className="answers">
-      //         <button
-      //           className="answer-bubble"
-      //           onClick={() =>
-      //             handleAnswerSelect({ questionId: "Q10", value: "Whoop" })
-      //           }
-      //         >
-      //           Whoop
-      //         </button>
-      //         <button
-      //           className="answer-bubble"
-      //           onClick={() =>
-      //             handleAnswerSelect({
-      //               questionId: "Q10",
-      //               value: "Apple Watch",
-      //             })
-      //           }
-      //         >
-      //           Apple Watch
-      //         </button>
-      //         <button
-      //           className="answer-bubble"
-      //           onClick={() =>
-      //             handleAnswerSelect({ questionId: "Q10", value: "Oura Ring" })
-      //           }
-      //         >
-      //           Oura Ring
-      //         </button>
-      //         <button
-      //           className="answer-bubble"
-      //           onClick={() =>
-      //             handleAnswerSelect({ questionId: "Q10", value: "Garmin" })
-      //           }
-      //         >
-      //           Garmin
-      //         </button>
-      //         <button
-      //           className="answer-bubble"
-      //           onClick={() =>
-      //             handleAnswerSelect({ questionId: "Q10", value: "Fitbit" })
-      //           }
-      //         >
-      //           Fitbit
-      //         </button>
-      //         <button
-      //           className="answer-bubble"
-      //           onClick={() =>
-      //             handleAnswerSelect({ questionId: "Q10", value: "Other" })
-      //           }
-      //         >
-      //           Other
-      //         </button>
-      //       </div>
-      //     </div>
-      //   );
-      // Question 11: What is your zip code?
-      case 8:
-        const zipCodeRegex = /^\d{5}$/; // Regular expression for a 5-digit zip code
-
-        const handleZipCodeChange = (
-          e: React.ChangeEvent<HTMLInputElement>
-        ) => {
-          const userInput = e.target.value;
-          if (zipCodeRegex.test(userInput)) {
-            // Valid zip code
-            setTemporaryInput({
-              ...temporaryInput,
-              ["Q11"]: {
-                questionId: "Q11",
-                value: userInput,
-                input: true,
-              },
-            });
-          } else {
-            // Invalid zip code, you can take appropriate action here
-            console.error("Please enter a valid 5-digit zip code.");
-          }
-        };
-
-        return (
-          <div className="question">
-            <p>Zip Code</p>
+            <p>{questionHeading}</p>
             <input
               type="text"
               className="input-text"
-              placeholder="Enter 5 Digit Zip Code"
-              maxLength={5}
-              onChange={handleZipCodeChange}
+              placeholder={question.placeholder || ""}
+              value={userInput}
+              onChange={handleTextChange}
+              maxLength={5} // You can adjust maxLength or other properties as needed
             />
             <button
               className="next-button"
-              onClick={() => handleInputSubmit("Q11")}
+              disabled={!userInput}
+              onClick={() =>
+                handleInputSubmit && handleInputSubmit(question.questionId)
+              }
             >
               Next
             </button>
           </div>
         );
+
+      case "dropdown":
+        return (
+          <div className="question">
+            <p>{questionHeading}</p>
+            <select
+              className="age-dropdown"
+              onChange={(e) =>
+                handleAnswerSelect({
+                  questionId: question.questionId,
+                  value: e.target.value,
+                })
+              }
+            >
+              <option value="">Select</option>
+              {(typeof determinedAnswerOptions === "function"
+                ? determinedAnswerOptions()
+                : determinedAnswerOptions ?? []
+              ).map((option: string) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
+        );
+
+      default:
+        return (
+          <div className="question">
+            <p>{questionHeading}</p>
+            <div className="answers">
+              {(typeof determinedAnswerOptions === "function"
+                ? determinedAnswerOptions()
+                : determinedAnswerOptions ?? []
+              ).map((answer: string, index: number) => (
+                <button
+                  className="answer-bubble"
+                  key={index}
+                  onClick={() =>
+                    handleAnswerSelect({
+                      questionId: question.questionId,
+                      value: answer,
+                    })
+                  }
+                >
+                  {answer}
+                </button>
+              ))}
+            </div>
+          </div>
+        );
     }
+  };
+
+  const renderQuestion = () => {
+    console.log("Rendering question for index:", currentQuestion);
+
+    // Assuming `currentQuestion` is maintained elsewhere in your state and
+    // properly updates to reflect the current question index.
+    // Also assuming `answers` is an object or similar structure containing the user's
+    // answers so far, which you might need for dynamic questions.
+
+    // Directly return the RenderQuizQuestion component for any question index.
+    // This assumes RenderQuizQuestion is designed to handle rendering based on
+    // the current question index and the answers provided so far.
+    return (
+      <RenderQuizQuestion
+        currentQuestionIndex={currentQuestion}
+        answers={answers} // Make sure to pass the current state of answers, if needed for dynamic content
+      />
+    );
   };
 
   return (
