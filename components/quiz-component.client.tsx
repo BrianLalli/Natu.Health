@@ -18,6 +18,7 @@ const QuizComponent = () => {
   const [selectedQ4Answers, setSelectedQ4Answers] = useState<Set<string>>(
     new Set()
   );
+  const [zipCode, setZipCode] = useState<string>("");
   const [temporaryInput, setTemporaryInput] = useState<Answers>({});
   const totalQuestions = 9;
 
@@ -126,7 +127,7 @@ const QuizComponent = () => {
     // Redirect or further process
     window.location.href = `/practitioners?focusArea=${encodeURIComponent(
       focusArea
-    )}&zipCode=${encodeURIComponent(userZipCode)}`;
+    )}&zipCode=${encodeURIComponent(zipCode)}`;
   };
 
   const renderProgressBar = () => {
@@ -886,7 +887,10 @@ const QuizComponent = () => {
           e: React.ChangeEvent<HTMLInputElement>
         ) => {
           const userInput = e.target.value;
+          console.log("Final Answers:", answers);
+          console.log(zipCodeRegex.test(userInput));
           if (zipCodeRegex.test(userInput)) {
+            setZipCode(userInput);
             // Valid zip code
             setTemporaryInput({
               ...temporaryInput,
@@ -897,6 +901,7 @@ const QuizComponent = () => {
               },
             });
           } else {
+            setZipCode("");
             // Invalid zip code, you can take appropriate action here
             console.error("Please enter a valid 5-digit zip code.");
           }
@@ -913,10 +918,11 @@ const QuizComponent = () => {
               onChange={handleZipCodeChange}
             />
             <button
-              className="next-button"
-              onClick={() => handleInputSubmit("Q11")}
+            disabled={!zipCode}
+              className={zipCode ? "next-button" : "disabled-button"}
+              onClick={() => handleSubmit()}
             >
-              Next
+              Submit
             </button>
           </div>
         );
@@ -973,17 +979,18 @@ const QuizComponent = () => {
             {renderQuestion()}
           </>
         ) : (
-          <div>
-            <p className="completion-message">
-              Thank you for completing the quiz!
-            </p>
-            <button
-              className="next-button bg-lavender text-off-white border-none"
-              onClick={handleSubmit}
-            >
-              Submit
-            </button>
-          </div>
+          null
+          // <div>
+          //   <p className="completion-message">
+          //     Thank you for completing the quiz!
+          //   </p>
+          //   <button
+          //     className="next-button bg-lavender text-off-white border-none"
+          //     onClick={handleSubmit}
+          //   >
+          //     Submit
+          //   </button>
+          // </div>
         )}
       </div>
     </div>
