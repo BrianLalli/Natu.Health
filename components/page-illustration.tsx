@@ -2,18 +2,17 @@ import React from "react";
 
 export default function PageIllustration() {
   return (
-    <div
-      className="relative max-w-6xl mx-auto h-0 pointer-events-none"
-      aria-hidden="true"
-      style={{ backgroundColor: '#F7F7F7' }}
-    >
-      <svg
-        className="absolute top-0 right-0 transform translate-x-1/2 -mr-16"
-        width="722"
-        height="320"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
+<div
+  className="pointer-events-none overflow-hidden absolute inset-0"
+  aria-hidden="true"
+  style={{ backgroundColor: 'transparent' }} // Removed red border used for debugging
+>
+<svg
+  className="absolute inset-0 w-full h-full"
+  preserveAspectRatio="xMidYMid slice"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
         <defs>
           <linearGradient
             id="illustration-01"

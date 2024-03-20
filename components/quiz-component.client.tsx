@@ -19,30 +19,44 @@ const QuizComponent = () => {
     new Set()
   );
   const [temporaryInput, setTemporaryInput] = useState<Answers>({});
-  const totalQuestions = 11;
+  const totalQuestions = 9;
+
+  const getNextQuestionIndex = (currentQuestionIndex: number) => {
+    // After Q4, check if we need to skip based on Q1's answer
+    if (currentQuestionIndex === 4) {
+      const q1Answer = answers["Q1"]?.value;
+      if (q1Answer === "Current Symptoms") {
+        // Move to the next question about symptom duration
+        return 5;
+      } else {
+        // For "Preventative Care" or "General Health", skip as planned
+        return 6; // Ensure this aligns with your actual question structure
+      }
+    }
+    // Default behavior: proceed to the next question
+    return currentQuestionIndex + 1;
+  };
 
   const handleAnswerSelect = (selectedAnswer: Answer) => {
-    if (selectedAnswer.questionId === "Q4") {
-      setSelectedQ4Answers((prevSelected) => {
-        const newSelected = new Set(prevSelected);
-        if (newSelected.has(selectedAnswer.value as string)) {
-          newSelected.delete(selectedAnswer.value as string);
-        } else {
-          newSelected.add(selectedAnswer.value as string);
-        }
+    setAnswers((prevAnswers) => ({
+      ...prevAnswers,
+      [selectedAnswer.questionId]: selectedAnswer,
+    }));
 
-        // Move to the next question if any option is selected
-        if (newSelected.size > 0) {
-          setCurrentQuestion((prevCurrentQuestion) => prevCurrentQuestion + 1);
-        }
-        return newSelected;
-      });
-    } else {
-      setAnswers((prevAnswers) => ({
-        ...prevAnswers,
-        [selectedAnswer.questionId]: selectedAnswer,
-      }));
+    if (selectedAnswer.questionId === "Q4") {
+      const newSelected = new Set(selectedQ4Answers);
+      if (newSelected.has(selectedAnswer.value.toString())) {
+        newSelected.delete(selectedAnswer.value.toString());
+      } else {
+        newSelected.add(selectedAnswer.value.toString());
+      }
+      setSelectedQ4Answers(newSelected);
     }
+
+    console.log(
+      `Answer selected for question ${selectedAnswer.questionId}:`,
+      selectedAnswer.value
+    );
   };
 
   const handleQ4AnswerSelect = (value: string) => {
@@ -59,39 +73,43 @@ const QuizComponent = () => {
 
   useEffect(() => {
     const lastAnsweredQuestionId = Object.keys(answers).pop();
+    console.log(
+      "Last answered question ID:",
+      lastAnsweredQuestionId,
+      "Current Answers State:",
+      answers
+    );
     if (
       lastAnsweredQuestionId &&
       answers[lastAnsweredQuestionId] &&
       lastAnsweredQuestionId !== "Q4"
     ) {
+      console.log("Effect setting next question");
       setCurrentQuestion((prevCurrentQuestion) => prevCurrentQuestion + 1);
     }
   }, [answers]);
 
-  const handleInputSubmit = (questionId: string, isFinal: boolean = false) => {
+  const handleInputSubmit = (questionId: string) => {
     const inputValue = temporaryInput[questionId];
     if (inputValue) {
       const newAnswers = {
         ...answers,
         [questionId]: { questionId, value: inputValue.value },
       };
-  
+
       // Update answers state
       setAnswers(newAnswers);
-  
-      // If this is the final question, submit the quiz
-      if (isFinal) {
-        // You might want to perform any final validation here
-  
-        // Submit the quiz directly
-        handleSubmit(); // This now directly calls the final submission logic
-      } else {
-        // If not the final question, just move to the next question
-        setCurrentQuestion((prevCurrentQuestion) => prevCurrentQuestion + 1);
-      }
+
+      // Log the final answers including the latest input
+      console.log("Current Answers:", {
+        ...newAnswers,
+        Q4: Array.from(selectedQ4Answers),
+      });
+
+      // Move to the next question or to the submission
+      setCurrentQuestion((prevCurrentQuestion) => prevCurrentQuestion + 1);
     }
   };
-  
 
   const handleSubmit = () => {
     const finalAnswers = {
@@ -125,83 +143,340 @@ const QuizComponent = () => {
     );
   };
 
+  const dynamicQ4Options = {
+    Male: [
+      {
+        category: "Men’s Health",
+        options: [
+          "Hormone Therapy",
+          "Testosterone Replacement Therapy (TRT)",
+          "Growth Hormones",
+          "Peptides",
+          "Skin",
+          "Fertility",
+          "Stem Cells",
+          "Platelet-Rich-Plasma Injections",
+        ],
+      },
+      {
+        category: "Brain Health",
+        options: [
+          "Cognitive support- thinking, learning, decision making",
+          "Emotional support - stress, depression, well-being",
+          "Neurological conditions - Alzheimer's, dementia, Parkinson's, epilepsy (prevention and therapies)",
+          "Substance abuse",
+          "Neurofeedback",
+        ],
+      },
+      {
+        category: "Chronic Pain or Injuries",
+        options: [
+          "Back, Neck & Spine",
+          "Knee Joints",
+          "Shoulder",
+          "Elbow",
+          "Wrist & Hand",
+          "Ankle & Foot",
+        ],
+      },
+      {
+        category: "Sexual",
+        options: [
+          "Pregnancy",
+          "Pelvic Floor",
+          "Fertility",
+          "Erectile dysfunction",
+        ],
+      },
+      {
+        category: "Sleep",
+        options: [
+          "Sleep Habits",
+          "Insomnia",
+          "Sleep Apnea",
+          "Restless Leg Syndrome",
+          "Narcolepsy",
+          "Other Sleep Disorders",
+        ],
+      },
+      {
+        category: "Digestive",
+        options: [
+          "Gut Health",
+          "Gastrointestinal Disorders (Poop)",
+          "Nutritional",
+          "Leaky Gut",
+          "Functional Nutrition",
+        ],
+      },
+      {
+        category: "Respiratory",
+        options: [
+          "Chronic Obstructive Pulmonary Disease (COPD)",
+          "Asthma",
+          "Bronchitis",
+          "Emphysema",
+          "Respiratory Infection",
+          "Allergies",
+        ],
+      },
+    ],
+    Female: [
+      {
+        category: "Women’s Health",
+        options: [
+          "Hormone Therapy",
+          "Pregnancy",
+          "Peptides",
+          "Skin",
+          "Fertility",
+          "Stem Cells",
+          "Platelet-Rich-Plasma Injections",
+        ],
+      },
+      {
+        category: "Brain Health",
+        options: [
+          "Cognitive support- thinking, learning, decision making",
+          "Emotional support - stress, depression, well-being",
+          "Neurological conditions - Alzheimer's, dementia, Parkinson's, epilepsy (prevention and therapies)",
+          "Substance abuse",
+          "Neurofeedback",
+        ],
+      },
+      {
+        category: "Chronic Pain or Injuries",
+        options: [
+          "Back, Neck & Spine",
+          "Knee Joints",
+          "Shoulder",
+          "Elbow",
+          "Wrist & Hand",
+          "Ankle & Foot",
+        ],
+      },
+      {
+        category: "Sexual",
+        options: [
+          "Pregnancy",
+          "Pelvic Floor",
+          "Fertility",
+          "Erectile dysfunction",
+        ],
+      },
+      {
+        category: "Sleep",
+        options: [
+          "Sleep Habits",
+          "Insomnia",
+          "Sleep Apnea",
+          "Restless Leg Syndrome",
+          "Narcolepsy",
+          "Other Sleep Disorders",
+        ],
+      },
+      {
+        category: "Digestive",
+        options: [
+          "Gut Health",
+          "Gastrointestinal Disorders (Poop)",
+          "Nutritional",
+          "Leaky Gut",
+          "Functional Nutrition",
+        ],
+      },
+      {
+        category: "Respiratory",
+        options: [
+          "Chronic Obstructive Pulmonary Disease (COPD)",
+          "Asthma",
+          "Bronchitis",
+          "Emphysema",
+          "Respiratory Infection",
+          "Allergies",
+        ],
+      },
+    ],
+    "Prefer not to say": [
+      {
+        category: "Men’s Health",
+        options: [
+          "Hormone Therapy",
+          "Testosterone Replacement Therapy (TRT)",
+          "Growth Hormones",
+          "Peptides",
+          "Skin",
+          "Fertility",
+          "Stem Cells",
+          "Platelet-Rich-Plasma Injections",
+        ],
+      },
+      {
+        category: "Women’s Health",
+        options: [
+          "Hormone Therapy",
+          "Pregnancy",
+          "Peptides",
+          "Skin",
+          "Fertility",
+          "Stem Cells",
+          "Platelet-Rich-Plasma Injections",
+        ],
+      },
+      {
+        category: "Brain Health",
+        options: [
+          "Cognitive support- thinking, learning, decision making",
+          "Emotional support - stress, depression, well-being",
+          "Neurological conditions - Alzheimer's, dementia, Parkinson's, epilepsy (prevention and therapies)",
+          "Substance abuse",
+          "Neurofeedback",
+        ],
+      },
+      {
+        category: "Chronic Pain or Injuries",
+        options: [
+          "Back, Neck & Spine",
+          "Knee Joints",
+          "Shoulder",
+          "Elbow",
+          "Wrist & Hand",
+          "Ankle & Foot",
+        ],
+      },
+      {
+        category: "Sexual",
+        options: [
+          "Pregnancy",
+          "Pelvic Floor",
+          "Fertility",
+          "Erectile dysfunction",
+        ],
+      },
+      {
+        category: "Sleep",
+        options: [
+          "Sleep Habits",
+          "Insomnia",
+          "Sleep Apnea",
+          "Restless Leg Syndrome",
+          "Narcolepsy",
+          "Other Sleep Disorders",
+        ],
+      },
+      {
+        category: "Digestive",
+        options: [
+          "Gut Health",
+          "Gastrointestinal Disorders (Poop)",
+          "Nutritional",
+          "Leaky Gut",
+          "Functional Nutrition",
+        ],
+      },
+      {
+        category: "Respiratory",
+        options: [
+          "Chronic Obstructive Pulmonary Disease (COPD)",
+          "Asthma",
+          "Bronchitis",
+          "Emphysema",
+          "Respiratory Infection",
+          "Allergies",
+        ],
+      },
+    ],
+  };
+
   const renderQuestion = () => {
     console.log("Rendering question for index:", currentQuestion);
     switch (currentQuestion) {
-      // Question 1: Are you looking for?
+      // Question 1: What are you looking for help with?
       case 0:
         return (
           <div className="question">
-            <p>Are you looking for?</p>
+            <p>What are you looking for help with?</p>
             <div className="answers">
               <button
                 className="answer-bubble"
                 onClick={() =>
                   handleAnswerSelect({
                     questionId: "Q1",
-                    value: "Help with current symptoms",
+                    value: "Current Symptoms",
                   })
                 }
               >
-                Help with current symptoms
+                Current Symptoms
               </button>
               <button
                 className="answer-bubble"
                 onClick={() =>
                   handleAnswerSelect({
                     questionId: "Q1",
-                    value: "Proactive care",
+                    value: "Preventative Care",
                   })
                 }
               >
-                Proactive care
+                Preventative Care
               </button>
               <button
                 className="answer-bubble"
                 onClick={() =>
                   handleAnswerSelect({
                     questionId: "Q1",
-                    value: "Just exploring",
+                    value: "General Health",
                   })
                 }
               >
-                Just exploring
+                General Health
               </button>
             </div>
           </div>
         );
 
-      // Question 2: Are you looking for specific care?
+      // Question 2: What is your sex?
       case 1:
+        console.log("Rendering Q2");
         return (
           <div className="question">
-            <p>Are you looking for specific care?</p>
+            <p>What is your sex?</p>
             <div className="answers">
               <button
                 className="answer-bubble"
                 onClick={() =>
-                  handleAnswerSelect({ questionId: "Q2", value: "Yes" })
+                  handleAnswerSelect({ questionId: "Q2", value: "Male" })
                 }
               >
-                Yes
+                Male
               </button>
               <button
                 className="answer-bubble"
                 onClick={() =>
-                  handleAnswerSelect({ questionId: "Q2", value: "No" })
+                  handleAnswerSelect({ questionId: "Q2", value: "Female" })
                 }
               >
-                No
+                Female
+              </button>
+              <button
+                className="answer-bubble"
+                onClick={() =>
+                  handleAnswerSelect({
+                    questionId: "Q2",
+                    value: "Prefer not to say",
+                  })
+                }
+              >
+                Prefer not to say
               </button>
             </div>
           </div>
         );
 
-      // Question 3: What are you looking to explore?
+      // Question 3: What type of care are you looking for?
       case 2:
         return (
           <div className="question">
-            <p>What are you looking to explore?</p>
+            <p>What type of care are you looking for?</p>
             <div className="answers">
               <button
                 className="answer-bubble"
@@ -249,132 +524,137 @@ const QuizComponent = () => {
             </div>
           </div>
         );
-      // Question 4: Digging a little deeper, is there anything else you’re interested in exploring?
-      case 3:
+      // Question 4: Digging a little deeper, are you looking for care for any of the following?
+      case 3: {
+        // Safely determine the key to use for dynamicQ4Options based on answers.Q2.value
+        console.log("Rendering Q4", {
+          selectedQ4Answers,
+          genderKey: answers.Q2?.value,
+        });
+        const genderKey = answers.Q2?.value
+          ? ["Male", "Female", "Prefer not to say"].includes(
+              answers.Q2.value.toString()
+            )
+            ? answers.Q2.value.toString()
+            : "Prefer not to say"
+          : "Prefer not to say";
+
+        // TypeScript now knows genderKey is one of the keys in dynamicQ4Options or "Prefer not to say"
+        const optionsToDisplay =
+          dynamicQ4Options[genderKey as keyof typeof dynamicQ4Options];
+
         return (
           <div className="question question-4">
             <p>
-              Digging a little deeper, which of the following are you interested
-              in exploring?
+              Digging a little deeper, are you looking for care for any of the
+              following?
             </p>
             <p>
               <strong>Select all that apply.</strong>
             </p>
             <div className="answers">
-              {[
-                "Sleep",
-                "Pain",
-                "Allergies",
-                "Hormones",
-                "Poop",
-                "Nutrition",
-                "Supplements",
-                "Vaccines",
-                "Sexual",
-              ].map((option) => (
-                <button
-                  key={option}
-                  className={`answer-bubble ${
-                    selectedQ4Answers.has(option) ? "selected" : ""
-                  }`}
-                  onClick={() => handleQ4AnswerSelect(option)}
-                >
-                  {option}
-                </button>
+              {optionsToDisplay.map((category) => (
+                <React.Fragment key={category.category}>
+                  <h3>{category.category}</h3>
+                  {category.options.map((option) => (
+                    <button
+                      key={option}
+                      className={`answer-bubble ${
+                        selectedQ4Answers.has(option) ? "selected" : ""
+                      }`}
+                      onClick={() => handleQ4AnswerSelect(option)}
+                    >
+                      {option}
+                    </button>
+                  ))}
+                </React.Fragment>
               ))}
             </div>
             <button
               className="next-button"
               onClick={() => setCurrentQuestion(currentQuestion + 1)}
-              disabled={selectedQ4Answers.size === 0} // Disable if no option is selected
+              disabled={selectedQ4Answers.size === 0}
             >
               Next
             </button>
           </div>
         );
+      }
 
       // Question 5: How long have you experienced your symptoms?
-      case 4:
-        return (
-          <div className="question">
-            <p>How long have you experienced your symptoms?</p>
-            <div className="answers">
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({
-                    questionId: "Q5",
-                    value: "Less Than 1 Month",
-                  })
-                }
-              >
-                Less Than 1 Month
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({
-                    questionId: "Q5",
-                    value: "2-6 Months",
-                  })
-                }
-              >
-                2-6 Months
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({
-                    questionId: "Q5",
-                    value: "Over 6 Months",
-                  })
-                }
-              >
-                Over 6 Months
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({
-                    questionId: "Q5",
-                    value: "Over 1 Year",
-                  })
-                }
-              >
-                Over 1 Year
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({
-                    questionId: "Q5",
-                    value: "N/A",
-                  })
-                }
-              >
-                N/A
-              </button>
-            </div>
-          </div>
-        );
+      case 4: {
+        // Determine the user's selection for Question 1
+        const q1Answer = answers["Q1"]?.value;
 
-      // Question 6: Are there specific reasons you’re looking for care?
+        // Adjust the question and options for Q5 based on the Q1 answer
+        if (q1Answer === "Current Symptoms") {
+          return (
+            <div className="question">
+              <p>How long have you experienced your symptoms?</p>
+              <div className="answers">
+                {[
+                  "Less Than 1 Month",
+                  "2-6 Months",
+                  "Over 6 Months",
+                  "Over 1 Year",
+                  "I don’t know",
+                ].map((option) => (
+                  <button
+                    key={option}
+                    className="answer-bubble"
+                    onClick={() =>
+                      handleAnswerSelect({ questionId: "Q5", value: option })
+                    }
+                  >
+                    {option}
+                  </button>
+                ))}
+              </div>
+            </div>
+          );
+        } else if (
+          q1Answer === "Preventative Care" ||
+          q1Answer === "General Health"
+        ) {
+          return (
+            <div className="question">
+              <p>
+                Are there other factors that are important to you when exploring
+                care options?
+              </p>
+              <div className="answers">
+                {[
+                  "Family History",
+                  "I’m training for something",
+                  "Lifestyle Factors",
+                  "Genetics",
+                  "Not sure",
+                ].map((option) => (
+                  <button
+                    key={option}
+                    className="answer-bubble"
+                    onClick={() =>
+                      handleAnswerSelect({ questionId: "Q5", value: option })
+                    }
+                  >
+                    {option}
+                  </button>
+                ))}
+              </div>
+            </div>
+          );
+        }
+      }
+
+      // Question 6: Are there other factors that are important to you when exploring care options?
       case 5:
         return (
           <div className="question">
-            <p>Are there specific reasons you’re looking for care?</p>
+            <p>
+              Are there other factors that are important to you when exploring
+              care options?
+            </p>
             <div className="answers">
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({
-                    questionId: "Q6",
-                    value: "General Health",
-                  })
-                }
-              >
-                General Health
-              </button>
               <button
                 className="answer-bubble"
                 onClick={() =>
@@ -402,11 +682,33 @@ const QuizComponent = () => {
                 onClick={() =>
                   handleAnswerSelect({
                     questionId: "Q6",
-                    value: "I'm just interested",
+                    value: "Lifestyle Factors",
                   })
                 }
               >
-                I'm just interested
+                Lifestyle Factors
+              </button>
+              <button
+                className="answer-bubble"
+                onClick={() =>
+                  handleAnswerSelect({
+                    questionId: "Q6",
+                    value: "Genetics",
+                  })
+                }
+              >
+                Genetics
+              </button>
+              <button
+                className="answer-bubble"
+                onClick={() =>
+                  handleAnswerSelect({
+                    questionId: "Q6",
+                    value: "Not sure",
+                  })
+                }
+              >
+                Not sure
               </button>
             </div>
           </div>
@@ -423,38 +725,62 @@ const QuizComponent = () => {
                 onClick={() =>
                   handleAnswerSelect({
                     questionId: "Q7",
-                    value: "Chiropractor",
+                    value: "Medical Doctor (MD)",
                   })
                 }
               >
-                Chiropractor
+                Medical Doctor (MD)
               </button>
               <button
                 className="answer-bubble"
                 onClick={() =>
                   handleAnswerSelect({
                     questionId: "Q7",
-                    value: "Acupuncturist",
+                    value: "Doctor of Osteopathic Medicine (DO)",
                   })
                 }
               >
-                Acupuncturist
+                Doctor of Osteopathic Medicine (DO)
               </button>
               <button
                 className="answer-bubble"
                 onClick={() =>
-                  handleAnswerSelect({ questionId: "Q7", value: "Naturopath" })
+                  handleAnswerSelect({ questionId: "Q7", value: "Acupuncturist (LAc, OMD, DoCM)" })
                 }
               >
-                Naturopath
+                Acupuncturist (LAc, OMD, DoCM)
               </button>
               <button
                 className="answer-bubble"
                 onClick={() =>
-                  handleAnswerSelect({ questionId: "Q7", value: "Osteopath" })
+                  handleAnswerSelect({ questionId: "Q7", value: "Chiropractor (DC)" })
                 }
               >
-                Osteopath
+                Chiropractor (DC)
+              </button>
+              <button
+                className="answer-bubble"
+                onClick={() =>
+                  handleAnswerSelect({ questionId: "Q7", value: "Naturopathic Doctor (ND)" })
+                }
+              >
+                Naturopathic Doctor (ND)
+              </button>
+              <button
+                className="answer-bubble"
+                onClick={() =>
+                  handleAnswerSelect({ questionId: "Q7", value: "Physical Therapist (PT)" })
+                }
+              >
+                Physical Therapist (PT)
+              </button>
+              <button
+                className="answer-bubble"
+                onClick={() =>
+                  handleAnswerSelect({ questionId: "Q7", value: "Massage Therapist (LMT)" })
+                }
+              >
+                Massage Therapist (LMT)
               </button>
               <button
                 className="answer-bubble"
@@ -467,41 +793,9 @@ const QuizComponent = () => {
             </div>
           </div>
         );
-      // Question 8: What is your sex assigned at birth?
-      case 7:
-        return (
-          <div className="question">
-            <p>What is your sex assigned at birth?</p>
-            <div className="answers">
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q8", value: "Man" })
-                }
-              >
-                Man
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q8", value: "Woman" })
-                }
-              >
-                Woman
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q8", value: "Other" })
-                }
-              >
-                Other
-              </button>
-            </div>
-          </div>
-        );
+
       // Question 9: How old are you?
-      case 8:
+      case 7:
         return (
           <div className="question">
             <p>How old are you?</p>
@@ -523,68 +817,68 @@ const QuizComponent = () => {
             </select>
           </div>
         );
-      // Question 10: Do you use a wearable fitness device?
-      case 9:
-        return (
-          <div className="question">
-            <p>Do you use a wearable fitness device?</p>
-            <div className="answers">
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q10", value: "Whoop" })
-                }
-              >
-                Whoop
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({
-                    questionId: "Q10",
-                    value: "Apple Watch",
-                  })
-                }
-              >
-                Apple Watch
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q10", value: "Oura Ring" })
-                }
-              >
-                Oura Ring
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q10", value: "Garmin" })
-                }
-              >
-                Garmin
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q10", value: "Fitbit" })
-                }
-              >
-                Fitbit
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q10", value: "Other" })
-                }
-              >
-                Other
-              </button>
-            </div>
-          </div>
-        );
+      // // Question 10: Do you use a wearable fitness device?
+      // case 8:
+      //   return (
+      //     <div className="question">
+      //       <p>Do you use a wearable fitness device?</p>
+      //       <div className="answers">
+      //         <button
+      //           className="answer-bubble"
+      //           onClick={() =>
+      //             handleAnswerSelect({ questionId: "Q10", value: "Whoop" })
+      //           }
+      //         >
+      //           Whoop
+      //         </button>
+      //         <button
+      //           className="answer-bubble"
+      //           onClick={() =>
+      //             handleAnswerSelect({
+      //               questionId: "Q10",
+      //               value: "Apple Watch",
+      //             })
+      //           }
+      //         >
+      //           Apple Watch
+      //         </button>
+      //         <button
+      //           className="answer-bubble"
+      //           onClick={() =>
+      //             handleAnswerSelect({ questionId: "Q10", value: "Oura Ring" })
+      //           }
+      //         >
+      //           Oura Ring
+      //         </button>
+      //         <button
+      //           className="answer-bubble"
+      //           onClick={() =>
+      //             handleAnswerSelect({ questionId: "Q10", value: "Garmin" })
+      //           }
+      //         >
+      //           Garmin
+      //         </button>
+      //         <button
+      //           className="answer-bubble"
+      //           onClick={() =>
+      //             handleAnswerSelect({ questionId: "Q10", value: "Fitbit" })
+      //           }
+      //         >
+      //           Fitbit
+      //         </button>
+      //         <button
+      //           className="answer-bubble"
+      //           onClick={() =>
+      //             handleAnswerSelect({ questionId: "Q10", value: "Other" })
+      //           }
+      //         >
+      //           Other
+      //         </button>
+      //       </div>
+      //     </div>
+      //   );
       // Question 11: What is your zip code?
-      case 10:
+      case 8:
         const zipCodeRegex = /^\d{5}$/; // Regular expression for a 5-digit zip code
 
         const handleZipCodeChange = (

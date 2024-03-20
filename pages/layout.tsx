@@ -47,7 +47,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </main>
 
       {/* Footer with a consistent background based on centralized color definitions */}
-      <Footer className="bg-light-slate text-gray-700" />
+      <Footer className="bg-deep-slate text-off-white-700" />
     </div>
   );
 }
