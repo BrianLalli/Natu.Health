@@ -212,6 +212,21 @@
   background-color: #43a047; /* Slightly darker green background on hover */
 }
 
+.disabled-button {
+  display: block; /* Block display to fill the width of its container */
+  margin: 20px auto; /* Centering the button horizontally with top and bottom margin */
+  padding: 10px 30px; /* Padding to make the button larger */
+  border: none; /* No border */
+  cursor: pointer; /* Changes the cursor to signify it's clickable */
+  text-align: center; /* Ensures the text inside the button is centered */
+  font-size: 1.3rem; /* Example font size */
+  border-radius: 25px; /* Rounded edges */
+  width: auto; /* Auto width based on content and padding */
+  z-index: 100 !important;
+  background-color: #e4e4e4;
+  color: #cfcfcf;
+}
+
 /* Styles for the input text on desktop */
 .input-text {
   padding: 10px;
