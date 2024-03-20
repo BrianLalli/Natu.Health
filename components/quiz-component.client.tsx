@@ -388,50 +388,51 @@ const QuizComponent = () => {
     ],
   };
 
+  interface IQuizQuestion {
+    questionId: string,
+    questionHeading: string,
+    answerOptions: string[]
+  }
+
+
+  const quizQuestions: IQuizQuestion[] = [
+    {
+      questionId: "Q1",
+      questionHeading: "What are you looking for help with?",
+      answerOptions: ["Current Symptoms", "Preventative Care", "General Health"] 
+    },
+  ]
+
+  const RenderQuizQuestion = ({currentQuestion}:{currentQuestion: number}) => {
+    if(!currentQuestion && currentQuestion !== 0) return;
+    const {questionId, questionHeading, answerOptions} = quizQuestions[currentQuestion];
+    return (<div className="question">
+    <p>{questionHeading}</p>
+    <div className="answers">
+      {answerOptions.map(answer => (
+      <button
+        className="answer-bubble"
+        key={answer}
+        onClick={() =>
+          handleAnswerSelect({
+            questionId,
+            value: answer,
+          })
+        }
+      >
+        {answer}
+      </button>
+      ))}
+    </div></div>)
+  }
+
   const renderQuestion = () => {
     console.log("Rendering question for index:", currentQuestion);
     switch (currentQuestion) {
       // Question 1: What are you looking for help with?
       case 0:
         return (
-          <div className="question">
-            <p>What are you looking for help with?</p>
-            <div className="answers">
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({
-                    questionId: "Q1",
-                    value: "Current Symptoms",
-                  })
-                }
-              >
-                Current Symptoms
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({
-                    questionId: "Q1",
-                    value: "Preventative Care",
-                  })
-                }
-              >
-                Preventative Care
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({
-                    questionId: "Q1",
-                    value: "General Health",
-                  })
-                }
-              >
-                General Health
-              </button>
-            </div>
-          </div>
+          <RenderQuizQuestion currentQuestion={currentQuestion}/>
         );
 
       // Question 2: What is your sex?
