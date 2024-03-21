@@ -1,18 +1,23 @@
 import Link from "next/link";
 import "../app/css/additional-styles/buttons.css";
-import PageIllustration from "../components/page-illustration";
-import PageIllustration2 from "../components/page-illustration2"; // Make sure this import path is correct
+import PageIllustration from "./page-illustration";
+import PageIllustration2 from "./page-illustration2";
+import SearchBar from "./search-bar.client";
 
 export default function Hero() {
   return (
-    <section style={{position: 'relative', overflow: 'hidden'}}>
+    <section style={{ position: 'relative', overflow: 'hidden' }}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 relative">
         {/* Illustrations behind hero content */}
-        <PageIllustration2 /> {/* First illustration */}
-        <PageIllustration /> {/* Second illustration */}
+        <div style={{ position: 'absolute', top: -10, left: 0, width: '50%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'flex-start', zIndex: 1 }}>
+          <PageIllustration2 pageName="hero2" /> {/* Illustration to the left */}
+        </div>
+        <div style={{ position: 'absolute', top: 0, right: -50, width: '50%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', zIndex: 1 }}>
+          <PageIllustration pageName="hero1" /> {/* Illustration to the right */}
+        </div>
 
         {/* Hero content */}
-        <div className="relative pt-32 pb-10 md:pt-40 md:pb-16">
+        <div className="relative pt-32 pb-10 md:pt-40 md:pb-16" style={{ zIndex: 2 }}>
           {/* Section header */}
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
             <h1 className="h1 mb-4" data-aos="fade-up" style={{ color: "#435373" }}>
@@ -29,6 +34,7 @@ export default function Hero() {
               </div>
             </div>
           </div>
+          <SearchBar />
         </div>
       </div>
     </section>
