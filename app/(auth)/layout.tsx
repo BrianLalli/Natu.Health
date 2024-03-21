@@ -1,4 +1,4 @@
-// import PageIllustration from '@/components/page-illustration'
+import PageIllustration from '@/components/page-illustration'
 
 export default function AuthLayout({
   children,
@@ -7,6 +7,9 @@ export default function AuthLayout({
 }) {  
   return (
     <main className="grow">
+
+      {/* Replace "YourPageName" with the actual name of the page you want the illustration for */}
+      <PageIllustration pageName="auth" />
 
       {children}
 
