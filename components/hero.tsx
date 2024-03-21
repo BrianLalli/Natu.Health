@@ -9,7 +9,7 @@ export default function Hero() {
     <section style={{ position: 'relative', overflow: 'hidden' }}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 relative">
         {/* Illustrations behind hero content */}
-        <div style={{ position: 'absolute', top: -10, left: 0, width: '50%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'flex-start', zIndex: 1 }}>
+        <div style={{ position: 'absolute', top: 0, left: 0, width: '50%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'flex-start', zIndex: 1 }}>
           <PageIllustration2 pageName="hero2" /> {/* Illustration to the left */}
         </div>
         <div style={{ position: 'absolute', top: 0, right: -50, width: '50%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', zIndex: 1 }}>
