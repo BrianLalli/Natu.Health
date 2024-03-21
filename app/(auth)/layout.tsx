@@ -1,4 +1,4 @@
-import PageIllustration from '@/components/page-illustration';
+import React from 'react';
 
 export default function AuthLayout({
   children,
@@ -7,9 +7,6 @@ export default function AuthLayout({
 }) {
   return (
     <main className="grow">
-      {/* Ensure you pass a valid string that corresponds to one of the page names 
-          expected by PageIllustration. Replace 'yourPageName' with the actual name. */}
-      <PageIllustration pageName="auth" />
       {children}
     </main>
   );
