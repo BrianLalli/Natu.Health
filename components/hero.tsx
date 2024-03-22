@@ -5,6 +5,9 @@ import PageIllustration2 from "./page-illustration2";
 import SearchBar from "./search-bar.client";
 
 export default function Hero() {
+  const handleSearch = (searchTerm: string) => {
+    console.log(`Search term: ${searchTerm}`);
+  };
   return (
     <section style={{ position: "relative", overflow: "hidden" }}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 relative">
@@ -77,7 +80,7 @@ export default function Hero() {
               </div>
             </div>
           </div>
-          <SearchBar />
+          <SearchBar onSearch={handleSearch} />
         </div>
       </div>
     </section>
