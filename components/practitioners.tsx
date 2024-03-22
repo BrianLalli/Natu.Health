@@ -110,7 +110,7 @@ const PractitionersComponent = () => {
         </h1>
         {bestMatch && (
           <div className="best-match-container bg-off-white">
-            <h2 className="text-xl font-semibold text-center mt-6 mb-4 text-deep-slate">
+            <h2 className="text-2xl font-semibold text-center mt-6 mb-4 text-flora">
               Best Match:
             </h2>
             <PractitionerCard practitioner={bestMatch} />
@@ -118,7 +118,7 @@ const PractitionersComponent = () => {
         )}
         {additionalPractitioners.length > 0 && (
           <div className="additional-options-container mt-8 mb-20 bg-off-white">
-            <h2 className="text-xl font-semibold text-center mb-4 text-deep-slate">
+            <h2 className="text-2xl font-semibold text-center mb-4 text-deep-slate">
               Additional Options:
             </h2>
             <div className="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 custom-grid-gap justify-center">
