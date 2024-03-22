@@ -13,7 +13,7 @@ export default function SignUp() {
 
           {/* Page header */}
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
-            <h1 className="h1">Welcome to your journey to better health.</h1>
+            <h1 className="h1 text-deep-slate">Welcome to your journey to better health.</h1>
           </div>
 
           {/* Form */}
@@ -66,7 +66,7 @@ export default function SignUp() {
               </div>
               <div className="flex flex-wrap -mx-3 mt-6">
                 <div className="w-full px-3">
-                  <button className="btn text-white bg-purple-600 hover:bg-purple-700 w-full">Sign up</button>
+                  <button className="btn text-white bg-lavender hover:bg-purple-700 w-full">Sign up</button>
                 </div>
               </div>
             </form>

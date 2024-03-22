@@ -5,6 +5,8 @@ import {
   calculateHaversineDistance,
 } from "../utils/parsePractitionerData";
 import "../app/css/additional-styles/practitioners.css";
+import PageIllustration from "./page-illustration";
+import PageIllustration2 from "./page-illustration2";
 
 const PractitionersComponent = () => {
   const [bestMatch, setBestMatch] = useState<PractitionerInfo | null>(null);
@@ -92,30 +94,41 @@ const PractitionersComponent = () => {
   }
 
   return (
-    <div>
-      <h1 className="text-2xl font-semibold recommendation text-deep-slate">
-        Based on your needs and proximity to your location, we recommend:
-      </h1>
-      {bestMatch && (
-        <div className="best-match-container bg-off-white">
-          <h2 className="text-xl font-semibold text-center mt-6 mb-4 text-deep-slate">
-            Best Match:
-          </h2>
-          <PractitionerCard practitioner={bestMatch} />
-        </div>
-      )}
-      {additionalPractitioners.length > 0 && (
-        <div className="additional-options-container mt-8 bg-off-white">
-          <h2 className="text-xl font-semibold text-center mb-4 text-deep-slate">
-            Additional Options:
-          </h2>
-          <div className="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 custom-grid-gap justify-center">
-            {additionalPractitioners.map((practitioner, index) => (
-              <PractitionerCard key={index} practitioner={practitioner} />
-            ))}
+    <div className="relative bg-off-white text-deep-slate overflow-hidden"> {/* Container with relative positioning */}
+      {/* Page Illustrations */}
+      <div style={{ position: 'absolute', top: 0, left: 0, width: '50%', height: '100%', zIndex: 0 }}>
+        <PageIllustration2 pageName="practitionersLeft" /> {/* Illustration to the left */}
+      </div>
+      <div style={{ position: 'absolute', top: 0, right: 0, width: '50%', height: '100%', zIndex: 0 }}>
+        <PageIllustration pageName="practitionersRight" /> {/* Illustration to the right */}
+      </div>
+      
+      {/* Original content, now wrapped in a div to maintain structure */}
+      <div className="practitioners-content z-10"> {/* Content on top of the illustrations */}
+        <h1 className="text-2xl font-semibold recommendation text-deep-slate">
+          Based on your needs and proximity to your location, we recommend:
+        </h1>
+        {bestMatch && (
+          <div className="best-match-container bg-off-white">
+            <h2 className="text-xl font-semibold text-center mt-6 mb-4 text-deep-slate">
+              Best Match:
+            </h2>
+            <PractitionerCard practitioner={bestMatch} />
           </div>
-        </div>
-      )}
+        )}
+        {additionalPractitioners.length > 0 && (
+          <div className="additional-options-container mt-8 mb-20 bg-off-white">
+            <h2 className="text-xl font-semibold text-center mb-4 text-deep-slate">
+              Additional Options:
+            </h2>
+            <div className="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 custom-grid-gap justify-center">
+              {additionalPractitioners.map((practitioner, index) => (
+                <PractitionerCard key={index} practitioner={practitioner} />
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

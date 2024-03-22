@@ -39,7 +39,7 @@ export default function Zigzag() {
               >
                 <div className="md:pr-4 lg:pr-12 xl:pr-16">
                   <div className="font-architects-daughter text-xl text-600 mb-2">
-                  Personalized recommendations
+                  Personalized Recommendations
                   </div>
                   <h3 className="h3 mb-3">
                   A simple triage for tailored care
@@ -54,7 +54,7 @@ export default function Zigzag() {
                         <path d="M10.28 2.28L3.989 8.575 1.695 6.28A1 1 0 00.28 7.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 2.28z" />
                       </svg>
                       <span>
-                      Tell us a little about yourself so we can offer a recommended provider
+                      Tell us a little about yourself and your current health journey
                       </span>
                     </li>
                     <li className="flex items-center mb-2">
@@ -66,7 +66,7 @@ export default function Zigzag() {
                         <path d="M10.28 2.28L3.989 8.575 1.695 6.28A1 1 0 00.28 7.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 2.28z" />
                       </svg>
                       <span>
-                      Select the right path for you - whether that’s meeting with a specialized practitioner or engaging in library of resources that can help guide you on a path to a healthier you
+                      See relevant providers that have a proven track record and ability to help
                       </span>
                     </li>
                   </ul>
@@ -106,11 +106,34 @@ export default function Zigzag() {
                     More options. Easy access.
                   </div>
                   <h3 className="h3 mb-3">
-                  Access a diverse network of practitioners helps people find alternative and cutting-edge therapies to achieve a healthier and more fulfilling life{" "}
+                  Find alternative and cutting-edge therapies to achieve a healthier and more fulfilling life
                   </h3>
-                  <p className="text-xl text-400 mb-4">
-                  Natu’s responsive approach to care supports people across a wide range of needs, interests and goals. Our personalized options are backed up by a practitioner network with varying clinical expertise and modalities to help make access to care easier than ever.
-                  </p>
+                  <ul className="text-lg text-gray-400 -mb-2">
+                    <li className="flex items-center mb-2">
+                      <svg
+                        className="w-3 h-3 fill-current text-green-500 mr-2 shrink-0"
+                        viewBox="0 0 12 12"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path d="M10.28 2.28L3.989 8.575 1.695 6.28A1 1 0 00.28 7.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 2.28z" />
+                      </svg>
+                      <span>
+                      Select the right path for you based on provider’s specialty, modality, and proximity 
+                      </span>
+                    </li>
+                    <li className="flex items-center mb-2">
+                      <svg
+                        className="w-3 h-3 fill-current text-green-500 mr-2 shrink-0"
+                        viewBox="0 0 12 12"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path d="M10.28 2.28L3.989 8.575 1.695 6.28A1 1 0 00.28 7.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 2.28z" />
+                      </svg>
+                      <span>
+                      Feel confident in your decision
+                      </span>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
