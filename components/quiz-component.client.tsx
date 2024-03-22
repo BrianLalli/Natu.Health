@@ -27,6 +27,8 @@ const QuizComponent = () => {
   const [showInfoPopup, setShowInfoPopup] = useState(false);
   const [selectedQ7Answers, setSelectedQ7Answers] = useState(new Set());
 
+
+
   const handleInfoClick = () => {
     setShowInfoPopup(true);
   };
@@ -36,15 +38,17 @@ const QuizComponent = () => {
   };
 
   useEffect(() => {
-    const closePopup = (e) => {
+    const closePopup = () => {
       if (showInfoPopup) {
         closeInfoPopup();
       }
     };
-
-    window.addEventListener("click", closePopup);
-    return () => window.removeEventListener("click", closePopup);
+  
+    window.addEventListener('click', closePopup);
+    return () => window.removeEventListener('click', closePopup);
   }, [showInfoPopup]);
+  
+  
 
   const getNextQuestionIndex = (currentQuestionIndex: number) => {
     // After Q4, check if we need to skip based on Q1's answer
@@ -63,44 +67,41 @@ const QuizComponent = () => {
     return currentQuestionIndex + 1;
   };
 
-  const handleAnswerSelect = (selectedAnswer: Answer) => {
-    // For single-choice questions (not Q4 or Q7), update answers directly
-    if (
-      selectedAnswer.questionId !== "Q4" &&
-      selectedAnswer.questionId !== "Q7"
-    ) {
-      setAnswers((prevAnswers) => ({
-        ...prevAnswers,
-        [selectedAnswer.questionId]: selectedAnswer,
-      }));
+  // Assuming `selectedAnswer.questionId` correctly determines which state to update,
+// and `selectedQ4Answers` and `selectedQ7Answers` are both initialized as Set<string>
+
+const handleAnswerSelect = (selectedAnswer: Answer) => {
+  const answerValue = selectedAnswer.value.toString();
+  const isQ4 = selectedAnswer.questionId === "Q4";
+
+  if (isQ4) {
+    const newSelected = new Set(selectedQ4Answers);
+    if (newSelected.has(answerValue)) {
+      newSelected.delete(answerValue);
     } else {
-      // For Q4 or Q7, use a Set to allow multiple selections
-      const currentSelectedAnswers =
-        selectedAnswer.questionId === "Q4"
-          ? selectedQ4Answers
-          : selectedQ7Answers;
-      const updateSelectedAnswers =
-        selectedAnswer.questionId === "Q4"
-          ? setSelectedQ4Answers
-          : setSelectedQ7Answers;
-
-      const newSelected = new Set(currentSelectedAnswers);
-      const answerValue = selectedAnswer.value.toString();
-
-      if (newSelected.has(answerValue)) {
-        newSelected.delete(answerValue); // Deselect
-      } else {
-        newSelected.add(answerValue); // Select
-      }
-
-      updateSelectedAnswers(newSelected);
+      newSelected.add(answerValue);
     }
+    setSelectedQ4Answers(newSelected);
+  } else if (selectedAnswer.questionId === "Q7") {
+    const newSelected = new Set(selectedQ7Answers);
+    if (newSelected.has(answerValue)) {
+      newSelected.delete(answerValue);
+    } else {
+      newSelected.add(answerValue);
+    }
+    setSelectedQ7Answers(newSelected);
+  } else {
+    // Handle single-choice questions
+    setAnswers((prevAnswers) => ({
+      ...prevAnswers,
+      [selectedAnswer.questionId]: selectedAnswer,
+    }));
+  }
 
-    console.log(
-      `Answer selected for question ${selectedAnswer.questionId}:`,
-      selectedAnswer.value
-    );
-  };
+  console.log(`Answer selected for question ${selectedAnswer.questionId}:`, answerValue);
+};
+
+  
 
   const handleQ4AnswerSelect = (value: string) => {
     setSelectedQ4Answers((prevSelected) => {
