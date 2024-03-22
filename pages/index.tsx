@@ -5,7 +5,7 @@ import Hero from '../components/hero'; // Adjust the import path
 import SecondaryHero from '../components/secondaryHero'; // Adjust the import path
 import Zigzag from '../components/zigzag';
 import AboutUs from '../components/about-us'
-import OurApproach from '../components/our-approach';
+// import OurApproach from '../components/our-approach';
 
 export default function HomePage() {
   // Explicitly define the type of searchTerm as string
@@ -19,7 +19,7 @@ export default function HomePage() {
       <Hero />
       <AboutUs />
       <Zigzag />
-      <OurApproach />
+      {/* <OurApproach /> */}
       <SecondaryHero />
     </RootLayout>
   );

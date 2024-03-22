@@ -51,7 +51,7 @@ export default function SecondaryHero() {
               data-aos="fade-up"
               style={{ color: "#435373" }}
             >
-              Ready to get started?
+              Find Personalized Care
             </h1>
             <Link
               href="/quiz"
