@@ -23,9 +23,32 @@ const QuizComponent = () => {
   const [zipCode, setZipCode] = useState<string>("");
   const [temporaryInput, setTemporaryInput] = useState<Answers>({});
   const totalQuestions = 9;
+  const [history, setHistory] = useState<number[]>([]);
+  const [showInfoPopup, setShowInfoPopup] = useState(false);
+  const [selectedQ7Answers, setSelectedQ7Answers] = useState(new Set());
+
+  const handleInfoClick = () => {
+    setShowInfoPopup(true);
+  };
+
+  const closeInfoPopup = () => {
+    setShowInfoPopup(false);
+  };
+
+  useEffect(() => {
+    const closePopup = (e) => {
+      if (showInfoPopup) {
+        closeInfoPopup();
+      }
+    };
+
+    window.addEventListener("click", closePopup);
+    return () => window.removeEventListener("click", closePopup);
+  }, [showInfoPopup]);
 
   const getNextQuestionIndex = (currentQuestionIndex: number) => {
     // After Q4, check if we need to skip based on Q1's answer
+    // Right before setting the new current question
     if (currentQuestionIndex === 4) {
       const q1Answer = answers["Q1"]?.value;
       if (q1Answer === "Current Symptoms") {
@@ -41,19 +64,36 @@ const QuizComponent = () => {
   };
 
   const handleAnswerSelect = (selectedAnswer: Answer) => {
-    setAnswers((prevAnswers) => ({
-      ...prevAnswers,
-      [selectedAnswer.questionId]: selectedAnswer,
-    }));
+    // For single-choice questions (not Q4 or Q7), update answers directly
+    if (
+      selectedAnswer.questionId !== "Q4" &&
+      selectedAnswer.questionId !== "Q7"
+    ) {
+      setAnswers((prevAnswers) => ({
+        ...prevAnswers,
+        [selectedAnswer.questionId]: selectedAnswer,
+      }));
+    } else {
+      // For Q4 or Q7, use a Set to allow multiple selections
+      const currentSelectedAnswers =
+        selectedAnswer.questionId === "Q4"
+          ? selectedQ4Answers
+          : selectedQ7Answers;
+      const updateSelectedAnswers =
+        selectedAnswer.questionId === "Q4"
+          ? setSelectedQ4Answers
+          : setSelectedQ7Answers;
 
-    if (selectedAnswer.questionId === "Q4") {
-      const newSelected = new Set(selectedQ4Answers);
-      if (newSelected.has(selectedAnswer.value.toString())) {
-        newSelected.delete(selectedAnswer.value.toString());
+      const newSelected = new Set(currentSelectedAnswers);
+      const answerValue = selectedAnswer.value.toString();
+
+      if (newSelected.has(answerValue)) {
+        newSelected.delete(answerValue); // Deselect
       } else {
-        newSelected.add(selectedAnswer.value.toString());
+        newSelected.add(answerValue); // Select
       }
-      setSelectedQ4Answers(newSelected);
+
+      updateSelectedAnswers(newSelected);
     }
 
     console.log(
@@ -88,9 +128,15 @@ const QuizComponent = () => {
       lastAnsweredQuestionId !== "Q4"
     ) {
       console.log("Effect setting next question");
-      setCurrentQuestion((prevCurrentQuestion) => prevCurrentQuestion + 1);
+      // Update to include history management
+      setCurrentQuestion((prevCurrentQuestion) => {
+        // Before changing the current question, update the history
+        setHistory((prevHistory) => [...prevHistory, prevCurrentQuestion]);
+        // Then, proceed to set the next question
+        return prevCurrentQuestion + 1;
+      });
     }
-  }, [answers]);
+  }, [answers]); // Note: You might need to include history in the dependency array if you experience issues, but it shouldn't be necessary for this case.
 
   const handleInputSubmit = (questionId: string) => {
     const inputValue = temporaryInput[questionId];
@@ -146,13 +192,27 @@ const QuizComponent = () => {
     );
   };
 
+  const goBack = () => {
+    setHistory((prevHistory) => {
+      const newHistory = [...prevHistory];
+      const prevQuestion = newHistory.pop(); // Remove the last question and get it
+      setHistory(newHistory); // Update the history without the last question
+
+      // Check if there's a previous question. If so, set it as the current question.
+      if (prevQuestion !== undefined) {
+        setCurrentQuestion(prevQuestion);
+      }
+      return newHistory; // Return the new history (not actually used here, but required by the setter pattern)
+    });
+  };
+
   const dynamicQ4Options = {
     Male: [
       {
         category: "Men’s Health",
         options: [
           "Hormone Therapy",
-          "Testosterone Replacement Therapy (TRT)",
+          "Testosterone Replacement Therapy",
           "Growth Hormones",
           "Peptides",
           "Skin",
@@ -164,9 +224,9 @@ const QuizComponent = () => {
       {
         category: "Brain Health",
         options: [
-          "Cognitive support- thinking, learning, decision making",
-          "Emotional support - stress, depression, well-being",
-          "Neurological conditions - Alzheimer's, dementia, Parkinson's, epilepsy (prevention and therapies)",
+          "Cognitive Support",
+          "Emotional Support",
+          "Neurological Conditions",
           "Substance abuse",
           "Neurofeedback",
         ],
@@ -188,7 +248,7 @@ const QuizComponent = () => {
           "Pregnancy",
           "Pelvic Floor",
           "Fertility",
-          "Erectile dysfunction",
+          "Erectile Dysfunction",
         ],
       },
       {
@@ -206,7 +266,7 @@ const QuizComponent = () => {
         category: "Digestive",
         options: [
           "Gut Health",
-          "Gastrointestinal Disorders (Poop)",
+          "Gastrointestinal Disorders",
           "Nutritional",
           "Leaky Gut",
           "Functional Nutrition",
@@ -215,7 +275,7 @@ const QuizComponent = () => {
       {
         category: "Respiratory",
         options: [
-          "Chronic Obstructive Pulmonary Disease (COPD)",
+          "Chronic Obstructive Pulmonary Disease",
           "Asthma",
           "Bronchitis",
           "Emphysema",
@@ -240,9 +300,9 @@ const QuizComponent = () => {
       {
         category: "Brain Health",
         options: [
-          "Cognitive support- thinking, learning, decision making",
-          "Emotional support - stress, depression, well-being",
-          "Neurological conditions - Alzheimer's, dementia, Parkinson's, epilepsy (prevention and therapies)",
+          "Cognitive Support",
+          "Emotional Support",
+          "Neurological Conditions",
           "Substance abuse",
           "Neurofeedback",
         ],
@@ -291,7 +351,7 @@ const QuizComponent = () => {
       {
         category: "Respiratory",
         options: [
-          "Chronic Obstructive Pulmonary Disease (COPD)",
+          "Chronic Obstructive Pulmonary Disease",
           "Asthma",
           "Bronchitis",
           "Emphysema",
@@ -305,7 +365,7 @@ const QuizComponent = () => {
         category: "Men’s Health",
         options: [
           "Hormone Therapy",
-          "Testosterone Replacement Therapy (TRT)",
+          "Testosterone Replacement Therapy",
           "Growth Hormones",
           "Peptides",
           "Skin",
@@ -329,9 +389,9 @@ const QuizComponent = () => {
       {
         category: "Brain Health",
         options: [
-          "Cognitive support- thinking, learning, decision making",
-          "Emotional support - stress, depression, well-being",
-          "Neurological conditions - Alzheimer's, dementia, Parkinson's, epilepsy (prevention and therapies)",
+          "Cognitive Support",
+          "Emotional Support",
+          "Neurological Conditions",
           "Substance abuse",
           "Neurofeedback",
         ],
@@ -380,7 +440,7 @@ const QuizComponent = () => {
       {
         category: "Respiratory",
         options: [
-          "Chronic Obstructive Pulmonary Disease (COPD)",
+          "Chronic Obstructive Pulmonary Disease",
           "Asthma",
           "Bronchitis",
           "Emphysema",
@@ -392,51 +452,60 @@ const QuizComponent = () => {
   };
 
   interface IQuizQuestion {
-    questionId: string,
-    questionHeading: string,
-    answerOptions: string[]
+    questionId: string;
+    questionHeading: string;
+    answerOptions: string[];
   }
-
 
   const quizQuestions: IQuizQuestion[] = [
     {
       questionId: "Q1",
       questionHeading: "What are you looking for help with?",
-      answerOptions: ["Current Symptoms", "Preventative Care", "General Health"] 
+      answerOptions: [
+        "Current Symptoms",
+        "Preventative Care",
+        "General Health",
+      ],
     },
-  ]
+  ];
 
-  const RenderQuizQuestion = ({currentQuestion}:{currentQuestion: number}) => {
-    if(!currentQuestion && currentQuestion !== 0) return;
-    const {questionId, questionHeading, answerOptions} = quizQuestions[currentQuestion];
-    return (<div className="question">
-    <p>{questionHeading}</p>
-    <div className="answers">
-      {answerOptions.map(answer => (
-      <button
-        className="answer-bubble"
-        key={answer}
-        onClick={() =>
-          handleAnswerSelect({
-            questionId,
-            value: answer,
-          })
-        }
-      >
-        {answer}
-      </button>
-      ))}
-    </div></div>)
-  }
+  const RenderQuizQuestion = ({
+    currentQuestion,
+  }: {
+    currentQuestion: number;
+  }) => {
+    if (!currentQuestion && currentQuestion !== 0) return;
+    const { questionId, questionHeading, answerOptions } =
+      quizQuestions[currentQuestion];
+    return (
+      <div className="question">
+        <p>{questionHeading}</p>
+        <div className="answers">
+          {answerOptions.map((answer) => (
+            <button
+              className="answer-bubble"
+              key={answer}
+              onClick={() =>
+                handleAnswerSelect({
+                  questionId,
+                  value: answer,
+                })
+              }
+            >
+              {answer}
+            </button>
+          ))}
+        </div>
+      </div>
+    );
+  };
 
   const renderQuestion = () => {
     console.log("Rendering question for index:", currentQuestion);
     switch (currentQuestion) {
       // Question 1: What are you looking for help with?
       case 0:
-        return (
-          <RenderQuizQuestion currentQuestion={currentQuestion}/>
-        );
+        return <RenderQuizQuestion currentQuestion={currentQuestion} />;
 
       // Question 2: What is your sex?
       case 1:
@@ -546,9 +615,8 @@ const QuizComponent = () => {
         // TypeScript now knows genderKey is one of the keys in dynamicQ4Options or "Prefer not to say"
         const optionsToDisplay =
           dynamicQ4Options[genderKey as keyof typeof dynamicQ4Options];
-
         return (
-          <div className="question question-4">
+          <div className="question question-4" style={{ textAlign: "center" }}>
             <p>
               Digging a little deeper, are you looking for care for any of the
               following?
@@ -556,26 +624,43 @@ const QuizComponent = () => {
             <p>
               <strong>Select all that apply.</strong>
             </p>
-            <div className="answers">
+            <div
+              className="answers"
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: "20px",
+              }}
+            >
               {optionsToDisplay.map((category) => (
-                <React.Fragment key={category.category}>
-                  <h3>{category.category}</h3>
-                  {category.options.map((option) => (
-                    <button
-                      key={option}
-                      className={`answer-bubble ${
-                        selectedQ4Answers.has(option) ? "selected" : ""
-                      }`}
-                      onClick={() => handleQ4AnswerSelect(option)}
-                    >
-                      {option}
-                    </button>
-                  ))}
-                </React.Fragment>
+                <div key={category.category} style={{ width: "70%" }}>
+                  <h3 style={{ margin: "10px 0" }}>{category.category}</h3>
+                  <div style={{ textAlign: "center" }}>
+                    {category.options.map((option) => (
+                      <button
+                        key={option}
+                        className={`answer-bubble ${
+                          selectedQ4Answers.has(option) ? "selected" : ""
+                        }`}
+                        onClick={() => handleQ4AnswerSelect(option)}
+                        style={{
+                          display: "inline-block",
+                          padding: "10px 20px",
+                          margin: "5px",
+                          textAlign: "center",
+                        }}
+                      >
+                        {option}
+                      </button>
+                    ))}
+                  </div>
+                </div>
               ))}
             </div>
             <button
               className="next-button"
+              style={{ marginTop: "20px" }}
               onClick={() => setCurrentQuestion(currentQuestion + 1)}
               disabled={selectedQ4Answers.size === 0}
             >
@@ -629,10 +714,10 @@ const QuizComponent = () => {
               <div className="answers">
                 {[
                   "Family History",
-                  "I’m training for something",
+                  "Upcoming Event",
                   "Lifestyle Factors",
                   "Genetics",
-                  "Not sure",
+                  "Not Sure",
                 ].map((option) => (
                   <button
                     key={option}
@@ -675,11 +760,11 @@ const QuizComponent = () => {
                 onClick={() =>
                   handleAnswerSelect({
                     questionId: "Q6",
-                    value: "I'm Training For Something",
+                    value: "Upcoming Event",
                   })
                 }
               >
-                I'm Training For Something
+                Upcoming Event
               </button>
               <button
                 className="answer-bubble"
@@ -712,7 +797,7 @@ const QuizComponent = () => {
                   })
                 }
               >
-                Not sure
+                Not Sure
               </button>
             </div>
           </div>
@@ -720,81 +805,74 @@ const QuizComponent = () => {
 
       // Question 7: Have you had experience with any of the following?
       case 6:
+        const explanations = {
+          "Medical Doctor (MD)": "Traditional primary care physician",
+          "Doctor of Osteopathic Medicine (DO)":
+            "A traditional primary care physician with the same capabilities as an MD but often practices more holistic, whole-person type of care",
+          "Acupuncturist (LAc, OMD, DoCM)":
+            "A Chinese medicine provider trained in acupuncture - a therapy that uses thin needles inserted through the skin at specific points on the body to control pain and other symptoms",
+          "Chiropractor (DC)":
+            "A licensed medical provider that typically treats patients with manual therapy",
+          "Naturopathic Doctor (ND)":
+            "A physician focused on holistic and nontoxic approaches to therapy with a strong emphasis on disease prevention and optimizing wellness.",
+          "Physical Therapist (PT)":
+            "A health specialist who evaluates and treats human body disorders",
+          "Massage Therapist (LMT)":
+            "A health specialist that manipulates clients soft tissues and joints to treat injuries and promote general wellness",
+          None: "No previous experience with any of the listed professionals",
+        };
+
         return (
-          <div className="question">
+          <div className="question question-7" style={{ textAlign: "center" }}>
             <p>Have you had experience with any of the following?</p>
-            <div className="answers">
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({
-                    questionId: "Q7",
-                    value: "Medical Doctor (MD)",
-                  })
-                }
-              >
-                Medical Doctor (MD)
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({
-                    questionId: "Q7",
-                    value: "Doctor of Osteopathic Medicine (DO)",
-                  })
-                }
-              >
-                Doctor of Osteopathic Medicine (DO)
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q7", value: "Acupuncturist (LAc, OMD, DoCM)" })
-                }
-              >
-                Acupuncturist (LAc, OMD, DoCM)
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q7", value: "Chiropractor (DC)" })
-                }
-              >
-                Chiropractor (DC)
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q7", value: "Naturopathic Doctor (ND)" })
-                }
-              >
-                Naturopathic Doctor (ND)
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q7", value: "Physical Therapist (PT)" })
-                }
-              >
-                Physical Therapist (PT)
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q7", value: "Massage Therapist (LMT)" })
-                }
-              >
-                Massage Therapist (LMT)
-              </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q7", value: "None" })
-                }
-              >
-                None
-              </button>
+            <p>
+              <strong>Select all that apply.</strong>
+            </p>
+            <div
+              className="answers"
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: "20px",
+              }}
+            >
+              {Object.entries(explanations).map(([category, explanation]) => (
+                <button
+                  key={category}
+                  className="answer-bubble"
+                  onClick={() =>
+                    handleAnswerSelect({ questionId: "Q7", value: category })
+                  }
+                  title={explanation}
+                  style={{
+                    display: "inline-block",
+                    padding: "10px 20px",
+                    margin: "5px",
+                    textAlign: "center",
+                    whiteSpace: "normal",
+                    maxWidth: "70%",
+                    backgroundColor: selectedQ7Answers.has(category)
+                      ? "var(--deep-slate)"
+                      : "var(--lavender)", // Change color based on selection
+                    color: selectedQ7Answers.has(category) ? "white" : "white", // Adjust text color based on selection
+                    borderColor: selectedQ7Answers.has(category)
+                      ? "var(--deep-slate)"
+                      : "initial", // Optional: Change border color if needed
+                  }}
+                >
+                  {category}
+                </button>
+              ))}
             </div>
+            <button
+              className="next-button"
+              style={{ marginTop: "20px" }}
+              onClick={() => setCurrentQuestion(currentQuestion + 1)}
+              disabled={selectedQ7Answers.size === 0}
+            >
+              Next
+            </button>
           </div>
         );
 
@@ -821,7 +899,7 @@ const QuizComponent = () => {
             </select>
           </div>
         );
-      
+
       // Question 11: What is your zip code?
       case 8:
         const zipCodeRegex = /^\d{5}$/; // Regular expression for a 5-digit zip code
@@ -861,7 +939,7 @@ const QuizComponent = () => {
               onChange={handleZipCodeChange}
             />
             <button
-            disabled={!zipCode}
+              disabled={!zipCode}
               className={zipCode ? "next-button" : "disabled-button"}
               onClick={() => handleSubmit()}
             >
@@ -875,11 +953,37 @@ const QuizComponent = () => {
   return (
     <div className="relative bg-off-white text-deep-slate overflow-hidden">
       {/* Page Illustrations similar to how it was done in hero.tsx */}
-      <div style={{ position: 'absolute', top: 410, left: 0, width: '50%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'flex-start', zIndex: 1 }}>
-        <PageIllustration2 pageName="quizLeft" /> {/* Illustration to the left */}
+      <div
+        style={{
+          position: "absolute",
+          top: 10,
+          left: 0,
+          width: "50%",
+          height: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "flex-start",
+          zIndex: 1,
+        }}
+      >
+        <PageIllustration2 pageName="quizLeft" />{" "}
+        {/* Illustration to the left */}
       </div>
-      <div style={{ position: 'absolute', top: 0, right: -50, width: '50%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', zIndex: 1 }}>
-        <PageIllustration pageName="quizRight" /> {/* Illustration to the right */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          right: -50,
+          width: "50%",
+          height: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "flex-end",
+          zIndex: 1,
+        }}
+      >
+        <PageIllustration pageName="quizRight" />{" "}
+        {/* Illustration to the right */}
       </div>
 
       {/* Quiz content container, ensuring it's above the illustrations with a higher zIndex */}
@@ -890,8 +994,13 @@ const QuizComponent = () => {
               {renderProgressBar()}
               {renderQuestion()}
             </>
-          ) : (
-            null
+          ) : null}
+          {history.length > 0 && (
+            <div className="go-back-container">
+              <button className="go-back-button" onClick={goBack}>
+                Go Back
+              </button>
+            </div>
           )}
         </div>
       </div>

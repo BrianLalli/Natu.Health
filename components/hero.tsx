@@ -57,7 +57,7 @@ export default function Hero() {
               data-aos="fade-up"
               style={{ color: "#435373" }}
             >
-              Find Personalized Care
+              A new way to find care
             </h1>
             <p
               className="text-xl mb-8"
@@ -75,7 +75,7 @@ export default function Hero() {
                   href="/quiz"
                   className="btn text-white bg-flora hover:bg-lavender w-full mb-0 sm:w-auto sm:mb-0"
                 >
-                  Get Started
+                  Find Personalized Care
                 </Link>
               </div>
             </div>

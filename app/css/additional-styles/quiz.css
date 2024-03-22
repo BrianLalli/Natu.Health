@@ -64,20 +64,21 @@
 
 /* Retain the existing styles for .answer-bubble */
 
-/* Additional styles specifically for question 4 answer bubbles */
-.question-4 .answer-bubble {
+/* Styles for both question 4 and question 7 answer bubbles */
+.question-4 .answer-bubble,
+.question-7 .answer-bubble {
   /* Inherits existing styles from .answer-bubble */
 
   /* Changes for indicating multiple selection capability */
   /* Slightly different background color to differentiate from other questions */
   background-color: var(--lavender);
-  
 
   /* Change in scale and border color on hover for better UX */
   transition: transform 0.2s ease-in-out, border-color 0.2s ease-in-out;
 }
 
-.question-4 .answer-bubble.selected {
+.question-4 .answer-bubble.selected,
+.question-7 .answer-bubble.selected {
   /* More distinct color for selected state */
   background-color: var(--deep-slate); /* More distinct color for selected state */
   border-color: var(--deep-slate);
@@ -209,7 +210,8 @@
 
 /* Hover effect for the Next button */
 .next-button:hover {
-  background-color: #43a047; /* Slightly darker green background on hover */
+  background-color: #8fcca0;
+  color: var(--off-white);
 }
 
 .disabled-button {
@@ -266,3 +268,52 @@
   margin-left: auto; /* These two margin properties */
   margin-right: auto; /* Center the block element horizontally */
 }
+
+.go-back-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px; /* Spacing from the content above */
+}
+
+.go-back-button {
+  padding: 10px 20px;
+  font-size: 16px; /* Example size, adjust as needed */
+  color: "#435373"; /* deep-slate for text color */
+  background-color: #e4e4e7; /* lavender for background */
+  border: 2px solid #9fa4b7; /* medium-slate for border */
+  border-radius: 25px;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.go-back-button:hover {
+  opacity: 0.8; /* Simulating a darker lavender on hover */
+}
+
+@media (min-width: 768px) {
+  .answers {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px; /* Adjust the gap between grid items as needed */
+  }
+
+  .question-4 h3 {
+    /* You might want to center the category headers above the options */
+    text-align: center;
+    margin-bottom: 10px; /* Add some space between the header and buttons */
+  }
+
+  .answer-bubble {
+    /* Make the buttons a bit larger on desktop for better clickability */
+    padding: 10px 20px;
+    width: 100%; /* Make the buttons take up the full width of the grid column */
+    /* More styling as needed */
+  }
+  .answer-bubble.selected {
+    /* Example of a selected style */
+    background-color: #435373; /* deep-slate color from your palette */
+    color: #F7F7F7; /* off-white for text */
+    /* Additional styles as needed */
+  }
+}
+
