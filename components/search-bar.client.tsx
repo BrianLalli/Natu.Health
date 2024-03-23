@@ -1,29 +1,29 @@
-// SearchBar.tsx
-
 import React, { useState } from "react";
+import { useRouter } from 'next/router'; // Import useRouter from next/router for navigation
 import { FaSearch } from "react-icons/fa";
 import { MdLocationOn } from "react-icons/md";
-import "../app/css/additional-styles/searchbar.css"; // Importing styles.css from the app folder
+import "../app/css/additional-styles/searchbar.css";
 
-interface SearchBarProps {
-  onSearch: (searchTerm: string, location: string) => void;
-}
-
-const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
+const SearchBar: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [location, setLocation] = useState("");
+  const router = useRouter(); // Use useRouter for programmatic navigation
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("Search Term Changed:", event.target.value); // Log search term changes
     setSearchTerm(event.target.value);
   };
 
   const handleLocationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("Location Changed:", event.target.value); // Log location changes
     setLocation(event.target.value);
   };
 
   const handleSearchSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    onSearch(searchTerm, location);
+    console.log("Submitting Search:", { searchTerm, location }); // Log values being submitted
+    // Directly redirect to the practitioners page with query parameters
+    router.push(`/practitioners?searchTerm=${encodeURIComponent(searchTerm)}&zipCode=${encodeURIComponent(location)}`);
   };
 
   return (
@@ -58,4 +58,3 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
 };
 
 export default SearchBar;
-export const config = { runtime: "client" };
