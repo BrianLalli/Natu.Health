@@ -1,6 +1,7 @@
 import Link from "next/link";
 import PageIllustration from "./page-illustration";
 import PageIllustration2 from "./page-illustration2"; // Import if you intend to use a second illustration
+import "../app/css/additional-styles//secondaryHero.css";
 
 export default function SecondaryHero() {
   return (
@@ -9,6 +10,7 @@ export default function SecondaryHero() {
         {/* Illustrations behind hero content */}
         {/* Ensure the container div for each illustration has appropriate styles for positioning */}
         <div
+        className="hide-on-mobile"
           style={{
             position: "absolute",
             top: -0,
@@ -24,6 +26,7 @@ export default function SecondaryHero() {
           <PageIllustration2 pageName="secondaryHero1" />
         </div>
         <div
+        className="hide-on-mobile"
           style={{
             position: "absolute",
             top: 0,

@@ -974,6 +974,7 @@ const QuizComponent = () => {
     <div className="relative bg-off-white text-deep-slate overflow-hidden">
       {/* Page Illustrations similar to how it was done in hero.tsx */}
       <div
+      className="hide-on-mobile"
         style={{
           position: "absolute",
           top: 10,
@@ -990,6 +991,7 @@ const QuizComponent = () => {
         {/* Illustration to the left */}
       </div>
       <div
+      className="hide-on-mobile"
         style={{
           position: "absolute",
           top: 0,

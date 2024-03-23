@@ -3,6 +3,8 @@ import "../app/css/additional-styles/buttons.css";
 import PageIllustration from "./page-illustration";
 import PageIllustration2 from "./page-illustration2";
 import SearchBar from "./search-bar.client";
+import '../app/css/additional-styles/hero.css';
+
 
 export default function Hero() {
   const handleSearch = (searchTerm: string) => {
@@ -11,8 +13,8 @@ export default function Hero() {
   return (
     <section style={{ position: "relative", overflow: "hidden" }}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 relative">
-        {/* Illustrations behind hero content */}
         <div
+          className="hide-on-mobile"
           style={{
             position: "absolute",
             top: 0,
@@ -25,10 +27,10 @@ export default function Hero() {
             zIndex: 1,
           }}
         >
-          <PageIllustration2 pageName="hero2" />{" "}
-          {/* Illustration to the left */}
+          <PageIllustration2 pageName="hero2" />
         </div>
         <div
+          className="hide-on-mobile"
           style={{
             position: "absolute",
             top: 0,
@@ -41,8 +43,7 @@ export default function Hero() {
             zIndex: 1,
           }}
         >
-          <PageIllustration pageName="hero1" />{" "}
-          {/* Illustration to the right */}
+          <PageIllustration pageName="hero1" />
         </div>
 
         {/* Hero content */}

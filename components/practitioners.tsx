@@ -99,6 +99,7 @@ const PractitionersComponent = () => {
       {/* Container with relative positioning */}
       {/* Page Illustrations */}
       <div
+      className="hide-on-mobile"
         style={{
           position: "absolute",
           top: 0,
@@ -112,6 +113,7 @@ const PractitionersComponent = () => {
         {/* Illustration to the left */}
       </div>
       <div
+      className="hide-on-mobile"
         style={{
           position: "absolute",
           top: 0,
