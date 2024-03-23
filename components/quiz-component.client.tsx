@@ -871,7 +871,7 @@ const QuizComponent = () => {
                     margin: "5px",
                     textAlign: "center",
                     whiteSpace: "normal", // Allow text to wrap and not stay on one line.
-                    maxWidth: "90%", // Increase the max width to allow for more text.
+                    maxWidth: "50%", // Increase the max width to allow for more text.
                     backgroundColor: selectedQ7Answers.has(category) ? "var(--deep-slate)" : "var(--lavender)",
                     color: selectedQ7Answers.has(category) ? "white" : "white", // This can remain unchanged.
                     borderColor: selectedQ7Answers.has(category) ? "var(--deep-slate)" : "initial",

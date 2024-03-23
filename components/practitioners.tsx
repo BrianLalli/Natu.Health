@@ -94,18 +94,44 @@ const PractitionersComponent = () => {
   }
 
   return (
-    <div className="relative bg-off-white text-deep-slate overflow-hidden"> {/* Container with relative positioning */}
+    <div className="relative bg-off-white text-deep-slate overflow-hidden">
+      {" "}
+      {/* Container with relative positioning */}
       {/* Page Illustrations */}
-      <div style={{ position: 'absolute', top: 0, left: 0, width: '50%', height: '100%', zIndex: 0 }}>
-        <PageIllustration2 pageName="practitionersLeft" /> {/* Illustration to the left */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "50%",
+          height: "100%",
+          zIndex: 0,
+        }}
+      >
+        <PageIllustration2 pageName="practitionersLeft" />{" "}
+        {/* Illustration to the left */}
       </div>
-      <div style={{ position: 'absolute', top: 0, right: 0, width: '50%', height: '100%', zIndex: 0 }}>
-        <PageIllustration pageName="practitionersRight" /> {/* Illustration to the right */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          right: 0,
+          width: "50%",
+          height: "100%",
+          zIndex: 0,
+        }}
+      >
+        <PageIllustration pageName="practitionersRight" />{" "}
+        {/* Illustration to the right */}
       </div>
-      
       {/* Original content, now wrapped in a div to maintain structure */}
-      <div className="practitioners-content z-10"> {/* Content on top of the illustrations */}
-        <h1 className="text-2xl font-semibold recommendation text-deep-slate">
+      <div className="practitioners-content z-10">
+        {" "}
+        {/* Content on top of the illustrations */}
+        <h1
+          className="text-2xl font-semibold recommendation text-deep-slate"
+          style={{ color: "var(--deep-slate) !important" }} // Replace '--your-color' with your color variable or use a direct color code.
+        >
           Based on your needs and proximity to your location, we recommend:
         </h1>
         {bestMatch && (
@@ -147,7 +173,9 @@ const PractitionerCard: React.FC<PractitionerCardProps> = ({
         alt={`Dr. ${practitioner.name}`}
         className="rounded-full w-40 h-40 mx-auto border-2 border-lavender"
       />
-      <h2 className="text-xl font-semibold mt-3 text-deep-slate">{practitioner.name}</h2>
+      <h2 className="text-xl font-semibold mt-3 text-deep-slate">
+        {practitioner.name}
+      </h2>
       <p className="font-semibold text-center text-deep-slate">
         {practitioner.specialty}
       </p>
