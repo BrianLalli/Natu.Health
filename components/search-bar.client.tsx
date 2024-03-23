@@ -6,15 +6,17 @@ import { MdLocationOn } from "react-icons/md";
 import "../app/css/additional-styles/searchbar.css"; // Importing styles.css from the app folder
 
 interface SearchBarProps {
-  onSearch: (searchTerm: string, location: string) => void;
+  // Updated to accept two parameters: focusArea and location
+  onSearch: (focusArea: string, location: string) => void;
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
-  const [searchTerm, setSearchTerm] = useState("");
+  // State for the search term (focus area) and location (zip code)
+  const [focusArea, setFocusArea] = useState("");
   const [location, setLocation] = useState("");
 
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
+  const handleFocusAreaChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFocusArea(event.target.value);
   };
 
   const handleLocationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,7 +25,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
 
   const handleSearchSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    onSearch(searchTerm, location);
+    // Passes the focus area and location (zip code) to the parent component's search handler
+    onSearch(focusArea, location);
   };
 
   return (
@@ -34,9 +37,9 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
           <input
             type="text"
             className="search-input"
-            placeholder="Condition, procedure, doctor..."
-            value={searchTerm}
-            onChange={handleSearchChange}
+            placeholder="Focus Area (e.g., Pregnancy, Digestive, Pain)"
+            value={focusArea}
+            onChange={handleFocusAreaChange}
           />
         </div>
         <div className="search-input-wrapper">

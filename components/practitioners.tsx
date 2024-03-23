@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useRouter } from 'next/router'; // Import useRouter
 import { PractitionerInfo } from "../models/PractitionerInfo";
 import {
   parsePractitionerData,
@@ -10,14 +11,19 @@ import PageIllustration2 from "./page-illustration2";
 
 const PractitionersComponent = () => {
   const [bestMatch, setBestMatch] = useState<PractitionerInfo | null>(null);
-  const [additionalPractitioners, setAdditionalPractitioners] = useState<
-    PractitionerInfo[]
-  >([]);
+  const [additionalPractitioners, setAdditionalPractitioners] = useState<PractitionerInfo[]>([]);
+  const router = useRouter(); // Initialize useRouter
 
   useEffect(() => {
-    const queryParams = new URLSearchParams(window.location.search);
-    const userFocusArea = queryParams.get("focusArea") || "";
-    const userZipCode = queryParams.get("zipCode") || "";
+    // Use router.query to access URL parameters
+    const userFocusArea = router.query.focusArea as string || "";
+    const userZipCode = router.query.zipCode as string || "";
+
+    if (!userFocusArea || !userZipCode) {
+      // Optionally handle the case where no search parameters are provided
+      console.log("Search parameters are missing.");
+      return;
+    }
 
     fetch("/data/practitioners.xlsx")
       .then((response) => response.blob())
@@ -27,9 +33,7 @@ const PractitionersComponent = () => {
           if (e.target && e.target.result) {
             const data = e.target.result;
             const { practitioners, zipCodes } = parsePractitionerData(data);
-            const userZipData = zipCodes.find(
-              (zip) => zip.code === userZipCode
-            );
+            const userZipData = zipCodes.find((zip) => zip.code === userZipCode);
 
             if (userZipData) {
               practitioners.forEach((practitioner) => {
@@ -53,41 +57,37 @@ const PractitionersComponent = () => {
                   practitioner.focusAreas.includes(userFocusArea)
                 )
                 .sort((a, b) => {
-                  const distanceA =
-                    a.distance !== undefined ? a.distance : Infinity;
-                  const distanceB =
-                    b.distance !== undefined ? b.distance : Infinity;
+                  const distanceA = a.distance !== undefined ? a.distance : Infinity;
+                  const distanceB = b.distance !== undefined ? b.distance : Infinity;
                   return distanceA - distanceB;
                 });
 
-              if (sortedPractitioners.length > 0) {
-                setBestMatch(sortedPractitioners[0]);
-                setAdditionalPractitioners(sortedPractitioners.slice(1));
-              } else {
-                setBestMatch(null);
-                setAdditionalPractitioners([]);
-              }
+              setBestMatch(sortedPractitioners.length > 0 ? sortedPractitioners[0] : null);
+              setAdditionalPractitioners(sortedPractitioners.slice(1));
             } else {
               console.error("User zip code not found in the data");
+              setBestMatch(null);
               setAdditionalPractitioners([]);
             }
           } else {
             console.error("Error reading the file");
+            setBestMatch(null);
+            setAdditionalPractitioners([]);
           }
         };
         reader.readAsBinaryString(blob);
       })
       .catch((error) => {
         console.error("Error loading the Excel file:", error);
+        setBestMatch(null);
+        setAdditionalPractitioners([]);
       });
-  }, []);
+  }, [router.query]); // Add router.query to the dependency array
 
   if (!bestMatch && additionalPractitioners.length === 0) {
     return (
       <div className="loading-message">
-        <p>
-          Sorry, this app is currently available only in the Denver, CO area.
-        </p>
+        <p>Sorry, this app is currently available only in the Denver, CO area.</p>
         <div className="spinner"></div>
       </div>
     );
