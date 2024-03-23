@@ -6,7 +6,7 @@ import "../app/css/additional-styles//secondaryHero.css";
 export default function SecondaryHero() {
   return (
     <section>
-      <div className="max-w-6xl mx-auto pt-40 pb-40 px-4 sm:px-6 relative">
+      <div className="max-w-6xl mx-auto pt-24 pb-40 px-4 sm:px-6 relative">
         {/* Illustrations behind hero content */}
         {/* Ensure the container div for each illustration has appropriate styles for positioning */}
         <div
@@ -45,7 +45,7 @@ export default function SecondaryHero() {
 
         {/* Hero content */}
         <div
-          className="relative pt-32 pb-10 md:pt-10 md:pb-10"
+          className="relative pt-10 pb-10 md:pt-10 md:pb-10"
           style={{ zIndex: 1 }}
         >
           <div className="max-w-3xl mx-auto text-center">
