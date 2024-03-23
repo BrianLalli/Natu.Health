@@ -1,15 +1,22 @@
 import Link from "next/link";
+import { useRouter } from 'next/router'; // Import useRouter
 import "../app/css/additional-styles/buttons.css";
 import PageIllustration from "./page-illustration";
 import PageIllustration2 from "./page-illustration2";
 import SearchBar from "./search-bar.client";
 import '../app/css/additional-styles/hero.css';
 
-
 export default function Hero() {
-  const handleSearch = (searchTerm: string) => {
-    console.log(`Search term: ${searchTerm}`);
+  const router = useRouter(); // Initialize useRouter
+
+  // Updated handleSearch to accept focusArea and location, and to use Next.js routing
+  const handleSearch = (focusArea: string, location: string) => {
+    router.push({
+      pathname: '/practitioners', // Update this path based on your routing structure
+      query: { focusArea, zipCode: location }, // Passing focusArea and zipCode as query parameters
+    });
   };
+
   return (
     <section style={{ position: "relative", overflow: "hidden" }}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 relative">
