@@ -121,12 +121,6 @@
   }
 }
 
-.progress-bar-wrapper {
-  max-width: 500px; /* Adjust as needed for desktop size */
-  margin: 20px auto; /* Centers the container */
-  padding: 0 15px;
-}
-
 .quiz-container {
   /* Existing styles */
   padding-bottom: 6rem;

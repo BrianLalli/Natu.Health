@@ -27,8 +27,6 @@ const QuizComponent = () => {
   const [showInfoPopup, setShowInfoPopup] = useState(false);
   const [selectedQ7Answers, setSelectedQ7Answers] = useState(new Set());
 
-
-
   const handleInfoClick = () => {
     setShowInfoPopup(true);
   };
@@ -43,12 +41,10 @@ const QuizComponent = () => {
         closeInfoPopup();
       }
     };
-  
-    window.addEventListener('click', closePopup);
-    return () => window.removeEventListener('click', closePopup);
+
+    window.addEventListener("click", closePopup);
+    return () => window.removeEventListener("click", closePopup);
   }, [showInfoPopup]);
-  
-  
 
   const getNextQuestionIndex = (currentQuestionIndex: number) => {
     // After Q4, check if we need to skip based on Q1's answer
@@ -68,40 +64,41 @@ const QuizComponent = () => {
   };
 
   // Assuming `selectedAnswer.questionId` correctly determines which state to update,
-// and `selectedQ4Answers` and `selectedQ7Answers` are both initialized as Set<string>
+  // and `selectedQ4Answers` and `selectedQ7Answers` are both initialized as Set<string>
 
-const handleAnswerSelect = (selectedAnswer: Answer) => {
-  const answerValue = selectedAnswer.value.toString();
-  const isQ4 = selectedAnswer.questionId === "Q4";
+  const handleAnswerSelect = (selectedAnswer: Answer) => {
+    const answerValue = selectedAnswer.value.toString();
+    const isQ4 = selectedAnswer.questionId === "Q4";
 
-  if (isQ4) {
-    const newSelected = new Set(selectedQ4Answers);
-    if (newSelected.has(answerValue)) {
-      newSelected.delete(answerValue);
+    if (isQ4) {
+      const newSelected = new Set(selectedQ4Answers);
+      if (newSelected.has(answerValue)) {
+        newSelected.delete(answerValue);
+      } else {
+        newSelected.add(answerValue);
+      }
+      setSelectedQ4Answers(newSelected);
+    } else if (selectedAnswer.questionId === "Q7") {
+      const newSelected = new Set(selectedQ7Answers);
+      if (newSelected.has(answerValue)) {
+        newSelected.delete(answerValue);
+      } else {
+        newSelected.add(answerValue);
+      }
+      setSelectedQ7Answers(newSelected);
     } else {
-      newSelected.add(answerValue);
+      // Handle single-choice questions
+      setAnswers((prevAnswers) => ({
+        ...prevAnswers,
+        [selectedAnswer.questionId]: selectedAnswer,
+      }));
     }
-    setSelectedQ4Answers(newSelected);
-  } else if (selectedAnswer.questionId === "Q7") {
-    const newSelected = new Set(selectedQ7Answers);
-    if (newSelected.has(answerValue)) {
-      newSelected.delete(answerValue);
-    } else {
-      newSelected.add(answerValue);
-    }
-    setSelectedQ7Answers(newSelected);
-  } else {
-    // Handle single-choice questions
-    setAnswers((prevAnswers) => ({
-      ...prevAnswers,
-      [selectedAnswer.questionId]: selectedAnswer,
-    }));
-  }
 
-  console.log(`Answer selected for question ${selectedAnswer.questionId}:`, answerValue);
-};
-
-  
+    console.log(
+      `Answer selected for question ${selectedAnswer.questionId}:`,
+      answerValue
+    );
+  };
 
   const handleQ4AnswerSelect = (value: string) => {
     setSelectedQ4Answers((prevSelected) => {
@@ -635,8 +632,21 @@ const handleAnswerSelect = (selectedAnswer: Answer) => {
               }}
             >
               {optionsToDisplay.map((category) => (
-                <div key={category.category} style={{ width: "70%" }}>
-                  <h3 style={{ margin: "10px 0" }}>{category.category}</h3>
+                <div
+                  key={category.category}
+                  style={{
+                    width: "100%", // Use 100% width to maximize the container's width.
+                    display: "flex", // This will allow you to center the items and let them wrap.
+                    justifyContent: "center", // This centers the buttons horizontally.
+                    flexWrap: "wrap", // This allows the buttons to wrap onto the next line if needed.
+                    alignItems: "center", // This vertically centers the buttons when they wrap.
+                    margin: "0 auto", // This centers the container `div`.
+                    padding: "10px 0", // Add padding to ensure the content does not touch the edges.
+                  }}
+                >
+                  <h3 style={{ width: "100%", textAlign: "center" }}>
+                    {category.category}
+                  </h3>
                   <div style={{ textAlign: "center" }}>
                     {category.options.map((option) => (
                       <button
@@ -646,10 +656,15 @@ const handleAnswerSelect = (selectedAnswer: Answer) => {
                         }`}
                         onClick={() => handleQ4AnswerSelect(option)}
                         style={{
-                          display: "inline-block",
+                          display: "flex", // Make the button itself a flex container to center its content.
+                          justifyContent: "center", // Center content horizontally inside the button.
+                          alignItems: "center", // Center content vertically inside the button.
                           padding: "10px 20px",
                           margin: "5px",
-                          textAlign: "center",
+                          border: "none", // You can style the border as needed.
+                          borderRadius: "20px", // This will give the button rounded corners.
+                          cursor: "pointer", // Changes the cursor to indicate it's clickable.
+                          // Add any additional styles you need for your button.
                         }}
                       >
                         {option}
@@ -847,19 +862,23 @@ const handleAnswerSelect = (selectedAnswer: Answer) => {
                   }
                   title={explanation}
                   style={{
-                    display: "inline-block",
-                    padding: "10px 20px",
+                    display: "flex", // Use flexbox for centering content within the buttons.
+                    justifyContent: "center", // Horizontally center the text inside the button.
+                    alignItems: "center", // Vertically center the text inside the button.
+                    height: 'auto', // Let the height be automatic to contain the content.
+                    minHeight: '48px', // Set a minimum height for touch targets, 48px is a good size for mobile according to accessibility standards.
+                    padding: "12px 20px", // Increase padding top and bottom to provide more space for the text.
                     margin: "5px",
                     textAlign: "center",
-                    whiteSpace: "normal",
-                    maxWidth: "70%",
-                    backgroundColor: selectedQ7Answers.has(category)
-                      ? "var(--deep-slate)"
-                      : "var(--lavender)", // Change color based on selection
-                    color: selectedQ7Answers.has(category) ? "white" : "white", // Adjust text color based on selection
-                    borderColor: selectedQ7Answers.has(category)
-                      ? "var(--deep-slate)"
-                      : "initial", // Optional: Change border color if needed
+                    whiteSpace: "normal", // Allow text to wrap and not stay on one line.
+                    maxWidth: "90%", // Increase the max width to allow for more text.
+                    backgroundColor: selectedQ7Answers.has(category) ? "var(--deep-slate)" : "var(--lavender)",
+                    color: selectedQ7Answers.has(category) ? "white" : "white", // This can remain unchanged.
+                    borderColor: selectedQ7Answers.has(category) ? "var(--deep-slate)" : "initial",
+                    overflow: 'hidden', // Ensure that content doesn't overflow the button bounds.
+                    textOverflow: 'ellipsis', // Use an ellipsis to indicate text overflow. This can be useful if you decide not to wrap text.
+                    borderRadius: '22px', // Add some border-radius if desired for rounded corners.
+                    // Add any other styles you think are necessary for the design.
                   }}
                 >
                   {category}
