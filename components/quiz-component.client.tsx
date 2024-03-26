@@ -222,7 +222,7 @@ const QuizComponent = () => {
         ],
       },
       {
-        category: "Brain Health",
+        category: "Cognitive",
         options: [
           "Cognitive Support",
           "Emotional Support",
@@ -232,7 +232,7 @@ const QuizComponent = () => {
         ],
       },
       {
-        category: "Chronic Pain or Injuries",
+        category: "Movement",
         options: [
           "Back, Neck & Spine",
           "Knee Joints",
@@ -242,26 +242,26 @@ const QuizComponent = () => {
           "Ankle & Foot",
         ],
       },
-      {
-        category: "Sexual",
-        options: [
-          "Pregnancy",
-          "Pelvic Floor",
-          "Fertility",
-          "Erectile Dysfunction",
-        ],
-      },
-      {
-        category: "Sleep",
-        options: [
-          "Sleep Habits",
-          "Insomnia",
-          "Sleep Apnea",
-          "Restless Leg Syndrome",
-          "Narcolepsy",
-          "Other Sleep Disorders",
-        ],
-      },
+      // {
+      //   category: "Sexual",
+      //   options: [
+      //     "Pregnancy",
+      //     "Pelvic Floor",
+      //     "Fertility",
+      //     "Erectile Dysfunction",
+      //   ],
+      // },
+      // {
+      //   category: "Sleep",
+      //   options: [
+      //     "Sleep Habits",
+      //     "Insomnia",
+      //     "Sleep Apnea",
+      //     "Restless Leg Syndrome",
+      //     "Narcolepsy",
+      //     "Other Sleep Disorders",
+      //   ],
+      // },
       {
         category: "Digestive",
         options: [
@@ -298,7 +298,7 @@ const QuizComponent = () => {
         ],
       },
       {
-        category: "Brain Health",
+        category: "Cognitive",
         options: [
           "Cognitive Support",
           "Emotional Support",
@@ -308,7 +308,7 @@ const QuizComponent = () => {
         ],
       },
       {
-        category: "Chronic Pain or Injuries",
+        category: "Movement",
         options: [
           "Back, Neck & Spine",
           "Knee Joints",
@@ -318,26 +318,26 @@ const QuizComponent = () => {
           "Ankle & Foot",
         ],
       },
-      {
-        category: "Sexual",
-        options: [
-          "Pregnancy",
-          "Pelvic Floor",
-          "Fertility",
-          "Erectile dysfunction",
-        ],
-      },
-      {
-        category: "Sleep",
-        options: [
-          "Sleep Habits",
-          "Insomnia",
-          "Sleep Apnea",
-          "Restless Leg Syndrome",
-          "Narcolepsy",
-          "Other Sleep Disorders",
-        ],
-      },
+      // {
+      //   category: "Sexual",
+      //   options: [
+      //     "Pregnancy",
+      //     "Pelvic Floor",
+      //     "Fertility",
+      //     "Erectile dysfunction",
+      //   ],
+      // },
+      // {
+      //   category: "Sleep",
+      //   options: [
+      //     "Sleep Habits",
+      //     "Insomnia",
+      //     "Sleep Apnea",
+      //     "Restless Leg Syndrome",
+      //     "Narcolepsy",
+      //     "Other Sleep Disorders",
+      //   ],
+      // },
       {
         category: "Digestive",
         options: [
@@ -357,6 +357,14 @@ const QuizComponent = () => {
           "Emphysema",
           "Respiratory Infection",
           "Allergies",
+        ],
+      },
+      {
+        category: "Pregnancy",
+        options: [
+          "Sleep",
+          "Fertility",
+          "Skin",
         ],
       },
     ],
@@ -387,7 +395,7 @@ const QuizComponent = () => {
         ],
       },
       {
-        category: "Brain Health",
+        category: "Cognitive",
         options: [
           "Cognitive Support",
           "Emotional Support",
@@ -397,7 +405,7 @@ const QuizComponent = () => {
         ],
       },
       {
-        category: "Chronic Pain or Injuries",
+        category: "Movement",
         options: [
           "Back, Neck & Spine",
           "Knee Joints",
@@ -407,26 +415,26 @@ const QuizComponent = () => {
           "Ankle & Foot",
         ],
       },
-      {
-        category: "Sexual",
-        options: [
-          "Pregnancy",
-          "Pelvic Floor",
-          "Fertility",
-          "Erectile dysfunction",
-        ],
-      },
-      {
-        category: "Sleep",
-        options: [
-          "Sleep Habits",
-          "Insomnia",
-          "Sleep Apnea",
-          "Restless Leg Syndrome",
-          "Narcolepsy",
-          "Other Sleep Disorders",
-        ],
-      },
+      // {
+      //   category: "Sexual",
+      //   options: [
+      //     "Pregnancy",
+      //     "Pelvic Floor",
+      //     "Fertility",
+      //     "Erectile dysfunction",
+      //   ],
+      // },
+      // {
+      //   category: "Sleep",
+      //   options: [
+      //     "Sleep Habits",
+      //     "Insomnia",
+      //     "Sleep Apnea",
+      //     "Restless Leg Syndrome",
+      //     "Narcolepsy",
+      //     "Other Sleep Disorders",
+      //   ],
+      // },
       {
         category: "Digestive",
         options: [
@@ -446,6 +454,14 @@ const QuizComponent = () => {
           "Emphysema",
           "Respiratory Infection",
           "Allergies",
+        ],
+      },
+      {
+        category: "Pregnancy",
+        options: [
+          "Sleep",
+          "Fertility",
+          "Skin",
         ],
       },
     ],
@@ -597,78 +613,91 @@ const QuizComponent = () => {
             </div>
           </div>
         );
+
+
       // Question 4: Digging a little deeper, are you looking for care for any of the following?
       case 3: {
-        // Safely determine the key to use for dynamicQ4Options based on answers.Q2.value
-        console.log("Rendering Q4", {
-          selectedQ4Answers,
-          genderKey: answers.Q2?.value,
-        });
         const genderKey = answers.Q2?.value
-          ? ["Male", "Female", "Prefer not to say"].includes(
-              answers.Q2.value.toString()
-            )
+          ? ["Male", "Female", "Prefer not to say"].includes(answers.Q2.value.toString())
             ? answers.Q2.value.toString()
             : "Prefer not to say"
           : "Prefer not to say";
-
-        // TypeScript now knows genderKey is one of the keys in dynamicQ4Options or "Prefer not to say"
-        const optionsToDisplay =
-          dynamicQ4Options[genderKey as keyof typeof dynamicQ4Options];
+      
+        const careTypeKey = answers.Q3?.value?.toString() || "";
+      
+        // Start with fetching all options for the selected gender from Q2.
+        let optionsForDisplay = [];
+        if (genderKey === "Prefer not to say") {
+          // Combine "Male" and "Female" options
+          const combinedOptions = [...dynamicQ4Options["Male"], ...dynamicQ4Options["Female"]];
+      
+          // This will track if the careTypeKey has already been added
+          let careTypeAdded = false;
+      
+          optionsForDisplay = combinedOptions.filter(option => {
+              // For Men’s Health and Women’s Health categories, always include
+              if (option.category === "Men’s Health" || option.category === "Women’s Health") {
+                  return true;
+              }
+      
+              // For the careTypeKey category, include it only if it hasn't been added yet
+              if (option.category === careTypeKey && !careTypeAdded) {
+                  careTypeAdded = true; // Mark as added
+                  return true;
+              }
+      
+              // Exclude duplicate careTypeKey categories or any other categories
+              return false;
+          });
+        } else {
+          // Fetch the options for the selected gender from Q2 and filter for the care type selected in Q3.
+          const genderSpecificOptions = dynamicQ4Options[genderKey as keyof typeof dynamicQ4Options];
+          optionsForDisplay = genderSpecificOptions.filter(option => 
+            option.category === careTypeKey ||
+            (genderKey === "Male" && option.category === "Men’s Health") ||
+            (genderKey === "Female" && option.category === "Women’s Health")
+          );
+        }
+      
+        // Proceed to render optionsToDisplay
         return (
           <div className="question question-4" style={{ textAlign: "center" }}>
-            <p>
-              Digging a little deeper, are you looking for care for any of the
-              following?
-            </p>
-            <p>
-              <strong>Select all that apply.</strong>
-            </p>
-            <div
-              className="answers"
-              style={{
+            <p>Digging a little deeper, are you looking for care for any of the following?</p>
+            <p><strong>Select all that apply.</strong></p>
+            <div className="answers" style={{
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
                 gap: "20px",
-              }}
-            >
-              {optionsToDisplay.map((category) => (
-                <div
-                  key={category.category}
-                  style={{
-                    width: "100%", // Use 100% width to maximize the container's width.
-                    display: "flex", // This will allow you to center the items and let them wrap.
-                    justifyContent: "center", // This centers the buttons horizontally.
-                    flexWrap: "wrap", // This allows the buttons to wrap onto the next line if needed.
-                    alignItems: "center", // This vertically centers the buttons when they wrap.
-                    margin: "0 auto", // This centers the container `div`.
-                    padding: "10px 0", // Add padding to ensure the content does not touch the edges.
-                  }}
-                >
+              }}>
+              {optionsForDisplay.map((category) => (
+                <div key={category.category} style={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    flexWrap: "wrap",
+                    alignItems: "center",
+                    margin: "0 auto",
+                    padding: "10px 0",
+                  }}>
                   <h3 style={{ width: "100%", textAlign: "center" }}>
                     {category.category}
                   </h3>
                   <div style={{ textAlign: "center" }}>
                     {category.options.map((option) => (
-                      <button
-                        key={option}
-                        className={`answer-bubble ${
-                          selectedQ4Answers.has(option) ? "selected" : ""
-                        }`}
-                        onClick={() => handleQ4AnswerSelect(option)}
-                        style={{
-                          display: "flex", // Make the button itself a flex container to center its content.
-                          justifyContent: "center", // Center content horizontally inside the button.
-                          alignItems: "center", // Center content vertically inside the button.
-                          padding: "10px 20px",
-                          margin: "5px",
-                          border: "none", // You can style the border as needed.
-                          borderRadius: "20px", // This will give the button rounded corners.
-                          cursor: "pointer", // Changes the cursor to indicate it's clickable.
-                          // Add any additional styles you need for your button.
-                        }}
-                      >
+                      <button key={option}
+                              className={`answer-bubble ${selectedQ4Answers.has(option) ? "selected" : ""}`}
+                              onClick={() => handleQ4AnswerSelect(option)}
+                              style={{
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                padding: "10px 20px",
+                                margin: "5px",
+                                border: "none",
+                                borderRadius: "20px",
+                                cursor: "pointer",
+                              }}>
                         {option}
                       </button>
                     ))}
@@ -676,17 +705,16 @@ const QuizComponent = () => {
                 </div>
               ))}
             </div>
-            <button
-              className="next-button"
-              style={{ marginTop: "20px" }}
-              onClick={() => setCurrentQuestion(currentQuestion + 1)}
-              disabled={selectedQ4Answers.size === 0}
-            >
+            <button className="next-button" style={{ marginTop: "20px" }}
+                    onClick={() => setCurrentQuestion(currentQuestion + 1)}
+                    disabled={selectedQ4Answers.size === 0}>
               Next
             </button>
           </div>
         );
       }
+      
+      
 
       // Question 5: How long have you experienced your symptoms?
       case 4: {
