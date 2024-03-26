@@ -25,17 +25,17 @@ const AboutUs: React.FC = () => {
   const benefitsData: BenefitProps[] = [
     {
       icon: <FaSearch />, // Assuming FaSearch is imported for "finding care"
-      title: 'Find Trusted Care → Better Experience',
+      title: 'Better Experience',
       description: 'Natu makes sense of the confusing alternative and nontraditional healthcare space.',
     },
     {
       icon: <FaHandHoldingHeart />, // Assuming FaHandHoldingHeart is imported for "empowerment"
-      title: 'Empower Your Health Decisions → Own Your Health',
+      title: 'Own Your Health',
       description: 'Natu empowers you with the information necessary to take control of your health and make decisions for yourself.',
     },
     {
       icon: <FaUserMd />, // Assuming FaUserMd is imported for "diverse practitioners"
-      title: 'Diverse Practitioners → Vetted Practitioners',
+      title: 'Vetted Practitioners',
       description: 'Natu conducted a comprehensive vetting process to ensure you can trust all providers listed on the platform.',
     },
   ];
