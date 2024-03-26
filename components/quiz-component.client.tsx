@@ -120,23 +120,22 @@ const QuizComponent = () => {
       "Current Answers State:",
       answers
     );
-  
+
     // This check might remain or be adjusted based on specific needs for Q4 or other questions
     if (lastAnsweredQuestionId && answers[lastAnsweredQuestionId]) {
       console.log("Effect setting next question");
-  
+
       setCurrentQuestion((prevCurrentQuestion) => {
         // Before changing the current question, update the history
         setHistory((prevHistory) => [...prevHistory, prevCurrentQuestion]);
-  
+
         // Use getNextQuestionIndex to determine the next question based on logic
         const nextQuestionIndex = getNextQuestionIndex(prevCurrentQuestion);
-  
+
         return nextQuestionIndex;
       });
     }
   }, [answers]); // Consider if you need to add getNextQuestionIndex or other dependencies here
-  
 
   const handleInputSubmit = (questionId: string) => {
     const inputValue = temporaryInput[questionId];
@@ -361,11 +360,7 @@ const QuizComponent = () => {
       },
       {
         category: "Pregnancy",
-        options: [
-          "Sleep",
-          "Fertility",
-          "Skin",
-        ],
+        options: ["Sleep", "Fertility", "Skin"],
       },
     ],
     "Prefer not to say": [
@@ -458,11 +453,7 @@ const QuizComponent = () => {
       },
       {
         category: "Pregnancy",
-        options: [
-          "Sleep",
-          "Fertility",
-          "Skin",
-        ],
+        options: ["Sleep", "Fertility", "Skin"],
       },
     ],
   };
@@ -602,102 +593,109 @@ const QuizComponent = () => {
               >
                 Movement
               </button>
-              <button
-                className="answer-bubble"
-                onClick={() =>
-                  handleAnswerSelect({ questionId: "Q3", value: "Pregnancy" })
-                }
-              >
-                Pregnancy
-              </button>
+              {/* Render the Pregnancy option conditionally based on the answer to Q2 */}
+              {answers.Q2?.value !== "Male" && (
+                <button
+                  className="answer-bubble"
+                  onClick={() =>
+                    handleAnswerSelect({ questionId: "Q3", value: "Pregnancy" })
+                  }
+                >
+                  Pregnancy
+                </button>
+              )}
             </div>
           </div>
         );
 
-
       // Question 4: Digging a little deeper, are you looking for care for any of the following?
       case 3: {
+        console.log("Rendering Q4", {
+          selectedQ4Answers,
+          genderKey: answers.Q2?.value,
+          careTypeKey: answers.Q3?.value,
+        });
+
         const genderKey = answers.Q2?.value
-          ? ["Male", "Female", "Prefer not to say"].includes(answers.Q2.value.toString())
+          ? ["Male", "Female", "Prefer not to say"].includes(
+              answers.Q2.value.toString()
+            )
             ? answers.Q2.value.toString()
             : "Prefer not to say"
           : "Prefer not to say";
-      
-        const careTypeKey = answers.Q3?.value?.toString() || "";
-      
-        // Start with fetching all options for the selected gender from Q2.
-        let optionsForDisplay = [];
-        if (genderKey === "Prefer not to say") {
-          // Combine "Male" and "Female" options
-          const combinedOptions = [...dynamicQ4Options["Male"], ...dynamicQ4Options["Female"]];
-      
-          // This will track if the careTypeKey has already been added
-          let careTypeAdded = false;
-      
-          optionsForDisplay = combinedOptions.filter(option => {
-              // For Men’s Health and Women’s Health categories, always include
-              if (option.category === "Men’s Health" || option.category === "Women’s Health") {
-                  return true;
-              }
-      
-              // For the careTypeKey category, include it only if it hasn't been added yet
-              if (option.category === careTypeKey && !careTypeAdded) {
-                  careTypeAdded = true; // Mark as added
-                  return true;
-              }
-      
-              // Exclude duplicate careTypeKey categories or any other categories
-              return false;
-          });
-        } else {
-          // Fetch the options for the selected gender from Q2 and filter for the care type selected in Q3.
-          const genderSpecificOptions = dynamicQ4Options[genderKey as keyof typeof dynamicQ4Options];
-          optionsForDisplay = genderSpecificOptions.filter(option => 
-            option.category === careTypeKey ||
-            (genderKey === "Male" && option.category === "Men’s Health") ||
-            (genderKey === "Female" && option.category === "Women’s Health")
-          );
-        }
-      
+
+        // Assuming answers.Q3.value will be one of the care types ("Digestive", "Cognitive", etc.)
+        const careTypeKey = answers.Q3?.value.toString(); // Convert to string explicitly
+
+        // Fetch the options for the gender
+        let optionsForGender =
+          dynamicQ4Options[genderKey as keyof typeof dynamicQ4Options];
+
+        // Filter the options based on the care type selected in Q3, if any
+        const optionsToDisplay = careTypeKey
+          ? optionsForGender.filter(
+              (category) =>
+                category.category === careTypeKey ||
+                category.category.includes(careTypeKey as string)
+            ) // Assure TypeScript that careTypeKey is a string
+          : optionsForGender; // If there's no careTypeKey selected, default to showing all options for the gender
+
         // Proceed to render optionsToDisplay
         return (
           <div className="question question-4" style={{ textAlign: "center" }}>
-            <p>Digging a little deeper, are you looking for care for any of the following?</p>
-            <p><strong>Select all that apply.</strong></p>
-            <div className="answers" style={{
+            <p>
+              Digging a little deeper, are you looking for care for any of the
+              following?
+            </p>
+            <p>
+              <strong>Select all that apply.</strong>
+            </p>
+            <div
+              className="answers"
+              style={{
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
                 gap: "20px",
-              }}>
-              {optionsForDisplay.map((category) => (
-                <div key={category.category} style={{
-                    width: "100%",
-                    display: "flex",
-                    justifyContent: "center",
-                    flexWrap: "wrap",
-                    alignItems: "center",
-                    margin: "0 auto",
-                    padding: "10px 0",
-                  }}>
-                  <h3 style={{ width: "100%", textAlign: "center" }}>
+              }}
+            >
+              {optionsToDisplay.map((category) => (
+                <div
+                  key={category.category}
+                  style={{
+                    width: "100%", // Use 100% width to maximize the container's width.
+                    display: "flex", // This will allow you to center the items and let them wrap.
+                    justifyContent: "center", // This centers the buttons horizontally.
+                    flexWrap: "wrap", // This allows the buttons to wrap onto the next line if needed.
+                    alignItems: "center", // This vertically centers the buttons when they wrap.
+                    margin: "0 auto", // This centers the container `div`.
+                    padding: "10px 0", // Add padding to ensure the content does not touch the edges.
+                  }}
+                >
+                  {/* <h3 style={{ width: "100%", textAlign: "center" }}>
                     {category.category}
-                  </h3>
+                  </h3> */}
                   <div style={{ textAlign: "center" }}>
                     {category.options.map((option) => (
-                      <button key={option}
-                              className={`answer-bubble ${selectedQ4Answers.has(option) ? "selected" : ""}`}
-                              onClick={() => handleQ4AnswerSelect(option)}
-                              style={{
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                padding: "10px 20px",
-                                margin: "5px",
-                                border: "none",
-                                borderRadius: "20px",
-                                cursor: "pointer",
-                              }}>
+                      <button
+                        key={option}
+                        className={`answer-bubble ${
+                          selectedQ4Answers.has(option) ? "selected" : ""
+                        }`}
+                        onClick={() => handleQ4AnswerSelect(option)}
+                        style={{
+                          display: "flex", // Make the button itself a flex container to center its content.
+                          justifyContent: "center", // Center content horizontally inside the button.
+                          alignItems: "center", // Center content vertically inside the button.
+                          padding: "10px 20px",
+                          margin: "5px",
+                          border: "none", // You can style the border as needed.
+                          borderRadius: "20px", // This will give the button rounded corners.
+                          cursor: "pointer", // Changes the cursor to indicate it's clickable.
+                          marginBottom: "20px", // Add some space between the buttons.
+                          // Add any additional styles you need for your button.
+                        }}
+                      >
                         {option}
                       </button>
                     ))}
@@ -705,16 +703,17 @@ const QuizComponent = () => {
                 </div>
               ))}
             </div>
-            <button className="next-button" style={{ marginTop: "20px" }}
-                    onClick={() => setCurrentQuestion(currentQuestion + 1)}
-                    disabled={selectedQ4Answers.size === 0}>
+            <button
+              className="next-button"
+              style={{ marginTop: "20px" }}
+              onClick={() => setCurrentQuestion(currentQuestion + 1)}
+              disabled={selectedQ4Answers.size === 0}
+            >
               Next
             </button>
           </div>
         );
       }
-      
-      
 
       // Question 5: How long have you experienced your symptoms?
       case 4: {
@@ -895,19 +894,23 @@ const QuizComponent = () => {
                     display: "flex", // Use flexbox for centering content within the buttons.
                     justifyContent: "center", // Horizontally center the text inside the button.
                     alignItems: "center", // Vertically center the text inside the button.
-                    height: 'auto', // Let the height be automatic to contain the content.
-                    minHeight: '48px', // Set a minimum height for touch targets, 48px is a good size for mobile according to accessibility standards.
+                    height: "auto", // Let the height be automatic to contain the content.
+                    minHeight: "48px", // Set a minimum height for touch targets, 48px is a good size for mobile according to accessibility standards.
                     padding: "12px 20px", // Increase padding top and bottom to provide more space for the text.
                     margin: "5px",
                     textAlign: "center",
                     whiteSpace: "normal", // Allow text to wrap and not stay on one line.
                     maxWidth: "70%", // Increase the max width to allow for more text.
-                    backgroundColor: selectedQ7Answers.has(category) ? "var(--deep-slate)" : "var(--lavender)",
+                    backgroundColor: selectedQ7Answers.has(category)
+                      ? "var(--deep-slate)"
+                      : "var(--lavender)",
                     color: selectedQ7Answers.has(category) ? "white" : "white", // This can remain unchanged.
-                    borderColor: selectedQ7Answers.has(category) ? "var(--deep-slate)" : "initial",
-                    overflow: 'hidden', // Ensure that content doesn't overflow the button bounds.
-                    textOverflow: 'ellipsis', // Use an ellipsis to indicate text overflow. This can be useful if you decide not to wrap text.
-                    borderRadius: '22px', // Add some border-radius if desired for rounded corners.
+                    borderColor: selectedQ7Answers.has(category)
+                      ? "var(--deep-slate)"
+                      : "initial",
+                    overflow: "hidden", // Ensure that content doesn't overflow the button bounds.
+                    textOverflow: "ellipsis", // Use an ellipsis to indicate text overflow. This can be useful if you decide not to wrap text.
+                    borderRadius: "22px", // Add some border-radius if desired for rounded corners.
                     // Add any other styles you think are necessary for the design.
                   }}
                 >
@@ -1004,7 +1007,7 @@ const QuizComponent = () => {
     <div className="relative bg-off-white text-deep-slate overflow-hidden">
       {/* Page Illustrations similar to how it was done in hero.tsx */}
       <div
-      className="hide-on-mobile"
+        className="hide-on-mobile"
         style={{
           position: "absolute",
           top: 10,
@@ -1021,7 +1024,7 @@ const QuizComponent = () => {
         {/* Illustration to the left */}
       </div>
       <div
-      className="hide-on-mobile"
+        className="hide-on-mobile"
         style={{
           position: "absolute",
           top: 0,
