@@ -6,11 +6,11 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          {/* Favicon */}
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
           <link rel="icon" href="/favicon.ico" />
-          {/* You can also include other head elements here, like meta tags */}
+          {/* Include other head elements like meta tags here */}
         </Head>
-        <body className="font-inter antialiased bg-gray-900 text-gray-200 tracking-tight">
+        <body className="font-inter antialiased bg-off-white text-gray-800 tracking-tight">
           <Main />
           <NextScript />
         </body>

@@ -13,7 +13,7 @@ export default function SignIn() {
 
           {/* Page header */}
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
-            <h1 className="h1">Welcome back.</h1>
+            <h1 className="h1 text-deep-slate">Welcome back.</h1>
           </div>
 
           {/* Form */}
@@ -62,7 +62,7 @@ export default function SignIn() {
               </div>
               <div className="flex flex-wrap -mx-3 mt-6">
                 <div className="w-full px-3">
-                  <button className="btn text-white bg-purple-600 hover:bg-purple-700 w-full">Sign in</button>
+                  <button className="btn text-white bg-lavender hover:bg-purple-700 w-full">Sign in</button>
                 </div>
               </div>
             </form>

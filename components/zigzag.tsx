@@ -1,14 +1,15 @@
 import Image from "next/image";
 import FeatImage01 from "../public/images/hero-image.png";
 import FeatImage02 from "../public/images/cropped-diverse-network.png";
+import "../app/css/additional-styles/zigzag.css";
 
 export default function Zigzag() {
   return (
     <section>
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="py-12 md:py-20 border-t border-gray-800">
+        <div className="py-12 md:py-6">
           {/* Section header */}
-          <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
+          <div className="max-w-3xl mx-auto text-center pb-12 md:pb-10 pt-6">
             <div className="inline-flex text-base font-semibold py-2 px-4 m-2 text-green-600 bg-green-200 rounded-full mb-4">
               How It Works
             </div>
@@ -37,11 +38,11 @@ export default function Zigzag() {
                 data-aos="fade-right"
               >
                 <div className="md:pr-4 lg:pr-12 xl:pr-16">
-                  <div className="font-architects-daughter text-xl text-purple-600 mb-2">
-                    Simple triage. Tailored care.
+                  <div className="font-architects-daughter text-xl text-600 mb-2">
+                  Personalized Recommendations
                   </div>
                   <h3 className="h3 mb-3">
-                    We’ll help you build a personalized path to care
+                  A simple triage for tailored care
                   </h3>
                   <ul className="text-lg text-gray-400 -mb-2">
                     <li className="flex items-center mb-2">
@@ -53,8 +54,7 @@ export default function Zigzag() {
                         <path d="M10.28 2.28L3.989 8.575 1.695 6.28A1 1 0 00.28 7.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 2.28z" />
                       </svg>
                       <span>
-                        Tell us a little about yourself so we can recommend
-                        personalized options.
+                      Tell us a little about yourself and your current health journey
                       </span>
                     </li>
                     <li className="flex items-center mb-2">
@@ -66,10 +66,7 @@ export default function Zigzag() {
                         <path d="M10.28 2.28L3.989 8.575 1.695 6.28A1 1 0 00.28 7.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 2.28z" />
                       </svg>
                       <span>
-                        Select the right path for you - whether that’s meeting
-                        with a specialized practitioner or engaging in a library of
-                        resources that can help guide you on your path to a
-                        healthier you
+                      See relevant providers that have a proven track record and ability to help
                       </span>
                     </li>
                   </ul>
@@ -109,17 +106,34 @@ export default function Zigzag() {
                     More options. Easy access.
                   </div>
                   <h3 className="h3 mb-3">
-                    Access a diverse network of practitioners within the natural
-                    medicine space, and get care that’s tailored to your
-                    specific needs{" "}
+                  Find alternative and cutting-edge therapies to achieve a healthier and more fulfilling life
                   </h3>
-                  <p className="text-xl text-gray-400 mb-4">
-                    Natu’s responsive approach to care supports people across a
-                    wide range of needs, interests and goals. Our personalized
-                    options are backed up by a practitioner network with varying
-                    clinical expertise and modality to help make access to care
-                    easier than ever.
-                  </p>
+                  <ul className="text-lg text-gray-400 -mb-2">
+                    <li className="flex items-center mb-2">
+                      <svg
+                        className="w-3 h-3 fill-current text-green-500 mr-2 shrink-0"
+                        viewBox="0 0 12 12"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path d="M10.28 2.28L3.989 8.575 1.695 6.28A1 1 0 00.28 7.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 2.28z" />
+                      </svg>
+                      <span>
+                      Select the right path for you based on provider’s specialty, modality, and proximity 
+                      </span>
+                    </li>
+                    <li className="flex items-center mb-2">
+                      <svg
+                        className="w-3 h-3 fill-current text-green-500 mr-2 shrink-0"
+                        viewBox="0 0 12 12"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path d="M10.28 2.28L3.989 8.575 1.695 6.28A1 1 0 00.28 7.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 2.28z" />
+                      </svg>
+                      <span>
+                      Feel confident in your decision
+                      </span>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>

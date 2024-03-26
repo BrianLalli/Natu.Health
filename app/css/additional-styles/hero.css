@@ -1,0 +1,7 @@
+/* CSS file */
+@media (max-width: 768px) { /* or whichever pixel value you deem as 'mobile' */
+    .hide-on-mobile {
+      display: none !important;
+    }
+  }
+  

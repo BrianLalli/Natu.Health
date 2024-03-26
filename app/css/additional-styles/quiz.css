@@ -1,10 +1,21 @@
 /* Add this to a CSS file that you import into your quiz-component.client.tsx */
+/* Custom Color Scheme */
+:root {
+  --off-white: #F7F7F7;
+  --lavender: #949cff;
+  --deep-slate: #435373;
+  --light-slate: #e4e4e7;
+  --medium-slate: #9fa4b7;
+  --yellow: #ffc812;
+  --flora: #8fcca0;
+}
 
 /* This will center your question on the page */
 .question {
   text-align: center;
   font-size: 1.5rem; /* Example font size */
   margin-bottom: 1rem; /* Space between the question and the answers */
+  color: var(--deep-slate); /* Use deep slate for text */
 }
 
 /* Media query for mobile devices */
@@ -33,8 +44,8 @@
   width: 350px; /* Set a fixed width */
   height: 50px; /* Set a fixed height */
 
-  background-color: #5d5dff; /* The purple background color for the bubbles */
-  color: white; /* White text color */
+  background-color: var(--lavender); /* Updated background color for the bubbles */
+  color: var(--off-white); /* Updated text color */
   border-radius: 9999px; /* Rounded corners for the bubble effect */
 
   cursor: pointer; /* Changes the cursor to indicate the bubble is clickable */
@@ -53,23 +64,24 @@
 
 /* Retain the existing styles for .answer-bubble */
 
-/* Additional styles specifically for question 4 answer bubbles */
-.question-4 .answer-bubble {
+/* Styles for both question 4 and question 7 answer bubbles */
+.question-4 .answer-bubble,
+.question-7 .answer-bubble {
   /* Inherits existing styles from .answer-bubble */
 
   /* Changes for indicating multiple selection capability */
   /* Slightly different background color to differentiate from other questions */
-  background-color: #5d5dff; 
-  
+  background-color: var(--lavender);
 
   /* Change in scale and border color on hover for better UX */
   transition: transform 0.2s ease-in-out, border-color 0.2s ease-in-out;
 }
 
-.question-4 .answer-bubble.selected {
+.question-4 .answer-bubble.selected,
+.question-7 .answer-bubble.selected {
   /* More distinct color for selected state */
-  background-color: #262668;
-  border-color: #262668;
+  background-color: var(--deep-slate); /* More distinct color for selected state */
+  border-color: var(--deep-slate);
 }
 
 
@@ -83,7 +95,7 @@
 /* Styles for touch devices */
 @media (hover: none) {
   .answer-bubble:active {
-    background-color: #4b4bff; /* Slightly different color on tap */
+    background-color: var(--light-slate); /* Slightly different color on tap */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Adjust the shadow */
   }
 }
@@ -92,9 +104,9 @@
   width: 200px; /* Ensures the dropdown fills the container */
   padding: 10px; /* Adjust padding for comfort */
   border-radius: 20px; /* Consistent with the bubble style */
-  background-color: #f0f0f0; /* Light background for the dropdown */
+  background-color: var(--light-slate); /* Light background for the dropdown */
   border: 1px solid #ccc; /* Subtle border */
-  color: #333; /* Text color */
+  color: var(--deep-slate); /* Text color */
   font-size: 1rem; /* Match font size with your design */
   cursor: pointer; /* Indicates it's an interactive element */
 }
@@ -107,12 +119,6 @@
     font-size: 16px; /* A legible font size for mobile screens */
     /* Retain other properties as needed */
   }
-}
-
-.progress-bar-wrapper {
-  max-width: 500px; /* Adjust as needed for desktop size */
-  margin: 20px auto; /* Centers the container */
-  padding: 0 15px;
 }
 
 .quiz-container {
@@ -158,7 +164,7 @@
 /* Styles for the progress bar container on desktop */
 .progress-bar-container {
   width: 400px; /* Fixed width for desktop, adjust as needed */
-  background-color: #e0e0e0;
+  background-color: var(--light-slate);
   border-radius: 5px;
   margin: 20px auto;
 }
@@ -174,7 +180,7 @@
 
 .progress-bar {
   height: 20px;
-  background-color: #4caf50; /* Change to match your color scheme */
+  background-color: var(--flora); /* Change to match your color scheme */
   width: 0; /* Initial width should be 0 */
   border-radius: 5px;
   transition: width 0.4s ease-in-out; /* Adds a smooth transition effect */
@@ -185,8 +191,8 @@
   display: block; /* Block display to fill the width of its container */
   margin: 20px auto; /* Centering the button horizontally with top and bottom margin */
   padding: 10px 30px; /* Padding to make the button larger */
-  background-color: #4caf50; /* Green background */
-  color: white; /* White text color */
+  background-color: var(--yellow); /* Yellow background */
+  color: var(--deep-slate);
   border: none; /* No border */
   cursor: pointer; /* Changes the cursor to signify it's clickable */
   text-align: center; /* Ensures the text inside the button is centered */
@@ -198,20 +204,36 @@
 
 /* Hover effect for the Next button */
 .next-button:hover {
-  background-color: #43a047; /* Slightly darker green background on hover */
+  background-color: #8fcca0;
+  color: var(--off-white);
+}
+
+.disabled-button {
+  display: block; /* Block display to fill the width of its container */
+  margin: 20px auto; /* Centering the button horizontally with top and bottom margin */
+  padding: 10px 30px; /* Padding to make the button larger */
+  border: none; /* No border */
+  cursor: pointer; /* Changes the cursor to signify it's clickable */
+  text-align: center; /* Ensures the text inside the button is centered */
+  font-size: 1.3rem; /* Example font size */
+  border-radius: 25px; /* Rounded edges */
+  width: auto; /* Auto width based on content and padding */
+  z-index: 100 !important;
+  background-color: #e4e4e4;
+  color: #cfcfcf;
 }
 
 /* Styles for the input text on desktop */
 .input-text {
   padding: 10px;
   margin: 10px 0;
-  border: 1px solid #ccc;
+  border: 1px solid var(--medium-slate);
   border-radius: 5px;
   width: 200px; /* Fixed width to match the progress bar container */
   box-sizing: border-box;
   font-size: 16px;
-  color: #333;
-  background-color: #fff;
+  color: var(--deep-slate);
+  background-color: var(--off-white);
 }
 
 .input-text:focus {
@@ -229,7 +251,7 @@
 
 .completion-message {
   font-size: 24px; /* Adjusts the size of the font */
-  color: white; /* Sets the color of the text */
+  color: var(--deep-slate); /* Sets the color of the text */
   font-weight: bold; /* Makes the font bold */
   text-align: center; /* Centers the text */
   margin-top: 20px; /* Adds space at the top */
@@ -239,4 +261,59 @@
   width: fit-content; /* Adjusts the width to fit the content */
   margin-left: auto; /* These two margin properties */
   margin-right: auto; /* Center the block element horizontally */
+}
+
+.go-back-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px; /* Spacing from the content above */
+}
+
+.go-back-button {
+  padding: 10px 20px;
+  font-size: 16px; /* Example size, adjust as needed */
+  color: "#435373"; /* deep-slate for text color */
+  background-color: #e4e4e7; /* lavender for background */
+  border: 2px solid #9fa4b7; /* medium-slate for border */
+  border-radius: 25px;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.go-back-button:hover {
+  opacity: 0.8; /* Simulating a darker lavender on hover */
+}
+
+@media (min-width: 768px) {
+  .answers {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px; /* Adjust the gap between grid items as needed */
+  }
+
+  .question-4 h3 {
+    /* You might want to center the category headers above the options */
+    text-align: center;
+    margin-bottom: 10px; /* Add some space between the header and buttons */
+  }
+
+  .answer-bubble {
+    /* Make the buttons a bit larger on desktop for better clickability */
+    padding: 10px 20px;
+    width: 100%; /* Make the buttons take up the full width of the grid column */
+    /* More styling as needed */
+  }
+  .answer-bubble.selected {
+    /* Example of a selected style */
+    background-color: #435373; /* deep-slate color from your palette */
+    color: #F7F7F7; /* off-white for text */
+    /* Additional styles as needed */
+  }
+}
+
+/* CSS file */
+@media (max-width: 768px) { /* or whichever pixel value you deem as 'mobile' */
+  .hide-on-mobile {
+    display: none !important;
+  }
 }
