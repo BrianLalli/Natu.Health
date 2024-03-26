@@ -120,21 +120,22 @@ const QuizComponent = () => {
       "Current Answers State:",
       answers
     );
-    if (
-      lastAnsweredQuestionId &&
-      answers[lastAnsweredQuestionId] &&
-      lastAnsweredQuestionId !== "Q4"
-    ) {
+  
+    // This check might remain or be adjusted based on specific needs for Q4 or other questions
+    if (lastAnsweredQuestionId && answers[lastAnsweredQuestionId]) {
       console.log("Effect setting next question");
-      // Update to include history management
+  
       setCurrentQuestion((prevCurrentQuestion) => {
         // Before changing the current question, update the history
         setHistory((prevHistory) => [...prevHistory, prevCurrentQuestion]);
-        // Then, proceed to set the next question
-        return prevCurrentQuestion + 1;
+  
+        // Use getNextQuestionIndex to determine the next question based on logic
+        const nextQuestionIndex = getNextQuestionIndex(prevCurrentQuestion);
+  
+        return nextQuestionIndex;
       });
     }
-  }, [answers]); // Note: You might need to include history in the dependency array if you experience issues, but it shouldn't be necessary for this case.
+  }, [answers]); // Consider if you need to add getNextQuestionIndex or other dependencies here
 
   const handleInputSubmit = (questionId: string) => {
     const inputValue = temporaryInput[questionId];
