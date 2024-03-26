@@ -1,10 +1,10 @@
 import Link from "next/link";
-import { useRouter } from 'next/router'; // Import useRouter
+import { useRouter } from "next/router"; // Import useRouter
 import "../app/css/additional-styles/buttons.css";
 import PageIllustration from "./page-illustration";
 import PageIllustration2 from "./page-illustration2";
 import SearchBar from "./search-bar.client";
-import '../app/css/additional-styles/hero.css';
+import "../app/css/additional-styles/hero.css";
 
 export default function Hero() {
   const router = useRouter(); // Initialize useRouter
@@ -12,7 +12,7 @@ export default function Hero() {
   // Updated handleSearch to accept focusArea and location, and to use Next.js routing
   const handleSearch = (focusArea: string, location: string) => {
     router.push({
-      pathname: '/practitioners', // Update this path based on your routing structure
+      pathname: "/practitioners", // Update this path based on your routing structure
       query: { focusArea, zipCode: location }, // Passing focusArea and zipCode as query parameters
     });
   };
@@ -81,7 +81,7 @@ export default function Hero() {
               <div data-aos="fade-up" data-aos-delay="400">
                 <Link
                   href="/quiz"
-                  className="btn text-white bg-flora hover:bg-lavender w-full mb-0 sm:w-auto sm:mb-0"
+                  className="btn text-white bg-flora hover:bg-lavender w-full mb-0 sm:w-auto sm:mb-0 font-bold"
                 >
                   Find Personalized Care
                 </Link>
